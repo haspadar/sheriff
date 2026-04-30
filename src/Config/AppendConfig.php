@@ -46,9 +46,9 @@ final readonly class AppendConfig implements Config
             return $this->defaults->list($name);
         }
 
-        $appends = $this->appends[$name];
+        $items = $this->appends[$name];
 
-        if (!is_array($appends) || !array_is_list($appends)) {
+        if (!is_array($items) || !array_is_list($items)) {
             throw new PiquleException(
                 sprintf('Append "%s" must be a list<scalar>', $name),
             );
@@ -56,7 +56,7 @@ final readonly class AppendConfig implements Config
 
         $scalars = [];
 
-        foreach ($appends as $item) {
+        foreach ($items as $item) {
             if (!is_scalar($item)) {
                 throw new PiquleException(
                     sprintf('Append "%s" must contain only scalars', $name),

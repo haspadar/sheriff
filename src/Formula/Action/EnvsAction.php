@@ -33,13 +33,13 @@ final readonly class EnvsAction implements Action
             return new ListArgs(['']);
         }
 
-        $indent = $this->unquotedIndent();
-        $lines = [sprintf('%s    git fetch --tags --unshallow 2>/dev/null || git fetch --tags', $indent)];
+        $yamlIndent = $this->unquotedIndent();
+        $lines = [sprintf('%s    git fetch --tags --unshallow 2>/dev/null || git fetch --tags', $yamlIndent)];
 
         foreach ($vars as $name => $command) {
             $lines[] = sprintf(
                 '%s    echo "%s=$(%s)" >> "$GITHUB_ENV"',
-                $indent,
+                $yamlIndent,
                 $name,
                 $command,
             );
@@ -48,8 +48,8 @@ final readonly class EnvsAction implements Action
         return new ListArgs([
             sprintf(
                 "%s- name: Set environment variables\n%s  run: |\n%s",
-                $indent,
-                $indent,
+                $yamlIndent,
+                $yamlIndent,
                 implode("\n", $lines),
             ),
         ]);

@@ -22,12 +22,12 @@ final readonly class PrefixedFile implements File
     #[Override]
     public function name(): string
     {
-        $prefix = rtrim($this->prefix, '/');
+        $pathPrefix = rtrim($this->prefix, '/');
         $name = ltrim($this->origin->name(), '/');
 
-        return $prefix === ''
+        return $pathPrefix === ''
             ? $name
-            : "{$prefix}/{$name}";
+            : "{$pathPrefix}/{$name}";
     }
 
     #[Override]

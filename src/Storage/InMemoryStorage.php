@@ -65,7 +65,7 @@ final readonly class InMemoryStorage implements Storage
         }
 
         $prefix = sprintf('%s/', rtrim($location, '/'));
-        $entries = [];
+        $matches = [];
 
         foreach ($keys as $key) {
             if (!str_starts_with($key, $prefix)) {
@@ -75,10 +75,10 @@ final readonly class InMemoryStorage implements Storage
             $rest = substr($key, strlen($prefix));
 
             if ($rest !== '' && !str_contains($rest, '/')) {
-                $entries[] = $key;
+                $matches[] = $key;
             }
         }
 
-        return $entries;
+        return $matches;
     }
 }

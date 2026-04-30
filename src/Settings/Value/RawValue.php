@@ -28,8 +28,7 @@ final readonly class RawValue
     /**
      * Returns the Value implementation matching the payload's runtime type.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      */
     public function value(): Value
     {
@@ -51,22 +50,21 @@ final readonly class RawValue
     /**
      * Wraps an array payload as a ListValue or TreeValue depending on its shape.
      *
-     * @param array<int|string, mixed> $raw
-     * @throws PiquleException
-     * @throws TypeError
+     * @param array<int|string, mixed> $items
+     * @throws PiquleException|TypeError
      */
-    private function fromArray(array $raw): Value
+    private function fromArray(array $items): Value
     {
-        if (array_is_list($raw)) {
+        if (array_is_list($items)) {
             return new ListValue(
-                array_map(static fn(mixed $item): Value => (new self($item))->value(), $raw),
+                array_map(static fn(mixed $item): Value => (new self($item))->value(), $items),
             );
         }
 
         $entries = [];
 
         /** @var mixed $item */
-        foreach ($raw as $key => $item) {
+        foreach ($items as $key => $item) {
             $entries[(string) $key] = (new self($item))->value();
         }
 

@@ -36,8 +36,7 @@ final readonly class RemovePatches
     /**
      * Returns the list of Patch objects derived from the section.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      * @return list<Patch>
      */
     public function patches(): array
@@ -55,8 +54,7 @@ final readonly class RemovePatches
     /**
      * Builds a RemoveList patch from a yaml list payload.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      */
     private function patchOf(string $key, mixed $raw): Patch
     {

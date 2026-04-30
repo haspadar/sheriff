@@ -16,8 +16,7 @@ interface Action
     /**
      * Applies this action to the given arguments and returns the result
      *
-     * @throws InvalidArgumentException
-     * @throws PiquleException
+     * @throws InvalidArgumentException|PiquleException
      */
     public function transformed(Args $args): Args;
 }

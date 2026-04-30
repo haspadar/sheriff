@@ -9,9 +9,6 @@ use UnexpectedValueException;
 /** A unit of work that can be executed. */
 interface Runnable
 {
-    /**
-     * @throws PiquleException
-     * @throws UnexpectedValueException
-     */
+    /** @throws PiquleException|UnexpectedValueException */
     public function run(): void;
 }

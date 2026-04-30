@@ -25,7 +25,7 @@ final readonly class ComposerRootNamespace
 
         $contents = @file_get_contents($this->path);
         /** @var array{autoload?: array{psr-4?: array<string, string>}} $data */
-        $data = json_decode($contents === false ? '{}' : $contents, true) ?? [];
+        $data = json_decode(is_string($contents) ? $contents : '{}', true) ?? [];
         $namespaces = $data['autoload']['psr-4'] ?? [];
 
         return $namespaces !== []

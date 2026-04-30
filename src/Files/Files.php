@@ -16,8 +16,7 @@ interface Files
     /**
      * Returns all files in this collection.
      *
-     * @throws PiquleException
-     * @throws UnexpectedValueException
+     * @throws PiquleException|UnexpectedValueException
      * @return iterable<File>
      */
     public function all(): iterable;

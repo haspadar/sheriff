@@ -53,8 +53,7 @@ final readonly class ReplaceAction implements Action
     /**
      * Splits the raw argument string into (search, replace) with escape sequences resolved.
      *
-     * @throws InvalidArgumentException When the wrapped args contain non-scalar values.
-     * @throws PiquleException When the raw argument does not contain exactly two comma-separated values.
+     * @throws InvalidArgumentException|PiquleException
      * @return array{string, string}
      */
     private function pair(): array

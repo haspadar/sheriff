@@ -37,8 +37,7 @@ interface Storage
     /**
      * Lists entries under the given location
      *
-     * @throws PiquleException
-     * @throws UnexpectedValueException
+     * @throws PiquleException|UnexpectedValueException
      * @return iterable<string> relative entry paths
      */
     public function entries(string $location): iterable;

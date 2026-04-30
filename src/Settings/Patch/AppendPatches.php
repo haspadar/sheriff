@@ -33,8 +33,7 @@ final readonly class AppendPatches
     /**
      * Returns the list of Patch objects derived from the section.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      * @return list<Patch>
      */
     public function patches(): array
@@ -52,8 +51,7 @@ final readonly class AppendPatches
     /**
      * Builds a single append patch matching the runtime type of the payload.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      */
     private function patchOf(string $key, mixed $raw): Patch
     {

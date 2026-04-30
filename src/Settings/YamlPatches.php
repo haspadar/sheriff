@@ -34,8 +34,7 @@ final readonly class YamlPatches
     /**
      * Returns every Patch declared by the yaml file in declaration order.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      * @return list<Patch>
      */
     public function patches(): array

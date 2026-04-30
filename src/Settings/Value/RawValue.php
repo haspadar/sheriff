@@ -28,8 +28,7 @@ final readonly class RawValue
     /**
      * Returns the Value implementation matching the payload's runtime type.
      *
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      */
     public function value(): Value
     {
@@ -52,8 +51,7 @@ final readonly class RawValue
      * Wraps an array payload as a ListValue or TreeValue depending on its shape.
      *
      * @param array<int|string, mixed> $items
-     * @throws PiquleException
-     * @throws TypeError
+     * @throws PiquleException|TypeError
      */
     private function fromArray(array $items): Value
     {

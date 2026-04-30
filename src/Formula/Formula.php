@@ -15,8 +15,7 @@ interface Formula
     /**
      * Evaluates the expression and returns the resulting string
      *
-     * @throws InvalidArgumentException
-     * @throws PiquleException
+     * @throws InvalidArgumentException|PiquleException
      */
     public function result(): string;
 }

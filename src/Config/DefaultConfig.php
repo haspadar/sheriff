@@ -82,13 +82,13 @@ final readonly class DefaultConfig implements Config
      */
     private function resolve(array $base): array
     {
-        /** @var list<string> $source */
-        $source = $this->source !== [] ? $this->source : ($base['php.src'] ?? []);
+        /** @var list<string> $resolvedSource */
+        $resolvedSource = $this->source !== [] ? $this->source : ($base['php.src'] ?? []);
 
-        /** @var list<string> $infra */
-        $infra = $this->infra !== [] ? $this->infra : ($base['infra.exclude'] ?? []);
+        /** @var list<string> $resolvedInfra */
+        $resolvedInfra = $this->infra !== [] ? $this->infra : ($base['infra.exclude'] ?? []);
 
-        return [$source, $infra];
+        return [$resolvedSource, $resolvedInfra];
     }
 
     /**
@@ -138,36 +138,36 @@ final readonly class DefaultConfig implements Config
     /**
      * Reads dynamic defaults derived from composer.json paths and directory lists.
      *
-     * @param list<string> $source Project source directories
-     * @param list<string> $infra Directories skipped by infrastructure linters
+     * @param list<string> $sources Project source directories
+     * @param list<string> $excludes Directories skipped by infrastructure linters
      * @return array<string, scalar|list<scalar>>
      */
-    private function dynamic(array $source, array $infra): array
+    private function dynamic(array $sources, array $excludes): array
     {
-        $projectIncludes = (new ProjectDirs($source))->toList();
+        $projectIncludes = (new ProjectDirs($sources))->toList();
 
         return [
-            'php.src' => $source,
-            'infra.exclude' => $infra,
-            'hadolint.ignore' => $infra,
+            'php.src' => $sources,
+            'infra.exclude' => $excludes,
+            'hadolint.ignore' => $excludes,
             'jsonlint.patterns' => array_merge(
                 ['**/*.json', '**/*.json5', '**/*.jsonc'],
-                (new NegatedGlobDirs($infra))->toList(),
+                (new NegatedGlobDirs($excludes))->toList(),
             ),
-            'markdownlint.ignores' => (new TrailingGlobDirs($infra))->toList(),
+            'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
             'phpcs.files' => $projectIncludes,
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),
-            'phpmd.paths' => $source,
+            'phpmd.paths' => $sources,
             'phpmetrics.includes' => $projectIncludes,
             'phpstan.paths' => $projectIncludes,
             'phpunit.source.include' => $projectIncludes,
             'psalm.project.directories' => $projectIncludes,
             'infection.source.directories' => $projectIncludes,
-            'shellcheck.ignore_dirs' => $infra,
-            'sonar.sources' => $source,
-            'typos.exclude' => (new TrailingSlashDirs($infra))->toList(),
+            'shellcheck.ignore_dirs' => $excludes,
+            'sonar.sources' => $sources,
+            'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),
             'yamllint.ignore' => array_merge(
-                (new TrailingGlobDirs($infra))->toList(),
+                (new TrailingGlobDirs($excludes))->toList(),
                 ['.piqule/**/html/**', '.piqule/**/coverage-report/**'],
             ),
         ];

@@ -71,16 +71,16 @@ final readonly class ParallelRun implements Runnable
     /**
      * Launches a batch of checks and collects results.
      *
-     * @param list<Check> $checks Checks to launch together
+     * @param list<Check> $batch Checks to launch together
      * @param int $offset Ordinal offset of the first check in the overall run
      * @param CheckReport $report Reporter used to announce starts and outcomes
      * @throws PiquleException
      */
-    private function batch(array $checks, int $offset, CheckReport $report): bool
+    private function batch(array $batch, int $offset, CheckReport $report): bool
     {
         $handles = [];
 
-        foreach ($checks as $index => $check) {
+        foreach ($batch as $index => $check) {
             $handle = $this->spawn($check);
 
             if ($handle === false) {

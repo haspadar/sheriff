@@ -38,10 +38,10 @@ final readonly class MergedTree
         return new TreeValue($entries);
     }
 
-    private function resolved(Value $base, Value $override): Value
+    private function resolved(Value $first, Value $second): Value
     {
-        return $base instanceof TreeValue && $override instanceof TreeValue
-            ? (new self($base, $override))->value()
-            : $override;
+        return $first instanceof TreeValue && $second instanceof TreeValue
+            ? (new self($first, $second))->value()
+            : $second;
     }
 }

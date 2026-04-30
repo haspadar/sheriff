@@ -1,4 +1,4 @@
-name: Build Piqule Infra Image
+name: Build Snob Infra Image
 
 on:
   push:

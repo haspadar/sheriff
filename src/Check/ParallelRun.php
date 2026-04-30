@@ -83,7 +83,7 @@ final readonly class ParallelRun implements Runnable
         foreach ($batch as $index => $check) {
             $handle = $this->spawn($check);
 
-            if ($handle === false) {
+            if (!is_array($handle)) {
                 throw new PiquleException("Failed to start: {$check->name()}");
             }
 
@@ -136,7 +136,7 @@ final readonly class ParallelRun implements Runnable
         $stdout = tmpfile();
         $stderr = tmpfile();
 
-        if ($stdout === false || $stderr === false) {
+        if (!is_resource($stdout) || !is_resource($stderr)) {
             return false;
         }
 

@@ -37,7 +37,7 @@ final readonly class DiskStorage implements Storage
 
         $contents = file_get_contents($path);
 
-        if ($contents === false) {
+        if (!is_string($contents)) {
             throw new PiquleException("Unable to read location: $location");
         }
 
@@ -96,7 +96,7 @@ final readonly class DiskStorage implements Storage
             throw new PiquleException("Unable to create directory: $directory");
         }
 
-        if (file_put_contents($path, $file->contents()) === false) {
+        if (!is_int(file_put_contents($path, $file->contents()))) {
             throw new PiquleException("Unable to write location: $location");
         }
 
@@ -118,7 +118,7 @@ final readonly class DiskStorage implements Storage
 
         $perms = fileperms($path);
 
-        if ($perms === false) {
+        if (!is_int($perms)) {
             throw new PiquleException("Unable to read permissions: $location");
         }
 

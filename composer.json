@@ -4,6 +4,7 @@
     "type": "library",
     "license": "MIT",
     "bin": [
+        "bin/snob",
         "bin/piqule"
     ],
     "autoload": {

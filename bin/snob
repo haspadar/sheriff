@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PIQULE_COMMAND_NAME=snob exec "$(dirname "$0")/piqule" "$@"

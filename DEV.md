@@ -362,7 +362,7 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `ci.piqule_bin` | `"vendor/bin/piqule"` | Path to piqule binary in CI |
+| `ci.piqule_bin` | `"vendor/bin/snob"` | Path to Snob binary in CI |
 | `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
 
 ### Coverage

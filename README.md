@@ -1,4 +1,4 @@
-# PHP Quality Laws
+# Snob
 
 [![CI](https://github.com/haspadar/piqule/actions/workflows/piqule.yml/badge.svg)](https://github.com/haspadar/piqule/actions/workflows/piqule.yml)
 [![Coverage](https://codecov.io/gh/haspadar/piqule/branch/main/graph/badge.svg)](https://codecov.io/gh/haspadar/piqule)
@@ -7,7 +7,7 @@
 [![Psalm](https://img.shields.io/badge/psalm-level%201-brightgreen)](https://psalm.dev)
 [![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/haspadar/piqule?utm_source=oss&utm_medium=github&utm_campaign=haspadar%2Fpiqule&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
-Quality checks for PHP projects.
+Picky standards for PHP projects.
 
 Installed via Composer.  
 Executed locally, in Git hooks, or in CI.

@@ -1,6 +1,6 @@
 {
     "name": "haspadar/piqule",
-    "description": "Quality checks for PHP projects",
+    "description": "Picky standards for PHP projects",
     "type": "library",
     "license": "MIT",
     "bin": [

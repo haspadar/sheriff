@@ -1,4 +1,4 @@
-# Release Drafter configuration for Piqule
+# Release Drafter configuration for Snob
 # Versioning is driven strictly by PR labels
 
 name-template: "v$RESOLVED_VERSION"

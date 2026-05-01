@@ -6,11 +6,12 @@ set -euo pipefail
 # ------------------------------------------------------------
 ensure_project_root() {
   if [ ! -d ".piqule" ]; then
-    echo "Error: run piqule from project root ('.piqule' directory not found)"
+    echo "Error: run ${PROGRAM} from project root ('.piqule' directory not found)"
     exit 1
   fi
 }
 
+PROGRAM="${PIQULE_COMMAND_NAME:-$(basename "$0")}"
 COMMAND="${1:-}"
 shift || true
 
@@ -32,7 +33,7 @@ case "$COMMAND" in
     "$(dirname "$0")/piqule-agent-rules-install" "$@"
     ;;
   *)
-    echo "Usage: piqule [sync|check|fix|agent-rules-install]"
+    echo "Usage: ${PROGRAM} [sync|check|fix|agent-rules-install]"
     exit 1
     ;;
 esac

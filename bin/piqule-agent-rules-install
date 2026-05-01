@@ -54,7 +54,7 @@ try {
     if ($touched === 0) {
         $output->info(
             'No agent files found (CLAUDE.md, AGENTS.md). '
-            . 'Create one of these manually and re-run `piqule agent-rules-install`.',
+            . 'Create one of these manually and re-run `snob agent-rules-install`.',
         );
     }
 } catch (PiquleException $e) {

@@ -30,7 +30,7 @@ try {
         }
 
         $output->info(sprintf(
-            '[AGENT] %s has no piqule section. Run: vendor/bin/piqule agent-rules-install',
+            '[AGENT] %s has no piqule section. Run: vendor/bin/snob agent-rules-install',
             $name,
         ));
     }

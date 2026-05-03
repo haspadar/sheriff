@@ -18,6 +18,7 @@ defaults:
   check.parallel: true
   check.slow: ["infection", "sonar"]
 
+  ci.sheriff_bin: "vendor/bin/sheriff"
   ci.piqule_bin: "vendor/bin/sheriff"
   ci.pr.max_lines_changed: 250
 

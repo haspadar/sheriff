@@ -3,7 +3,7 @@ override:
   phpmetrics.coupling.max_efferent: 25
   php.versions: ["8.3", "8.4", "8.5"]
   ci.pr.max_lines_changed: 2000
-  ci.piqule_bin: bin/sheriff
+  ci.sheriff_bin: bin/sheriff
   sonar.organization: haspadar-org
   sonar.projectKey: haspadar_sheriff
   infection.min_msi: 80

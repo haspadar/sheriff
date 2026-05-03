@@ -364,7 +364,8 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `ci.piqule_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
+| `ci.sheriff_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
+| `ci.piqule_bin` | `"vendor/bin/sheriff"` | Legacy alias for `ci.sheriff_bin` |
 | `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
 
 ### Coverage

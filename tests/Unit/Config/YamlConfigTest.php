@@ -81,6 +81,18 @@ final class YamlConfigTest extends TestCase
     }
 
     #[Test]
+    public function returnsSheriffBinaryWhenLegacyPiquleBinaryIsOverridden(): void
+    {
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin: bin/sheriff\n")->path() . '/.piqule.yaml';
+
+        self::assertSame(
+            ['bin/sheriff'],
+            (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin'),
+            'YamlConfig must map the legacy CI binary override to the Sheriff key',
+        );
+    }
+
+    #[Test]
     public function returnsAppendedValuesWhenAppendSectionPresent(): void
     {
         $path = $this->folder->withFile('.piqule.yaml', "append:\n    phpstan.neon_includes:\n        - ../../rules.neon\n")->path() . '/.piqule.yaml';

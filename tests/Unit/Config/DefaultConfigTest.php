@@ -66,8 +66,18 @@ final class DefaultConfigTest extends TestCase
     {
         self::assertSame(
             ['vendor/bin/sheriff'],
-            (new DefaultConfig())->list('ci.piqule_bin'),
+            (new DefaultConfig())->list('ci.sheriff_bin'),
             'CI must run the Composer-installed sheriff binary by default',
+        );
+    }
+
+    #[Test]
+    public function returnsLegacyVendorBinaryPathWhenPiquleKeyIsUsed(): void
+    {
+        self::assertSame(
+            ['vendor/bin/sheriff'],
+            (new DefaultConfig())->list('ci.piqule_bin'),
+            'legacy CI key must keep resolving to the Composer-installed sheriff binary',
         );
     }
 

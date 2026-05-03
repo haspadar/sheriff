@@ -216,6 +216,7 @@ Runtime image is selected via:
 - `PIQULE_INFRA_IMAGE` environment variable (legacy fallback)
 
 Execution is delegated to `.piqule/_docker.sh`.
+During the Sheriff package rename, generated scripts fall back to the last published `piqule-infra` image only when the default Sheriff image cannot be pulled and no image override was provided.
 
 ---
 

@@ -65,7 +65,7 @@ Everything under `templates/once/` is copied relative to project root only if th
 
 Run:
 
-`bin/piqule sync`
+`bin/sheriff sync`
 
 Flow:
 
@@ -88,9 +88,9 @@ Note:
 
 ## Template Pinning
 
-`bin/piqule-pin` computes a combined MD5 checksum of all files in `templates/always/` and `templates/git/` and writes it to `.piqule/templates.md5`. Called automatically by `bin/piqule sync`.
+`bin/sheriff-pin` computes a combined MD5 checksum of all files in `templates/always/` and `templates/git/` and writes it to `.piqule/templates.md5`. Called automatically by `bin/sheriff sync`.
 
-`bin/piqule-verify` compares the current checksum against the pinned value. If they differ, it prints a warning and suggests running `bin/piqule sync`. Called automatically by `bin/piqule check` and `bin/piqule fix`. Silent if `.piqule/templates.md5` does not exist.
+`bin/sheriff-verify` compares the current checksum against the pinned value. If they differ, it prints a warning and suggests running `bin/sheriff sync`. Called automatically by `bin/sheriff check` and `bin/sheriff fix`. Silent if `.piqule/templates.md5` does not exist.
 
 ---
 
@@ -212,7 +212,8 @@ If the file does not exist, defaults are used.
 Runtime image is selected via:
 
 - `.piqule.yaml` → `docker.image`
-- `PIQULE_INFRA_IMAGE` environment variable (highest priority)
+- `SHERIFF_INFRA_IMAGE` environment variable (highest priority)
+- `PIQULE_INFRA_IMAGE` environment variable (legacy fallback)
 
 Execution is delegated to `.piqule/_docker.sh`.
 
@@ -223,7 +224,7 @@ Execution is delegated to `.piqule/_docker.sh`.
 Build:
 
 ```bash
-docker buildx build -t ghcr.io/haspadar/piqule-infra:local --load .
+docker buildx build -t ghcr.io/haspadar/sheriff-infra:local --load .
 ```
 
 Run shell:
@@ -233,7 +234,7 @@ docker run --rm -it \
   --entrypoint bash \
   -v "$PWD:/project" \
   -w /project \
-  ghcr.io/haspadar/piqule-infra:local
+  ghcr.io/haspadar/sheriff-infra:local
 ```
 
 ---
@@ -272,7 +273,7 @@ For a full description of every class and the decorator pattern, see [docs/archi
 3. Register the new key type in `src/Config/OverrideConfig.php` (`OverrideMap` PHPDoc)
 4. Add the tool name to `$checks` in `bin/piqule-check`
 5. Add `'<tool>.cli' => true` to `DefaultConfig` and `'<tool>.cli'?: bool` to `OverrideMap` in `OverrideConfig`
-6. Run `vendor/bin/piqule sync` to verify template rendering
+6. Run `vendor/bin/sheriff sync` to verify template rendering
 7. Write unit and integration tests
 
 ---
@@ -296,7 +297,7 @@ External services require credentials. They are split into two categories:
 - **Secrets** (`src/Secret/Secret.php`) — GitHub Secrets for CI. Verified via `gh secret list`. Output prefixed with `[SECRET]`.
 - **Environment variables** (`src/EnvVar/EnvVar.php`) — local env vars on the developer machine. Verified via `getenv()`. Output prefixed with `[ENV]`.
 
-`bin/piqule-tokens-check` verifies both. Runs automatically after `piqule sync`, `piqule check` and `piqule fix`.
+`bin/sheriff-tokens-check` verifies both. Runs automatically after `sheriff sync`, `sheriff check` and `sheriff fix`.
 
 If `gh` is not installed or not authenticated, only secret verification is skipped; env var checks still run.
 
@@ -362,7 +363,7 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `ci.piqule_bin` | `"vendor/bin/snob"` | Path to Snob binary in CI |
+| `ci.piqule_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
 | `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
 
 ### Coverage
@@ -392,7 +393,7 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `docker.image` | `"ghcr.io/haspadar/piqule-infra@sha256:..."` | Infra image for CI |
+| `docker.image` | `"ghcr.io/haspadar/sheriff-infra@sha256:..."` | Infra image for CI |
 
 ### actionlint
 

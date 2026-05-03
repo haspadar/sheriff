@@ -31,10 +31,12 @@ try {
     $projectRoot = getcwd()
         ?: throw new PiquleException('Cannot determine current working directory');
 
-    $installPath = Composer\InstalledVersions::getInstallPath('haspadar/piqule');
+    $installPath = Composer\InstalledVersions::isInstalled('haspadar/sheriff')
+        ? Composer\InstalledVersions::getInstallPath('haspadar/sheriff')
+        : Composer\InstalledVersions::getInstallPath('haspadar/piqule');
 
     if ($installPath === null || $installPath === '') {
-        throw new PiquleException('Cannot determine piqule install path');
+        throw new PiquleException('Cannot determine Sheriff install path');
     }
 
     $libraryRoot = $installPath;

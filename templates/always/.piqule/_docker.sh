@@ -8,7 +8,7 @@ fi
 
 PROJECT_ROOT="$(pwd)"
 
-IMAGE="${PIQULE_INFRA_IMAGE:-<< config(docker.image) >>}"
+IMAGE="${SHERIFF_INFRA_IMAGE:-${PIQULE_INFRA_IMAGE:-<< config(docker.image) >>}}"
 
 docker run --rm \
   --user "$(id -u):$(id -g)" \

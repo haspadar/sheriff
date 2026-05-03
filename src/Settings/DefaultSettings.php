@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Settings backed by the built-in defaults declared in piqule's config.yaml.
+ * Settings backed by the built-in defaults declared in Sheriff's config.yaml.
  *
  * Example:
  *

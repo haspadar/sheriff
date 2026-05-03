@@ -1,4 +1,4 @@
-name: Build Snob Infra Image
+name: Build Sheriff Infra Image
 
 on:
   push:
@@ -50,7 +50,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/piqule-infra:latest
+            ghcr.io/${{ github.repository_owner }}/sheriff-infra:latest
 
       # ------------------------------------------------------------
       # Update pinned digest in config template when image changes

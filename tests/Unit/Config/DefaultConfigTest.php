@@ -62,12 +62,12 @@ final class DefaultConfigTest extends TestCase
     }
 
     #[Test]
-    public function returnsVendorBinaryPathWhenSnobRunsInCi(): void
+    public function returnsVendorBinaryPathWhenSheriffRunsInCi(): void
     {
         self::assertSame(
-            ['vendor/bin/snob'],
+            ['vendor/bin/sheriff'],
             (new DefaultConfig())->list('ci.piqule_bin'),
-            'CI must run the Composer-installed snob binary by default',
+            'CI must run the Composer-installed sheriff binary by default',
         );
     }
 

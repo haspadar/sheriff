@@ -40,7 +40,7 @@ final class AgentRulesCheckTest extends TestCase
 
         try {
             self::assertStringContainsString(
-                'snob agent-rules-install',
+                'sheriff agent-rules-install',
                 $this->runStdout($folder->path()),
                 'hint to run agent-rules-install must be printed when CLAUDE.md has no piqule marker',
             );

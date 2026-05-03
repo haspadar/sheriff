@@ -33,11 +33,11 @@ if [ -f "$COVERAGE_FILE" ]; then
   sed "s|${ESCAPED_PWD}/||g" "$COVERAGE_FILE" > "${COVERAGE_FILE}.tmp" \
     && mv "${COVERAGE_FILE}.tmp" "$COVERAGE_FILE"
 else
-  printf '\033[33m[TIP] Run piqule check phpunit first to include coverage in SonarCloud analysis\033[0m\n'
+  printf '\033[33m[TIP] Run sheriff check phpunit first to include coverage in SonarCloud analysis\033[0m\n'
 fi
 
 PROJECT_ROOT="$(pwd)"
-IMAGE="${PIQULE_INFRA_IMAGE:-<< config(docker.image) >>}"
+IMAGE="${SHERIFF_INFRA_IMAGE:-${PIQULE_INFRA_IMAGE:-<< config(docker.image) >>}}"
 
 docker run --rm \
   --user "$(id -u):$(id -g)" \

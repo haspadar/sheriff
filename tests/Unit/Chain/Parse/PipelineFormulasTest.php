@@ -63,6 +63,24 @@ final class PipelineFormulasTest extends TestCase
     }
 
     #[Test]
+    public function keepsSeparatorsInsideSingleQuotedArguments(): void
+    {
+        self::assertSame(
+            'src,tests',
+            (new PipelineOp(
+                (new PipelineFormulas("ListText(phpstan.paths)|Joined(',')"))->formulas(),
+                self::settings([
+                    'phpstan.paths' => new ListValue([
+                        new StringValue('src'),
+                        new StringValue('tests'),
+                    ]),
+                ]),
+            ))->rendered(),
+            'PipelineFormulas must not split separators inside single-quoted arguments',
+        );
+    }
+
+    #[Test]
     public function failsWhenFormulaNameIsUnknown(): void
     {
         $this->expectException(SheriffException::class);

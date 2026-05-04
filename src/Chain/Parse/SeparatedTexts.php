@@ -7,7 +7,7 @@ namespace Haspadar\Sheriff\Chain\Parse;
 use Haspadar\Sheriff\SheriffException;
 
 /**
- * Text split by a separator that is ignored inside double-quoted fragments.
+ * Text split by a separator that is ignored inside quoted fragments.
  *
  * Example:
  *
@@ -46,7 +46,7 @@ final readonly class SeparatedTexts
     private function pattern(): string
     {
         return sprintf(
-            '/%s(?=(?:[^"]*"[^"]*")*[^"]*$)/',
+            '/%s(?=(?:[^\'"\\\\]|\\\\.|"(?:[^"\\\\]|\\\\.)*"|\'(?:[^\'\\\\]|\\\\.)*\')*$)/',
             preg_quote($this->separator, '/'),
         );
     }

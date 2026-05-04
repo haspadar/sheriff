@@ -33,7 +33,7 @@ defaults:
   coderabbit.cloud: true
   coderabbit.cli: false
 
-  docker.image: "ghcr.io/haspadar/sheriff-infra@sha256:f1a41bcaab12ca89e65ecbf1cb42eddd400b0dac89f7b4d7a190ade6be089799"
+  docker.image: "ghcr.io/haspadar/sheriff-infra@sha256:88c76164614b7a8eaa26db74470966458389c237bbf2d6e819ac222cd2ac3762"
 
   actionlint.cli: true
 

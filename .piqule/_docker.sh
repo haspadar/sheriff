@@ -7,7 +7,7 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 PROJECT_ROOT="$(pwd)"
-DEFAULT_IMAGE="ghcr.io/haspadar/sheriff-infra@sha256:f1a41bcaab12ca89e65ecbf1cb42eddd400b0dac89f7b4d7a190ade6be089799"
+DEFAULT_IMAGE="ghcr.io/haspadar/sheriff-infra@sha256:88c76164614b7a8eaa26db74470966458389c237bbf2d6e819ac222cd2ac3762"
 LEGACY_IMAGE="ghcr.io/haspadar/piqule-infra@sha256:f1a41bcaab12ca89e65ecbf1cb42eddd400b0dac89f7b4d7a190ade6be089799"
 IMAGE="${SHERIFF_INFRA_IMAGE:-${PIQULE_INFRA_IMAGE:-$DEFAULT_IMAGE}}"
 

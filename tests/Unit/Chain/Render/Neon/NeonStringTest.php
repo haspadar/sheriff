@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Render\Neon\NeonString;
-use Haspadar\Piqule\Settings\Value\StringValue;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonString;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
 /**
  * A named quality check with a shell command

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Patch;
+namespace Haspadar\Sheriff\Settings\Patch;
 
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\TreeValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
 use TypeError;
 

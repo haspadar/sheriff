@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\File;
+namespace Haspadar\Sheriff\Tests\Unit\File;
 
-use Haspadar\Piqule\Config\Config;
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\Config\OverrideConfig;
-use Haspadar\Piqule\Envs\EmptyEnvs;
-use Haspadar\Piqule\File\ConfiguredFile;
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\Formula\Action\Action;
-use Haspadar\Piqule\Formula\Actions\FormulaActions;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Constraint\Files\HasFileContents;
-use Haspadar\Piqule\Tests\Constraint\HasFormulaError;
+use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\Config\OverrideConfig;
+use Haspadar\Sheriff\Envs\EmptyEnvs;
+use Haspadar\Sheriff\File\ConfiguredFile;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\Formula\Action\Action;
+use Haspadar\Sheriff\Formula\Actions\FormulaActions;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFileContents;
+use Haspadar\Sheriff\Tests\Constraint\HasFormulaError;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -119,7 +119,7 @@ final class ConfiguredFileTest extends TestCase
             ['php.versions' => ['8.3', '8.4']],
         );
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new ConfiguredFile(
             new TextFile(
@@ -133,7 +133,7 @@ final class ConfiguredFileTest extends TestCase
     #[Test]
     public function throwsWhenFirstActionReceivesArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new ConfiguredFile(
             new TextFile(
@@ -231,7 +231,7 @@ final class ConfiguredFileTest extends TestCase
     #[Test]
     public function throwsWhenIfNotEmptyReceivesArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Action "if_not_empty" does not accept arguments');
 
         (new ConfiguredFile(
@@ -246,7 +246,7 @@ final class ConfiguredFileTest extends TestCase
     #[Test]
     public function throwsWhenIfEmptyReceivesArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Action "if_empty" does not accept arguments');
 
         (new ConfiguredFile(
@@ -261,7 +261,7 @@ final class ConfiguredFileTest extends TestCase
     #[Test]
     public function throwsWhenShellQuoteReceivesArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Action "shell_quote" does not accept arguments');
 
         (new ConfiguredFile(
@@ -276,7 +276,7 @@ final class ConfiguredFileTest extends TestCase
     #[Test]
     public function throwsWhenJsonEscapeReceivesArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Action "json_escape" does not accept arguments');
 
         (new ConfiguredFile(

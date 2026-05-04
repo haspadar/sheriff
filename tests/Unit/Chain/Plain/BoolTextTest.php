@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Plain;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Plain\BoolText;
-use Haspadar\Piqule\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Chain\Plain\BoolText;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

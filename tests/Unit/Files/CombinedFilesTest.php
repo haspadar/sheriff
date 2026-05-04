@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Files;
+namespace Haspadar\Sheriff\Tests\Unit\Files;
 
-use Haspadar\Piqule\Files\CombinedFiles;
-use Haspadar\Piqule\Files\TextFiles;
-use Haspadar\Piqule\Tests\Constraint\Files\HasFiles;
+use Haspadar\Sheriff\Files\CombinedFiles;
+use Haspadar\Sheriff\Files\TextFiles;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFiles;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -18,15 +18,15 @@ final class CombinedFilesTest extends TestCase
         self::assertThat(
             new CombinedFiles([
                 new TextFiles([
-                    'README.md' => 'Piqule',
+                    'README.md' => 'Sheriff',
                 ]),
                 new TextFiles([
-                    'config/app.ini' => 'name=piqule',
+                    'config/app.ini' => 'name=sheriff',
                 ]),
             ]),
             new HasFiles([
-                'README.md' => 'Piqule',
-                'config/app.ini' => 'name=piqule',
+                'README.md' => 'Sheriff',
+                'config/app.ini' => 'name=sheriff',
             ]),
             'CombinedFiles must expose all files from all provided sources',
         );

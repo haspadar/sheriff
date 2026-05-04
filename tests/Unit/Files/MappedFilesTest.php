@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Files;
+namespace Haspadar\Sheriff\Tests\Unit\Files;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\File\ReplacedFile;
-use Haspadar\Piqule\Files\MappedFiles;
-use Haspadar\Piqule\Files\TextFiles;
-use Haspadar\Piqule\Tests\Constraint\Files\HasFiles;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\File\ReplacedFile;
+use Haspadar\Sheriff\Files\MappedFiles;
+use Haspadar\Sheriff\Files\TextFiles;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFiles;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -26,12 +26,12 @@ final class MappedFilesTest extends TestCase
                 fn(File $file) => new ReplacedFile(
                     $file,
                     '{{name}}',
-                    'Piqule',
+                    'Sheriff',
                 ),
             ),
             new HasFiles([
-                'README.md' => 'Hello, Piqule',
-                'config/app.ini' => 'name=Piqule',
+                'README.md' => 'Hello, Sheriff',
+                'config/app.ini' => 'name=Sheriff',
             ]),
             'MappedFiles must apply the mapping function to every file in the source',
         );

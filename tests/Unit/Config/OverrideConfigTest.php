@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\OverrideConfig;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Config\OverrideConfig;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -79,7 +79,7 @@ final class OverrideConfigTest extends TestCase
     #[Test]
     public function throwsWhenListCalledForUndeclaredKey(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new OverrideConfig(
             new FakeConfig([]),
@@ -103,7 +103,7 @@ final class OverrideConfigTest extends TestCase
     #[Test]
     public function throwsWhenYamlOverrideIsAssociative(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new OverrideConfig(
             new FakeConfig(['hadolint.override.error_yaml' => []]),
@@ -114,7 +114,7 @@ final class OverrideConfigTest extends TestCase
     #[Test]
     public function throwsWhenMutationTimeoutContainsObject(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new OverrideConfig(
             new FakeConfig(['infection.timeout' => []]),
@@ -125,7 +125,7 @@ final class OverrideConfigTest extends TestCase
     #[Test]
     public function throwsWhenOverrideIsObject(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new OverrideConfig(
             new FakeConfig(['jsonlint.mode' => []]),

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Secret;
+namespace Haspadar\Sheriff\Secret;
 
-use Haspadar\Piqule\Config\Config;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * GitHub Secret required by a CI service
@@ -16,6 +16,6 @@ interface Secret
 
     public function url(string $org): string;
 
-    /** @throws PiquleException */
+    /** @throws SheriffException */
     public function enabled(Config $config): bool;
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Map;
+namespace Haspadar\Sheriff\Chain\Map;
 
-use Haspadar\Piqule\Chain\Listed;
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Chain\Listed;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -43,7 +43,7 @@ final readonly class EachFormatted implements Listed
     #[Override]
     public function rendered(): string
     {
-        throw new PiquleException(
+        throw new SheriffException(
             'EachFormatted cannot render directly — collapse it via a Reduced op such as Joined',
         );
     }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Output;
+namespace Haspadar\Sheriff\Tests\Fake\Output;
 
-use Haspadar\Piqule\Output\Output;
+use Haspadar\Sheriff\Output\Output;
 
 final class FakeOutput implements Output
 {

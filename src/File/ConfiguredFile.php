@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\File;
+namespace Haspadar\Sheriff\File;
 
-use Haspadar\Piqule\Formula\Action\Action;
-use Haspadar\Piqule\Formula\Actions\ParsedActions;
-use Haspadar\Piqule\Formula\ExecutedFormula;
-use Haspadar\Piqule\Formula\NormalizedFormula;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Action\Action;
+use Haspadar\Sheriff\Formula\Actions\ParsedActions;
+use Haspadar\Sheriff\Formula\ExecutedFormula;
+use Haspadar\Sheriff\Formula\NormalizedFormula;
+use Haspadar\Sheriff\SheriffException;
 use InvalidArgumentException;
 use Override;
 
@@ -50,7 +50,7 @@ final readonly class ConfiguredFile implements File
     /**
      * Returns the result of evaluating a single DSL expression against the config.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function replaced(string $expression): string
     {
@@ -61,8 +61,8 @@ final readonly class ConfiguredFile implements File
                     $this->actions,
                 ),
             ))->result();
-        } catch (InvalidArgumentException | PiquleException $e) {
-            throw new PiquleException(
+        } catch (InvalidArgumentException | SheriffException $e) {
+            throw new SheriffException(
                 sprintf(
                     'File "%s", formula "%s": %s',
                     $this->name(),

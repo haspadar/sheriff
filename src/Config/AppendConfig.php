@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -37,7 +37,7 @@ final readonly class AppendConfig implements Config
     public function list(string $name): array
     {
         if (!$this->defaults->has($name)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Unknown config key "%s"', $name),
             );
         }
@@ -49,7 +49,7 @@ final readonly class AppendConfig implements Config
         $items = $this->appends[$name];
 
         if (!is_array($items) || !array_is_list($items)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Append "%s" must be a list<scalar>', $name),
             );
         }
@@ -58,7 +58,7 @@ final readonly class AppendConfig implements Config
 
         foreach ($items as $item) {
             if (!is_scalar($item)) {
-                throw new PiquleException(
+                throw new SheriffException(
                     sprintf('Append "%s" must contain only scalars', $name),
                 );
             }

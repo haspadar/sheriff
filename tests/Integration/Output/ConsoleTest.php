@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Output;
+namespace Haspadar\Sheriff\Tests\Integration\Output;
 
-use Haspadar\Piqule\Tests\Fixture\ConsoleProcess;
+use Haspadar\Sheriff\Tests\Fixture\ConsoleProcess;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Storage;
+namespace Haspadar\Sheriff\Tests\Constraint\Storage;
 
-use Haspadar\Piqule\Tests\Fake\Storage\Reaction\FakeStorageReaction;
+use Haspadar\Sheriff\Tests\Fake\Storage\Reaction\FakeStorageReaction;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class ReactionWasSilent extends Constraint

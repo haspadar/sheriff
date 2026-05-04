@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-# BEGIN piqule
-[ -f "$(dirname "$0")/pre-push-piqule" ] && "$(dirname "$0")/pre-push-piqule" "$@"
-# END piqule
+# BEGIN sheriff
+[ -f "$(dirname "$0")/pre-push-sheriff" ] && "$(dirname "$0")/pre-push-sheriff" "$@"
+# END sheriff

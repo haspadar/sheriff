@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * Executes a single check and captures its result.
@@ -22,7 +22,7 @@ final readonly class CheckRun
     /**
      * Runs the check command and returns its result.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     public function result(): CheckResult
     {

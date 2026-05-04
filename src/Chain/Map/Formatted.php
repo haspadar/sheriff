@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Map;
+namespace Haspadar\Sheriff\Chain\Map;
 
-use Haspadar\Piqule\Chain\Mapped;
-use Haspadar\Piqule\Chain\Op;
+use Haspadar\Sheriff\Chain\Mapped;
+use Haspadar\Sheriff\Chain\Op;
 use Override;
 
 /**

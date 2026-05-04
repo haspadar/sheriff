@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings;
+namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Value\RawValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Settings\Value\RawValue;
+use Haspadar\Sheriff\Settings\Value\Value;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use stdClass;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -31,7 +31,7 @@ final readonly class DefaultSettings implements Settings
      * @param string $path Filesystem path to the config.yaml that declares defaults
      */
     public function __construct(
-        private string $path = __DIR__ . '/../../templates/always/.piqule/config.yaml',
+        private string $path = __DIR__ . '/../../templates/always/.sheriff/config.yaml',
     ) {
         $this->cache = new stdClass();
     }
@@ -46,7 +46,7 @@ final readonly class DefaultSettings implements Settings
     public function value(string $name): Value
     {
         if (!$this->has($name)) {
-            throw new PiquleException(sprintf('Unknown config key "%s"', $name));
+            throw new SheriffException(sprintf('Unknown config key "%s"', $name));
         }
 
         return (new RawValue($this->defaults()[$name]))->value();
@@ -55,7 +55,7 @@ final readonly class DefaultSettings implements Settings
     /**
      * Parses the YAML file and caches the defaults map.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, mixed>
      */
     private function defaults(): array
@@ -70,7 +70,7 @@ final readonly class DefaultSettings implements Settings
         try {
             $yaml = Yaml::parseFile($this->path);
         } catch (ParseException $e) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to parse config "%s": %s', $this->path, $e->getMessage()),
                 0,
                 $e,
@@ -78,7 +78,7 @@ final readonly class DefaultSettings implements Settings
         }
 
         if (!is_array($yaml) || !array_key_exists('defaults', $yaml) || !is_array($yaml['defaults'])) {
-            throw new PiquleException('Missing "defaults" section in config.yaml');
+            throw new SheriffException('Missing "defaults" section in config.yaml');
         }
 
         /** @var array<string, mixed> $defaults */

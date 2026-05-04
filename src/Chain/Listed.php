@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain;
+namespace Haspadar\Sheriff\Chain;
 
 /**
  * Marker for chain ops that expose an ordered list of inner ops.
@@ -10,7 +10,7 @@ namespace Haspadar\Piqule\Chain;
  * Implementations carry a list of Op objects between pipeline stages, so map
  * and reduce operations can transform or fold the parts before rendering.
  * Calling rendered() directly on a Listed is a misuse: implementations are
- * expected to throw PiquleException, since collapsing parts into a string
+ * expected to throw SheriffException, since collapsing parts into a string
  * is the job of an explicit Reduced step (typically Joined) further down
  * the pipeline.
  */

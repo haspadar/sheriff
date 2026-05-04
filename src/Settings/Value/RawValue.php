@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Value;
+namespace Haspadar\Sheriff\Settings\Value;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use TypeError;
 
 /**
@@ -28,12 +28,12 @@ final readonly class RawValue
     /**
      * Returns the Value implementation matching the payload's runtime type.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      */
     public function value(): Value
     {
         return match (true) {
-            $this->raw === null => throw new PiquleException(
+            $this->raw === null => throw new SheriffException(
                 'Null config values are not supported; declare an explicit default',
             ),
             is_bool($this->raw) => new BoolValue($this->raw),
@@ -51,7 +51,7 @@ final readonly class RawValue
      * Wraps an array payload as a ListValue or TreeValue depending on its shape.
      *
      * @param array<int|string, mixed> $items
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      */
     private function fromArray(array $items): Value
     {

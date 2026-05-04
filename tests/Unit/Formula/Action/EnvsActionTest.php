@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Action;
 
-use Haspadar\Piqule\Envs\EmptyEnvs;
-use Haspadar\Piqule\Formula\Action\EnvsAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Tests\Constraint\Formula\Args\HasArgsValues;
-use Haspadar\Piqule\Tests\Fake\Envs\FakeEnvs;
+use Haspadar\Sheriff\Envs\EmptyEnvs;
+use Haspadar\Sheriff\Formula\Action\EnvsAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Tests\Constraint\Formula\Args\HasArgsValues;
+use Haspadar\Sheriff\Tests\Fake\Envs\FakeEnvs;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

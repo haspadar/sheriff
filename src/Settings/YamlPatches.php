@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings;
+namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch\AppendPatches;
-use Haspadar\Piqule\Settings\Patch\OverridePatches;
-use Haspadar\Piqule\Settings\Patch\RemovePatches;
+use Haspadar\Sheriff\Settings\Patch\AppendPatches;
+use Haspadar\Sheriff\Settings\Patch\OverridePatches;
+use Haspadar\Sheriff\Settings\Patch\RemovePatches;
+use Haspadar\Sheriff\SheriffException;
 use TypeError;
 
 /**
- * Loads `.piqule.yaml` and turns its operations into a Patch list.
+ * Loads `.sheriff.yaml` and turns its operations into a Patch list.
  *
  * Example:
  *
- *     (new YamlPatches('/path/to/.piqule.yaml'))->patches();
+ *     (new YamlPatches('/path/to/.sheriff.yaml'))->patches();
  */
 final readonly class YamlPatches
 {
@@ -24,7 +24,7 @@ final readonly class YamlPatches
     /**
      * Initializes with the path to the user yaml file.
      *
-     * @param string $path Filesystem path to the user `.piqule.yaml`
+     * @param string $path Filesystem path to the user `.sheriff.yaml`
      */
     public function __construct(string $path)
     {
@@ -34,7 +34,7 @@ final readonly class YamlPatches
     /**
      * Returns every Patch declared by the yaml file in declaration order.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      * @return list<Patch>
      */
     public function patches(): array

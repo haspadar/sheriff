@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Files;
+namespace Haspadar\Sheriff\Tests\Integration\Files;
 
-use Haspadar\Piqule\Files\FolderFiles;
-use Haspadar\Piqule\Storage\DiskStorage;
-use Haspadar\Piqule\Tests\Constraint\Files\HasFiles;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Files\FolderFiles;
+use Haspadar\Sheriff\Storage\DiskStorage;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFiles;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

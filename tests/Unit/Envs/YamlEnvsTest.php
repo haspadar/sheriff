@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Envs;
+namespace Haspadar\Sheriff\Tests\Unit\Envs;
 
-use Haspadar\Piqule\Envs\YamlEnvs;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Envs\YamlEnvs;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -28,9 +28,9 @@ final class YamlEnvsTest extends TestCase
     public function parsesEnvsSection(): void
     {
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  MY_VAR: \"echo hello\"\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['MY_VAR' => 'echo hello'],
@@ -43,9 +43,9 @@ final class YamlEnvsTest extends TestCase
     public function parsesMultipleEnvs(): void
     {
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  A: \"cmd-a\"\n  B: \"cmd-b\"\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['A' => 'cmd-a', 'B' => 'cmd-b'],
@@ -58,9 +58,9 @@ final class YamlEnvsTest extends TestCase
     public function returnsEmptyWhenNoEnvsSection(): void
     {
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n  phpstan.level: 8\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         self::assertSame(
             [],
@@ -72,12 +72,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenEnvsSectionIsNotMapping(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs: not-a-mapping\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }
@@ -85,12 +85,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenEnvsValueIsNotString(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  MY_VAR: 42\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }
@@ -98,12 +98,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenYamlIsMalformed(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  BROKEN: [\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }
@@ -111,12 +111,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenEnvsNameIsInvalid(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  1INVALID: \"echo hello\"\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }
@@ -124,12 +124,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenEnvsNameHasInvalidSuffix(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "envs:\n  VALID_START!: \"echo hello\"\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }
@@ -137,12 +137,12 @@ final class YamlEnvsTest extends TestCase
     #[Test]
     public function throwsWhenYamlRootIsNotMapping(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         $path = $this->folder->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "just a string\n",
-        )->path() . '/.piqule.yaml';
+        )->path() . '/.sheriff.yaml';
 
         (new YamlEnvs($path))->vars();
     }

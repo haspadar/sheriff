@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * A collection of quality checks
@@ -14,7 +14,7 @@ interface Checks
     /**
      * Returns all checks in this collection.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return iterable<Check>
      */
     public function all(): iterable;

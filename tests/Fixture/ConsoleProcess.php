@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fixture;
+namespace Haspadar\Sheriff\Tests\Fixture;
 
 final readonly class ConsoleProcess
 {
@@ -21,7 +21,7 @@ final readonly class ConsoleProcess
         }
 
         $script = sprintf(
-            'require %s; (new \Haspadar\Piqule\Output\Console())->%s(%s);',
+            'require %s; (new \Haspadar\Sheriff\Output\Console())->%s(%s);',
             var_export(dirname(__DIR__, 2) . '/vendor/autoload.php', true),
             $method,
             var_export($text, true),

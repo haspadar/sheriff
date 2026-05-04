@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula;
+namespace Haspadar\Sheriff\Formula;
 
-use Haspadar\Piqule\Formula\Actions\Actions;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Actions\Actions;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -35,7 +35,7 @@ final readonly class ExecutedFormula implements Formula
         return match (count($values)) {
             0 => '',
             1 => (string) $values[0],
-            default => throw new PiquleException(
+            default => throw new SheriffException(
                 'Formula must reduce to a single value, use join() to reduce list',
             ),
         };

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula\Actions;
+namespace Haspadar\Sheriff\Formula\Actions;
 
-use Haspadar\Piqule\Formula\Action\Action;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Action\Action;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -37,7 +37,7 @@ final readonly class ParsedActions implements Actions
             $name = $m[1];
 
             if (!array_key_exists($name, $this->actions)) {
-                throw new PiquleException(
+                throw new SheriffException(
                     sprintf('Unknown formula action "%s"', $name),
                 );
             }

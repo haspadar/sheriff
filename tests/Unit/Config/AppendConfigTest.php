@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\AppendConfig;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Config\AppendConfig;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -78,7 +78,7 @@ final class AppendConfigTest extends TestCase
     #[Test]
     public function throwsWhenListCalledForUndeclaredKey(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new AppendConfig(
             new FakeConfig([]),
@@ -108,7 +108,7 @@ final class AppendConfigTest extends TestCase
     #[Test]
     public function throwsWhenAppendValueIsAssociativeArray(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new AppendConfig(
             new FakeConfig(['phpstan.neon_includes' => []]),
@@ -119,7 +119,7 @@ final class AppendConfigTest extends TestCase
     #[Test]
     public function throwsWhenAppendValueIsScalar(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new AppendConfig(
             new FakeConfig(['phpstan.neon_includes' => []]),
@@ -130,7 +130,7 @@ final class AppendConfigTest extends TestCase
     #[Test]
     public function throwsWhenAppendListContainsNonScalar(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new AppendConfig(
             new FakeConfig(['phpstan.neon_includes' => []]),

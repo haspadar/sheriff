@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\ProjectConfig;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Config\ProjectConfig;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ final class ProjectConfigTest extends TestCase
         try {
             self::assertTrue(
                 (new ProjectConfig($folder->path()))->has('phpstan.level'),
-                'ProjectConfig must load defaults when no .piqule.yaml exists',
+                'ProjectConfig must load defaults when no .sheriff.yaml exists',
             );
         } finally {
             $folder->close();
@@ -28,10 +28,10 @@ final class ProjectConfigTest extends TestCase
     }
 
     #[Test]
-    public function loadsOverridesFromPiquleYaml(): void
+    public function loadsOverridesFromSheriffYaml(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    phpstan.level: 5",
         );
 
@@ -39,7 +39,7 @@ final class ProjectConfigTest extends TestCase
             self::assertSame(
                 [5],
                 (new ProjectConfig($folder->path()))->list('phpstan.level'),
-                'ProjectConfig must apply overrides from .piqule.yaml',
+                'ProjectConfig must apply overrides from .sheriff.yaml',
             );
         } finally {
             $folder->close();
@@ -47,13 +47,13 @@ final class ProjectConfigTest extends TestCase
     }
 
     #[Test]
-    public function loadsConfigFromPiqulePhp(): void
+    public function loadsConfigFromSheriffPhp(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.php',
+            '.sheriff.php',
             <<<'PHP'
             <?php
-            return new \Haspadar\Piqule\Tests\Fake\Config\FakeConfig([
+            return new \Haspadar\Sheriff\Tests\Fake\Config\FakeConfig([
                 'custom.key' => ['custom-value'],
             ]);
             PHP,
@@ -63,7 +63,7 @@ final class ProjectConfigTest extends TestCase
             self::assertSame(
                 ['custom-value'],
                 (new ProjectConfig($folder->path()))->list('custom.key'),
-                'ProjectConfig must load config from .piqule.php when .piqule.yaml is absent',
+                'ProjectConfig must load config from .sheriff.php when .sheriff.yaml is absent',
             );
         } finally {
             $folder->close();
@@ -71,15 +71,15 @@ final class ProjectConfigTest extends TestCase
     }
 
     #[Test]
-    public function throwsWhenPiqulePhpReturnsNonConfig(): void
+    public function throwsWhenSheriffPhpReturnsNonConfig(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.php',
+            '.sheriff.php',
             '<?php return "not a config";',
         );
 
         try {
-            $this->expectException(PiquleException::class);
+            $this->expectException(SheriffException::class);
             (new ProjectConfig($folder->path()))->has('any');
         } finally {
             $folder->close();
@@ -90,10 +90,10 @@ final class ProjectConfigTest extends TestCase
     public function returnsConfigAsArray(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.php',
+            '.sheriff.php',
             <<<'PHP'
             <?php
-            return new \Haspadar\Piqule\Tests\Fake\Config\FakeConfig([
+            return new \Haspadar\Sheriff\Tests\Fake\Config\FakeConfig([
                 'custom.key' => ['custom-value'],
             ]);
             PHP,
@@ -114,7 +114,7 @@ final class ProjectConfigTest extends TestCase
     public function returnsCachedConfigOnSecondCall(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    phpstan.level: 5",
         );
 
@@ -123,7 +123,7 @@ final class ProjectConfigTest extends TestCase
             $config->has('phpstan.level');
 
             file_put_contents(
-                $folder->path() . '/.piqule.yaml',
+                $folder->path() . '/.sheriff.yaml',
                 "override:\n    phpstan.level: 9",
             );
 

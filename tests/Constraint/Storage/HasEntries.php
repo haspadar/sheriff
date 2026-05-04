@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Storage;
+namespace Haspadar\Sheriff\Tests\Constraint\Storage;
 
-use Haspadar\Piqule\Storage\Storage;
+use Haspadar\Sheriff\Storage\Storage;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasEntries extends Constraint

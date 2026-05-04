@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Formula;
+namespace Haspadar\Sheriff\Tests\Fake\Formula;
 
-use Haspadar\Piqule\Formula\Action\Action;
-use Haspadar\Piqule\Formula\Args\Args;
-use Haspadar\Piqule\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Action\Action;
+use Haspadar\Sheriff\Formula\Args\Args;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
 
 final readonly class FakeAction implements Action
 {

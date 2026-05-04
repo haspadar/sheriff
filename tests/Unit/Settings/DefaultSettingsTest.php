@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings;
+namespace Haspadar\Sheriff\Tests\Unit\Settings;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\DefaultSettings;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\FloatValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -148,7 +148,7 @@ final class DefaultSettingsTest extends TestCase
             "defaults:\n  phpstan.level: 9\n",
         );
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new DefaultSettings($folder->path() . '/config.yaml'))->value('unknown.key');
     }
@@ -158,7 +158,7 @@ final class DefaultSettingsTest extends TestCase
     {
         $folder = (new TempFolder())->withFile('config.yaml', "other: 1\n");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new DefaultSettings($folder->path() . '/config.yaml'))->has('phpstan.level');
     }
@@ -168,7 +168,7 @@ final class DefaultSettingsTest extends TestCase
     {
         $folder = (new TempFolder())->withFile('config.yaml', "defaults:\n  bad: [unclosed\n");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new DefaultSettings($folder->path() . '/config.yaml'))->has('bad');
     }

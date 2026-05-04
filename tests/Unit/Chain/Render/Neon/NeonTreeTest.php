@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Render\Neon\NeonTree;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonTree;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

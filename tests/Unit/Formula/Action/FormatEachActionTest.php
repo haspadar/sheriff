@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Action;
 
-use Haspadar\Piqule\Formula\Action\FormatEachAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Action\FormatEachAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

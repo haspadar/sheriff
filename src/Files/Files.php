@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Files;
+namespace Haspadar\Sheriff\Files;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\SheriffException;
 use UnexpectedValueException;
 
 /**
@@ -16,7 +16,7 @@ interface Files
     /**
      * Returns all files in this collection.
      *
-     * @throws PiquleException|UnexpectedValueException
+     * @throws SheriffException|UnexpectedValueException
      * @return iterable<File>
      */
     public function all(): iterable;

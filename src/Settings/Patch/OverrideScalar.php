@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Patch;
+namespace Haspadar\Sheriff\Settings\Patch;
 
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\ScalarValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\ScalarValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
 
 /**

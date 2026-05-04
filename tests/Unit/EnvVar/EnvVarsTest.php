@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\EnvVar;
+namespace Haspadar\Sheriff\Tests\Unit\EnvVar;
 
-use Haspadar\Piqule\EnvVar\EnvVars;
-use Haspadar\Piqule\EnvVar\SonarEnvVar;
+use Haspadar\Sheriff\EnvVar\EnvVars;
+use Haspadar\Sheriff\EnvVar\SonarEnvVar;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

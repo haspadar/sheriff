@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula;
+namespace Haspadar\Sheriff\Formula;
 
 use Override;
 

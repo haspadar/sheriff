@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Output;
+namespace Haspadar\Sheriff\Tests\Unit\Output;
 
-use Haspadar\Piqule\Output\Message;
+use Haspadar\Sheriff\Output\Message;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

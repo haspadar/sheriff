@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Parse;
+namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -38,7 +38,7 @@ final readonly class MapFormula implements Formula
     public function op(array $previous, Settings $settings): Op
     {
         if (count($previous) !== 1) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf(
                     'MapFormula "%s" expects exactly one preceding op, got %d',
                     $this->target,

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\EnvVar;
+namespace Haspadar\Sheriff\EnvVar;
 
-use Haspadar\Piqule\Config\Config;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -46,7 +46,7 @@ final readonly class SonarEnvVar implements EnvVar
     /**
      * Checks whether SonarCloud mode is active.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function cloud(Config $config): bool
     {

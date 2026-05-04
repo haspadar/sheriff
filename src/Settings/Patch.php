@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings;
+namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Settings\Value\Value;
 
 /**
- * One operation derived from .piqule.yaml that modifies a configuration value.
+ * One operation derived from .sheriff.yaml that modifies a configuration value.
  */
 interface Patch
 {

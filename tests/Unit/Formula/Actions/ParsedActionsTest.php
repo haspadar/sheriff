@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Actions;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Actions;
 
-use Haspadar\Piqule\Formula\Action\FormatEachAction;
-use Haspadar\Piqule\Formula\Action\JoinAction;
-use Haspadar\Piqule\Formula\Actions\ParsedActions;
-use Haspadar\Piqule\Tests\Constraint\Formula\Actions\HasActionNames;
+use Haspadar\Sheriff\Formula\Action\FormatEachAction;
+use Haspadar\Sheriff\Formula\Action\JoinAction;
+use Haspadar\Sheriff\Formula\Actions\ParsedActions;
+use Haspadar\Sheriff\Tests\Constraint\Formula\Actions\HasActionNames;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

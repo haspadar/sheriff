@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Storage;
+namespace Haspadar\Sheriff\Storage;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\Storage\Reaction\StorageReaction;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\Storage\Reaction\StorageReaction;
 use Override;
 
 /**

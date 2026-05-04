@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Storage\Reaction;
+namespace Haspadar\Sheriff\Storage\Reaction;
 
 use Override;
 

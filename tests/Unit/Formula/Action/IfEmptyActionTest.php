@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Action;
 
-use Haspadar\Piqule\Formula\Action\IfEmptyAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Tests\Constraint\Formula\Args\HasArgsValues;
+use Haspadar\Sheriff\Formula\Action\IfEmptyAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Tests\Constraint\Formula\Args\HasArgsValues;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

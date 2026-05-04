@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Storage;
+namespace Haspadar\Sheriff\Tests\Unit\Storage;
 
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Storage\InMemoryStorage;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntries;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntry;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Storage\InMemoryStorage;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntries;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntry;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -87,7 +87,7 @@ final class InMemoryStorageTest extends TestCase
     #[Test]
     public function throwsWhenReadingMissingLocation(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new InMemoryStorage())->read('./absent.txt');
     }
@@ -149,7 +149,7 @@ final class InMemoryStorageTest extends TestCase
     #[Test]
     public function throwsWhenReadingModeForMissingLocation(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new InMemoryStorage())->mode('missing.txt');
     }

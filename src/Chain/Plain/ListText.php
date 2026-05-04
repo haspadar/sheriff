@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Plain;
+namespace Haspadar\Sheriff\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Listed;
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\FloatValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Chain\Listed;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\Value;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -51,7 +51,7 @@ final readonly class ListText implements Listed
     #[Override]
     public function rendered(): string
     {
-        throw new PiquleException(
+        throw new SheriffException(
             'ListText cannot render directly — collapse it via a Reduced op such as Joined',
         );
     }
@@ -59,7 +59,7 @@ final readonly class ListText implements Listed
     /**
      * Wraps a single Value child into the matching scalar Plain op.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function asText(Value $child): Op
     {
@@ -68,7 +68,7 @@ final readonly class ListText implements Listed
             $child instanceof IntValue => new IntText($child),
             $child instanceof FloatValue => new FloatText($child),
             $child instanceof StringValue => new StringText($child),
-            default => throw new PiquleException(
+            default => throw new SheriffException(
                 sprintf(
                     'ListText only accepts scalar children, got "%s"',
                     $child::class,

@@ -20,8 +20,8 @@ Everything under `templates/always/` is copied relative to project root on every
 
 Example:
 
-`templates/always/.github/workflows/piqule.yml`
-`templates/always/.piqule/phpstan.neon`
+`templates/always/.github/workflows/sheriff.yml`
+`templates/always/.sheriff/phpstan.neon`
 
 ### Git Templates
 
@@ -33,17 +33,17 @@ Everything under `templates/git/` is copied into:
 
 `.git/`
 
-Files are written with `DiffingStorage` (overwrite on change), except `pre-push` — it is appended via `AppendingStorage` using the marker `# BEGIN piqule` / `# END piqule`. This makes the operation idempotent: if the block is already present, `sync` skips it.
+Files are written with `DiffingStorage` (overwrite on change), except `pre-push` — it is appended via `AppendingStorage` using the marker `# BEGIN sheriff` / `# END sheriff`. This makes the operation idempotent: if the block is already present, `sync` skips it.
 
-The appended block wires `pre-push-piqule`:
+The appended block wires `pre-push-sheriff`:
 
 ```sh
-# BEGIN piqule
-[ -f "$(dirname "$0")/pre-push-piqule" ] && "$(dirname "$0")/pre-push-piqule" "$@"
-# END piqule
+# BEGIN sheriff
+[ -f "$(dirname "$0")/pre-push-sheriff" ] && "$(dirname "$0")/pre-push-sheriff" "$@"
+# END sheriff
 ```
 
-`pre-push-renovate` is copied to `.git/hooks/` but not wired automatically. To enable it, add the following line inside the `# BEGIN piqule / # END piqule` block in `.git/hooks/pre-push`:
+`pre-push-renovate` is copied to `.git/hooks/` but not wired automatically. To enable it, add the following line inside the `# BEGIN sheriff / # END sheriff` block in `.git/hooks/pre-push`:
 
 ```sh
 [ -f "$(dirname "$0")/pre-push-renovate" ] && "$(dirname "$0")/pre-push-renovate" "$@"
@@ -57,7 +57,7 @@ Location:
 
 Everything under `templates/once/` is copied relative to project root only if the target file does not exist yet. User edits survive subsequent `sync` runs.
 
-`.piqule.yaml` is generated from `templates/once/` on the first `sync`.
+`.sheriff.yaml` is generated from `templates/once/` on the first `sync`.
 
 ---
 
@@ -69,7 +69,7 @@ Run:
 
 Flow:
 
-1. Load `.piqule.yaml` if it exists (optional)
+1. Load `.sheriff.yaml` if it exists (optional)
 2. Scan `templates/always/`
 3. Scan `templates/git/`
 4. Scan `templates/once/`
@@ -78,19 +78,19 @@ Flow:
 7. Write `templates/git/` (non-pre-push files) → `.git/` (overwrite on change)
 8. Write `templates/git/` (pre-push file) → `.git/hooks/pre-push` (append if marker absent)
 9. Write `templates/once/` → project root (only if file doesn't exist)
-10. Pin template checksums → `.piqule/templates.md5`
+10. Pin template checksums → `.sheriff/templates.md5`
 
 Note:
 
-`.piqule.yaml` is generated from `templates/once/` on the first `sync`. Edit it freely — subsequent syncs will not overwrite it.
+`.sheriff.yaml` is generated from `templates/once/` on the first `sync`. Edit it freely — subsequent syncs will not overwrite it.
 
 ---
 
 ## Template Pinning
 
-`bin/sheriff-pin` computes a combined MD5 checksum of all files in `templates/always/` and `templates/git/` and writes it to `.piqule/templates.md5`. Called automatically by `bin/sheriff sync`.
+`bin/sheriff-pin` computes a combined MD5 checksum of all files in `templates/always/` and `templates/git/` and writes it to `.sheriff/templates.md5`. Called automatically by `bin/sheriff sync`.
 
-`bin/sheriff-verify` compares the current checksum against the pinned value. If they differ, it prints a warning and suggests running `bin/sheriff sync`. Called automatically by `bin/sheriff check` and `bin/sheriff fix`. Silent if `.piqule/templates.md5` does not exist.
+`bin/sheriff-verify` compares the current checksum against the pinned value. If they differ, it prints a warning and suggests running `bin/sheriff sync`. Called automatically by `bin/sheriff check` and `bin/sheriff fix`. Silent if `.sheriff/templates.md5` does not exist.
 
 ---
 
@@ -165,7 +165,7 @@ JSON string interpolation (safe insertion of arbitrary values into a JSON string
 
 Optional file:
 
-`.piqule.yaml`
+`.sheriff.yaml`
 
 Example:
 
@@ -179,7 +179,7 @@ append:
         - legacy
 ```
 
-Keys are flat and use dot-separated names. All valid keys are declared in `templates/always/.piqule/config.yaml`.
+Keys are flat and use dot-separated names. All valid keys are declared in `templates/always/.sheriff/config.yaml`.
 
 `override` replaces the default value entirely. `append` adds to the default list.
 
@@ -211,12 +211,10 @@ If the file does not exist, defaults are used.
 
 Runtime image is selected via:
 
-- `.piqule.yaml` → `docker.image`
+- `.sheriff.yaml` → `docker.image`
 - `SHERIFF_INFRA_IMAGE` environment variable (highest priority)
-- `PIQULE_INFRA_IMAGE` environment variable (legacy fallback)
 
-Execution is delegated to `.piqule/_docker.sh`.
-During the Sheriff package rename, generated scripts fall back to the last published `piqule-infra` image only when the default Sheriff image cannot be pulled and no image override was provided.
+Execution is delegated to `.sheriff/_docker.sh`.
 
 ---
 
@@ -269,10 +267,10 @@ For a full description of every class and the decorator pattern, see [docs/archi
 
 ## Adding a New Tool
 
-1. Create `templates/always/.piqule/<tool>/` and add a `command.sh` inside it
+1. Create `templates/always/.sheriff/<tool>/` and add a `command.sh` inside it
 2. Add any config keys the tool needs to `src/Config/DefaultConfig.php` (`DEFAULTS` array)
 3. Register the new key type in `src/Config/OverrideConfig.php` (`OverrideMap` PHPDoc)
-4. Add the tool name to `$checks` in `bin/piqule-check`
+4. Add the tool name to `$checks` in `bin/sheriff-check`
 5. Add `'<tool>.cli' => true` to `DefaultConfig` and `'<tool>.cli'?: bool` to `OverrideMap` in `OverrideConfig`
 6. Run `vendor/bin/sheriff sync` to verify template rendering
 7. Write unit and integration tests
@@ -287,7 +285,7 @@ For a full description of every class and the decorator pattern, see [docs/archi
 2. Add the corresponding entry to the `OverrideMap` PHPDoc type in `src/Config/OverrideConfig.php`
 3. Use the key in a template placeholder: `<< config(my.new.key) >>`
 
-Keys are flat dot-separated names. Accessing an undeclared key throws `PiquleException`.
+Keys are flat dot-separated names. Accessing an undeclared key throws `SheriffException`.
 
 ---
 
@@ -329,20 +327,20 @@ Each env var implements `EnvVar` (`src/EnvVar/EnvVar.php`):
 ### Adding a Secret
 
 1. Create a class in `src/Secret/` implementing `Secret`
-2. Register it in `bin/piqule-tokens-check` inside the `Secrets` array
+2. Register it in `bin/sheriff-tokens-check` inside the `Secrets` array
 3. Write unit tests
 
 ### Adding an Environment Variable
 
 1. Create a class in `src/EnvVar/` implementing `EnvVar`
-2. Register it in `bin/piqule-tokens-check` inside the `EnvVars` array
+2. Register it in `bin/sheriff-tokens-check` inside the `EnvVars` array
 3. Write unit tests
 
 ---
 
 ## Configuration Reference
 
-All keys below are declared in `templates/always/.piqule/config.yaml` with their defaults. Override any key in `.piqule.yaml` under `override` or extend lists under `append`.
+All keys below are declared in `templates/always/.sheriff/config.yaml` with their defaults. Override any key in `.sheriff.yaml` under `override` or extend lists under `append`.
 
 ### Global
 
@@ -365,7 +363,6 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 | Key | Default | Description |
 |-----|---------|-------------|
 | `ci.sheriff_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
-| `ci.piqule_bin` | `"vendor/bin/sheriff"` | Legacy alias for `ci.sheriff_bin` |
 | `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
 
 ### Coverage
@@ -560,7 +557,7 @@ All keys below are declared in `templates/always/.piqule/config.yaml` with their
 | `sonar.sources` | `["src"]` | Source directories |
 | `sonar.tests` | `["tests"]` | Test directories |
 | `sonar.exclusions` | `[]` | Excluded paths |
-| `sonar.php.coverage.reportPaths` | `[".piqule/codecov/coverage.xml"]` | Coverage report path |
+| `sonar.php.coverage.reportPaths` | `[".sheriff/codecov/coverage.xml"]` | Coverage report path |
 
 ### typos
 

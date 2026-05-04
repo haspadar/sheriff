@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Secret;
+namespace Haspadar\Sheriff\Secret;
 
 /**
  * Collection of CI secrets.

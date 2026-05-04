@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Patch;
+namespace Haspadar\Sheriff\Settings\Patch;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\RawValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\RawValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\SheriffException;
 use TypeError;
 
 /**
- * Translates the `append` section of `.piqule.yaml` into Patch instances.
+ * Translates the `append` section of `.sheriff.yaml` into Patch instances.
  *
  * Example:
  *
@@ -33,7 +33,7 @@ final readonly class AppendPatches
     /**
      * Returns the list of Patch objects derived from the section.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      * @return list<Patch>
      */
     public function patches(): array
@@ -51,7 +51,7 @@ final readonly class AppendPatches
     /**
      * Builds a single append patch matching the runtime type of the payload.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      */
     private function patchOf(string $key, mixed $raw): Patch
     {
@@ -60,7 +60,7 @@ final readonly class AppendPatches
         return match (true) {
             $value instanceof ListValue => new AppendList($key, $value),
             $value instanceof TreeValue => new AppendTree($key, $value),
-            default => throw new PiquleException(
+            default => throw new SheriffException(
                 sprintf('Append "%s" expects a list or mapping', $key),
             ),
         };

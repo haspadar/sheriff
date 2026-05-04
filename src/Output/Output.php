@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Output;
+namespace Haspadar\Sheriff\Output;
 
 /**
  * Writes user-facing messages to an output channel

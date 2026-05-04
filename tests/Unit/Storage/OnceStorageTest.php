@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Storage;
+namespace Haspadar\Sheriff\Tests\Unit\Storage;
 
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\Storage\InMemoryStorage;
-use Haspadar\Piqule\Storage\OnceStorage;
-use Haspadar\Piqule\Tests\Constraint\Storage\ReactionWasSilent;
-use Haspadar\Piqule\Tests\Fake\Storage\Reaction\FakeStorageReaction;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\Storage\InMemoryStorage;
+use Haspadar\Sheriff\Storage\OnceStorage;
+use Haspadar\Sheriff\Tests\Constraint\Storage\ReactionWasSilent;
+use Haspadar\Sheriff\Tests\Fake\Storage\Reaction\FakeStorageReaction;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fixture;
+namespace Haspadar\Sheriff\Tests\Fixture;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 final readonly class TempFolder
 {
@@ -16,17 +16,17 @@ final readonly class TempFolder
         $allocated = tempnam($base, '');
 
         if ($allocated === false) {
-            throw new PiquleException('Failed to allocate temporary directory name');
+            throw new SheriffException('Failed to allocate temporary directory name');
         }
 
         if (!unlink($allocated)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to remove temp file: "%s"', $allocated),
             );
         }
 
         if (!mkdir($allocated, 0o755) && !is_dir($allocated)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to create temp directory: "%s"', $allocated),
             );
         }
@@ -45,13 +45,13 @@ final readonly class TempFolder
         $dir = dirname($file);
 
         if (!is_dir($dir) && !mkdir($dir, 0o755, true) && !is_dir($dir)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to create directory: "%s"', $dir),
             );
         }
 
         if (file_put_contents($file, $contents) === false) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to create file: "%s"', $file),
             );
         }
@@ -72,7 +72,7 @@ final readonly class TempFolder
 
         $items = scandir($dir);
         if ($items === false) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to scan directory: "%s"', $dir),
             );
         }

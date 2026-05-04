@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Files;
+namespace Haspadar\Sheriff\Tests\Unit\Files;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\Files\FilteredFiles;
-use Haspadar\Piqule\Files\TextFiles;
-use Haspadar\Piqule\Tests\Constraint\Files\HasFiles;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\Files\FilteredFiles;
+use Haspadar\Sheriff\Files\TextFiles;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFiles;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -20,13 +20,13 @@ final class FilteredFilesTest extends TestCase
             new FilteredFiles(
                 new TextFiles([
                     'pre-push' => 'exit 1',
-                    'pre-push-piqule' => 'exit 2',
+                    'pre-push-sheriff' => 'exit 2',
                     'commit-msg' => 'exit 3',
                 ]),
                 fn(File $file): bool => !str_ends_with($file->name(), 'pre-push'),
             ),
             new HasFiles([
-                'pre-push-piqule' => 'exit 2',
+                'pre-push-sheriff' => 'exit 2',
                 'commit-msg' => 'exit 3',
             ]),
             'FilteredFiles must exclude files that do not satisfy the predicate',

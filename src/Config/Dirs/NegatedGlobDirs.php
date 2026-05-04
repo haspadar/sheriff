@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config\Dirs;
+namespace Haspadar\Sheriff\Config\Dirs;
 
 use Override;
 

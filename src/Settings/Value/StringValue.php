@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Value;
+namespace Haspadar\Sheriff\Settings\Value;
 
 /**
  * Configuration value holding a string.

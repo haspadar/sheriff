@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Envs;
+namespace Haspadar\Sheriff\Envs;
 
 use Override;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\AgentRules;
+namespace Haspadar\Sheriff\Tests\Integration\AgentRules;
 
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -13,9 +13,9 @@ use function proc_open;
 
 final class AgentRulesCheckTest extends TestCase
 {
-    private const string SCRIPT = __DIR__ . '/../../../bin/piqule-agent-rules-check';
+    private const string SCRIPT = __DIR__ . '/../../../bin/sheriff-agent-rules-check';
 
-    private const string MARKER = '<!-- piqule:begin -->';
+    private const string MARKER = '<!-- sheriff:begin -->';
 
     #[Test]
     public function staysSilentWhenNoAgentFilePresent(): void
@@ -42,7 +42,7 @@ final class AgentRulesCheckTest extends TestCase
             self::assertStringContainsString(
                 'sheriff agent-rules-install',
                 $this->runStdout($folder->path()),
-                'hint to run agent-rules-install must be printed when CLAUDE.md has no piqule marker',
+                'hint to run agent-rules-install must be printed when CLAUDE.md has no sheriff marker',
             );
         } finally {
             $folder->close();
@@ -68,14 +68,14 @@ final class AgentRulesCheckTest extends TestCase
     #[Test]
     public function staysSilentWhenMarkerAlreadyPresent(): void
     {
-        $content = "# Project rules\n" . self::MARKER . "\n<!-- piqule:end -->\n";
+        $content = "# Project rules\n" . self::MARKER . "\n<!-- sheriff:end -->\n";
         $folder = (new TempFolder())->withFile('CLAUDE.md', $content);
 
         try {
             self::assertSame(
                 '',
                 $this->runStdout($folder->path()),
-                'no hint must be printed when piqule marker is already present',
+                'no hint must be printed when sheriff marker is already present',
             );
         } finally {
             $folder->close();
@@ -92,7 +92,7 @@ final class AgentRulesCheckTest extends TestCase
         );
 
         if (!is_resource($proc)) {
-            self::fail('Failed to start piqule-agent-rules-check subprocess');
+            self::fail('Failed to start sheriff-agent-rules-check subprocess');
         }
 
         fclose($pipes[0]);

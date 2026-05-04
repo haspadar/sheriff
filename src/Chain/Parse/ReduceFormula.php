@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Parse;
+namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Listed;
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
+use Haspadar\Sheriff\Chain\Listed;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -38,7 +38,7 @@ final readonly class ReduceFormula implements Formula
     public function op(array $previous, Settings $settings): Op
     {
         if ($previous === []) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf(
                     'ReduceFormula "%s" requires preceding pipeline stages to combine',
                     $this->target,

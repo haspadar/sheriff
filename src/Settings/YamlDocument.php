@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings;
+namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Example:
  *
- *     (new YamlDocument('/path/to/.piqule.yaml'))->section('override');
+ *     (new YamlDocument('/path/to/.sheriff.yaml'))->section('override');
  */
 final readonly class YamlDocument
 {
@@ -28,7 +28,7 @@ final readonly class YamlDocument
      * Returns the named top-level mapping section, or empty if absent.
      *
      * @param string $name Section name to read from the top-level mapping
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, mixed>
      */
     public function section(string $name): array
@@ -40,7 +40,7 @@ final readonly class YamlDocument
         }
 
         if (!is_array($document[$name])) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Section "%s" in "%s" must be a mapping', $name, $this->path),
             );
         }
@@ -54,13 +54,13 @@ final readonly class YamlDocument
     /**
      * Parses the yaml file once and returns the top-level mapping.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, mixed>
      */
     private function mapping(): array
     {
         if (!is_file($this->path) || !is_readable($this->path)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Yaml file "%s" is missing or not readable', $this->path),
             );
         }
@@ -69,7 +69,7 @@ final readonly class YamlDocument
             /** @var mixed $parsed */
             $parsed = Yaml::parseFile($this->path);
         } catch (ParseException $e) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to parse "%s": %s', $this->path, $e->getMessage()),
                 0,
                 $e,
@@ -81,7 +81,7 @@ final readonly class YamlDocument
         }
 
         if (!is_array($parsed) || ($parsed !== [] && array_is_list($parsed))) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Expected a mapping at the top of "%s"', $this->path),
             );
         }

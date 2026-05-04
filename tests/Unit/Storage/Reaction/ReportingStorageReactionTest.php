@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Storage\Reaction;
+namespace Haspadar\Sheriff\Tests\Unit\Storage\Reaction;
 
-use Haspadar\Piqule\Storage\Reaction\ReportingStorageReaction;
-use Haspadar\Piqule\Tests\Fake\Output\FakeOutput;
+use Haspadar\Sheriff\Storage\Reaction\ReportingStorageReaction;
+use Haspadar\Sheriff\Tests\Fake\Output\FakeOutput;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

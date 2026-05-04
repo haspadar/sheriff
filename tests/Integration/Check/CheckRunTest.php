@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Check;
+namespace Haspadar\Sheriff\Tests\Integration\Check;
 
-use Haspadar\Piqule\Check\CheckRun;
-use Haspadar\Piqule\Tests\Fake\Check\FakeCheck;
-use Haspadar\Piqule\Tests\Fake\Check\FakeCliOption;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Check\CheckRun;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeCheck;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeCliOption;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

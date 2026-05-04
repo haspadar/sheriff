@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Output;
+namespace Haspadar\Sheriff\Output;
 
 use Override;
 

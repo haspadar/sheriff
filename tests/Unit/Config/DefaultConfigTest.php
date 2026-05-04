@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\ConfigPaths;
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Config\ConfigPaths;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -68,16 +68,6 @@ final class DefaultConfigTest extends TestCase
             ['vendor/bin/sheriff'],
             (new DefaultConfig())->list('ci.sheriff_bin'),
             'CI must run the Composer-installed sheriff binary by default',
-        );
-    }
-
-    #[Test]
-    public function returnsLegacyVendorBinaryPathWhenPiquleKeyIsUsed(): void
-    {
-        self::assertSame(
-            ['vendor/bin/sheriff'],
-            (new DefaultConfig())->list('ci.piqule_bin'),
-            'legacy CI key must keep resolving to the Composer-installed sheriff binary',
         );
     }
 
@@ -167,7 +157,7 @@ final class DefaultConfigTest extends TestCase
     {
         $folder = (new TempFolder())->withFile('empty.yaml', 'root: true');
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Missing "defaults" section');
 
         $config = new DefaultConfig(paths: new ConfigPaths(config: $folder->path() . '/empty.yaml'));
@@ -184,7 +174,7 @@ final class DefaultConfigTest extends TestCase
     {
         $folder = (new TempFolder())->withFile('broken.yaml', ": invalid: yaml: :");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessage('Failed to parse config');
 
         $config = new DefaultConfig(paths: new ConfigPaths(config: $folder->path() . '/broken.yaml'));

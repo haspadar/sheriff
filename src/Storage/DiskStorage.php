@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Storage;
+namespace Haspadar\Sheriff\Storage;
 
 use FilesystemIterator;
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use SplFileInfo;
 
@@ -32,13 +32,13 @@ final readonly class DiskStorage implements Storage
         $path = $this->pathOf($location);
 
         if (!is_file($path)) {
-            throw new PiquleException("Location not found: $location");
+            throw new SheriffException("Location not found: $location");
         }
 
         $contents = file_get_contents($path);
 
         if (!is_string($contents)) {
-            throw new PiquleException("Unable to read location: $location");
+            throw new SheriffException("Unable to read location: $location");
         }
 
         return $contents;
@@ -93,15 +93,15 @@ final readonly class DiskStorage implements Storage
             && !mkdir($directory, self::FULL_PERMISSIONS, true)
             && !is_dir($directory)
         ) {
-            throw new PiquleException("Unable to create directory: $directory");
+            throw new SheriffException("Unable to create directory: $directory");
         }
 
         if (!is_int(file_put_contents($path, $file->contents()))) {
-            throw new PiquleException("Unable to write location: $location");
+            throw new SheriffException("Unable to write location: $location");
         }
 
         if (!chmod($path, $file->mode())) {
-            throw new PiquleException("Unable to set permissions: $location");
+            throw new SheriffException("Unable to set permissions: $location");
         }
 
         return $this;
@@ -113,13 +113,13 @@ final readonly class DiskStorage implements Storage
         $path = $this->pathOf($location);
 
         if (!is_file($path)) {
-            throw new PiquleException("Location not found: $location");
+            throw new SheriffException("Location not found: $location");
         }
 
         $perms = fileperms($path);
 
         if (!is_int($perms)) {
-            throw new PiquleException("Unable to read permissions: $location");
+            throw new SheriffException("Unable to read permissions: $location");
         }
 
         return $perms & self::FULL_PERMISSIONS;
@@ -128,7 +128,7 @@ final readonly class DiskStorage implements Storage
     /**
      * Resolves the absolute filesystem path for a given storage location.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function pathOf(string $location): string
     {

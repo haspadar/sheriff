@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Plain;
+namespace Haspadar\Sheriff\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -34,7 +34,7 @@ final readonly class FloatText implements Op
         $raw = $this->value->raw;
 
         if (!is_finite($raw)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('FloatText cannot render non-finite value "%s"', (string) $raw),
             );
         }

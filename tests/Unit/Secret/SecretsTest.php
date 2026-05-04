@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Secret;
+namespace Haspadar\Sheriff\Tests\Unit\Secret;
 
-use Haspadar\Piqule\Secret\CodecovSecret;
-use Haspadar\Piqule\Secret\InfectionSecret;
-use Haspadar\Piqule\Secret\Secrets;
+use Haspadar\Sheriff\Secret\CodecovSecret;
+use Haspadar\Sheriff\Secret\InfectionSecret;
+use Haspadar\Sheriff\Secret\Secrets;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

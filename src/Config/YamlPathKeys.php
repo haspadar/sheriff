@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
- * Resolves include and exclude lists from .piqule.yaml override/append sections.
+ * Resolves include and exclude lists from .sheriff.yaml override/append sections.
  *
  * Cascades into DefaultConfig so all derived path keys reflect the project layout.
  */
@@ -29,7 +29,7 @@ final readonly class YamlPathKeys
     /**
      * Resolves the effective PHP source directories after overrides and appends.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return list<string>
      */
     public function phpSrc(): array
@@ -49,7 +49,7 @@ final readonly class YamlPathKeys
     /**
      * Resolves the effective infrastructure exclude patterns after overrides and appends.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return list<string>
      */
     public function infraExclude(): array
@@ -70,7 +70,7 @@ final readonly class YamlPathKeys
      * Converts a mixed list to a validated list of strings.
      *
      * @param list<mixed> $value
-     * @throws PiquleException
+     * @throws SheriffException
      * @return list<string>
      */
     private function toStringList(array $value, string $key): array
@@ -79,7 +79,7 @@ final readonly class YamlPathKeys
 
         foreach ($value as $i => $item) {
             if (!is_string($item)) {
-                throw new PiquleException(
+                throw new SheriffException(
                     sprintf('"%s" must be a list of strings, got %s at index %d', $key, get_debug_type($item), $i),
                 );
             }

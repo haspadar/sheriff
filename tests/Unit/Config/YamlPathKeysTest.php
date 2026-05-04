@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\Config\YamlPathKeys;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\Config\YamlPathKeys;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ final class YamlPathKeysTest extends TestCase
     #[Test]
     public function throwsWhenOverridePhpSrcContainsNonString(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessageMatches('/override\.php\.src/');
 
         $keys = new YamlPathKeys(['php.src' => [42]], [], new DefaultConfig());
@@ -25,7 +25,7 @@ final class YamlPathKeysTest extends TestCase
     #[Test]
     public function throwsWhenOverrideInfraExcludeContainsNonString(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessageMatches('/override\.infra\.exclude/');
 
         $keys = new YamlPathKeys(['infra.exclude' => [true]], [], new DefaultConfig());
@@ -35,7 +35,7 @@ final class YamlPathKeysTest extends TestCase
     #[Test]
     public function throwsWhenAppendInfraExcludeContainsNonString(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessageMatches('/append\.infra\.exclude/');
 
         $keys = new YamlPathKeys([], ['infra.exclude' => [null]], new DefaultConfig());
@@ -45,7 +45,7 @@ final class YamlPathKeysTest extends TestCase
     #[Test]
     public function throwsWhenAppendPhpSrcContainsNonString(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
         $this->expectExceptionMessageMatches('/append\.php\.src/');
 
         $keys = new YamlPathKeys([], ['php.src' => [3.14]], new DefaultConfig());

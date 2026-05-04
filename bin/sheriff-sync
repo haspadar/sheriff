@@ -1,4 +1,97 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env php
+<?php
 
-exec "$(dirname "$0")/piqule-sync" "$@"
+declare(strict_types=1);
+
+use Haspadar\Sheriff\Config\ProjectConfig;
+use Haspadar\Sheriff\Envs\EmptyEnvs;
+use Haspadar\Sheriff\Envs\YamlEnvs;
+use Haspadar\Sheriff\File\ConfiguredFile;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\File\PrefixedFile;
+use Haspadar\Sheriff\Formula\Actions\FormulaActions;
+use Haspadar\Sheriff\Files\EachFile;
+use Haspadar\Sheriff\Files\FilteredFiles;
+use Haspadar\Sheriff\Files\FolderFiles;
+use Haspadar\Sheriff\Files\MappedFiles;
+use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Storage\AppendingStorage;
+use Haspadar\Sheriff\Storage\DiffingStorage;
+use Haspadar\Sheriff\Storage\DiskStorage;
+use Haspadar\Sheriff\Storage\OnceStorage;
+use Haspadar\Sheriff\Storage\Reaction\ReportingStorageReaction;
+use Haspadar\Sheriff\Storage\Reaction\StorageReactions;
+
+require_once __DIR__ . '/bootstrap-autoload.php';
+
+$output = new Console();
+
+try {
+    $projectRoot = getcwd()
+        ?: throw new SheriffException('Cannot determine current working directory');
+
+    $installPath = Composer\InstalledVersions::isInstalled('haspadar/sheriff')
+        ? Composer\InstalledVersions::getInstallPath('haspadar/sheriff')
+        : dirname(__DIR__);
+
+    if ($installPath === null || $installPath === '') {
+        throw new SheriffException('Cannot determine Sheriff install path');
+    }
+
+    $libraryRoot = $installPath;
+
+    $config = new ProjectConfig($projectRoot);
+
+    $yamlPath = $projectRoot . '/.sheriff.yaml';
+    $envs = file_exists($yamlPath)
+        ? new YamlEnvs($yamlPath)
+        : new EmptyEnvs();
+
+    $actions = (new FormulaActions($config, $envs))->map();
+
+    $reactions = new StorageReactions([new ReportingStorageReaction($output)]);
+    $disk = new DiskStorage($projectRoot);
+
+    $alwaysFiles = new MappedFiles(
+        new FolderFiles(
+            new DiskStorage($libraryRoot . '/templates/always'),
+            '',
+        ),
+        fn(File $file): File => new ConfiguredFile($file, $actions),
+    );
+
+    $gitFiles = new MappedFiles(
+        new FolderFiles(
+            new DiskStorage($libraryRoot . '/templates/git'),
+            '',
+        ),
+        fn(File $file): File => new PrefixedFile('.git', $file),
+    );
+
+    $onceFiles = new MappedFiles(
+        new FolderFiles(
+            new DiskStorage($libraryRoot . '/templates/once'),
+            '',
+        ),
+        fn(File $file): File => new ConfiguredFile($file, $actions),
+    );
+
+    $gitDiffFiles = new FilteredFiles(
+        $gitFiles,
+        fn(File $f): bool => !str_ends_with($f->name(), '/pre-push'),
+    );
+
+    $gitAppendFiles = new FilteredFiles(
+        $gitFiles,
+        fn(File $f): bool => str_ends_with($f->name(), '/pre-push'),
+    );
+
+    (new EachFile($alwaysFiles, fn(File $file) => (new DiffingStorage($disk, $reactions))->write($file)))->run();
+    (new EachFile($gitDiffFiles, fn(File $file) => (new DiffingStorage($disk, $reactions))->write($file)))->run();
+    (new EachFile($gitAppendFiles, fn(File $file) => (new AppendingStorage($disk, $reactions, '# BEGIN sheriff'))->write($file)))->run();
+    (new EachFile($onceFiles, fn(File $file) => (new OnceStorage($disk, $reactions))->write($file)))->run();
+} catch (SheriffException $e) {
+    $output->error($e->getMessage());
+    exit(1);
+}

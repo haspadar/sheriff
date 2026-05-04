@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Storage;
+namespace Haspadar\Sheriff\Storage;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * Resolves a relative location to an absolute path within a storage root, preventing path traversal.
@@ -22,7 +22,7 @@ final readonly class SafePath
      * Returns the safe absolute path for a relative location.
      *
      * @param string $location Relative location under the storage root
-     * @throws PiquleException
+     * @throws SheriffException
      */
     public function resolve(string $location): string
     {
@@ -35,7 +35,7 @@ final readonly class SafePath
 
             if ($part === '..') {
                 if ($parts === []) {
-                    throw new PiquleException("Invalid location: $location");
+                    throw new SheriffException("Invalid location: $location");
                 }
 
                 array_pop($parts);

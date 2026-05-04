@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Plain;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Plain\FloatText;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Chain\Plain\FloatText;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +25,7 @@ final class FloatTextTest extends TestCase
     #[Test]
     public function rejectsInfinity(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FloatText(new FloatValue(INF)))->rendered();
     }
@@ -33,7 +33,7 @@ final class FloatTextTest extends TestCase
     #[Test]
     public function rejectsNotANumber(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FloatText(new FloatValue(NAN)))->rendered();
     }
@@ -41,7 +41,7 @@ final class FloatTextTest extends TestCase
     #[Test]
     public function rejectsNegativeInfinity(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FloatText(new FloatValue(-INF)))->rendered();
     }

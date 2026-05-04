@@ -1,0 +1,25 @@
+override:
+  phpmetrics.coupling.max_afferent: 32
+  phpmetrics.coupling.max_efferent: 25
+  php.versions: ["8.3", "8.4", "8.5"]
+  ci.pr.max_lines_changed: 5000
+  ci.sheriff_bin: bin/sheriff
+  sonar.organization: haspadar-org
+  sonar.projectKey: haspadar_sheriff
+  infection.min_msi: 80
+  infection.min_covered_msi: 90
+  coverage.project.target: 85
+  coverage.project.threshold: 1
+  coverage.patch.target: 85
+  coverage.patch.threshold: 1
+  psalm.project.files:
+    - "../../bin/sheriff"
+    - "../../bin/sheriff-check"
+    - "../../bin/sheriff-fix"
+    - "../../bin/sheriff-sync"
+    - "../../bin/sheriff-tokens-check"
+  phpstan.afferent_coupling.excluded_classes: ['\Haspadar\Sheriff\SheriffException']
+
+append:
+  infra.exclude:
+    - templates

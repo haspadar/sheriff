@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+        errorLevel="1"
+        xmlns="https://getpsalm.org/schema/config"
+        findUnusedCode="true"
+        findUnusedBaselineEntry="true"
+        ensureArrayStringOffsetsExist="true"
+        reportMixedIssues="true"
+>
+    <projectFiles>
+        <directory name="../../src" />
+        <file name="../../bin/sheriff" />
+        <file name="../../bin/sheriff-check" />
+        <file name="../../bin/sheriff-fix" />
+        <file name="../../bin/sheriff-sync" />
+        <file name="../../bin/sheriff-tokens-check" />
+        <ignoreFiles>
+
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <InvalidAttribute errorLevel="suppress" />
+        <UnusedClass errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="../../src" />
+            </errorLevel>
+        </UnusedClass>
+
+    </issueHandlers>
+</psalm>

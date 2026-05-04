@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula\Action;
+namespace Haspadar\Sheriff\Formula\Action;
 
 use ArgumentCountError;
-use Haspadar\Piqule\Formula\Args\Args;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Formula\Args\StringifiedArgs;
-use Haspadar\Piqule\Formula\Args\UnquotedArgs;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Args\Args;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Args\StringifiedArgs;
+use Haspadar\Sheriff\Formula\Args\UnquotedArgs;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use ValueError;
 
@@ -42,7 +42,7 @@ final readonly class FormatAction implements Action
         }
 
         if (count($values) > 1) {
-            throw new PiquleException(
+            throw new SheriffException(
                 'Cannot format list: expected single value',
             );
         }
@@ -56,7 +56,7 @@ final readonly class FormatAction implements Action
         try {
             $result = sprintf($template, $scalar);
         } catch (ArgumentCountError | ValueError $e) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('format() failed: %s', $e->getMessage()),
                 0,
                 $e,

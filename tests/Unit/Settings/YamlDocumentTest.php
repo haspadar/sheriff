@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings;
+namespace Haspadar\Sheriff\Tests\Unit\Settings;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\YamlDocument;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\YamlDocument;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -15,11 +15,11 @@ final class YamlDocumentTest extends TestCase
     #[Test]
     public function returnsEmptySectionForFileWithoutThatKey(): void
     {
-        $folder = (new TempFolder())->withFile('.piqule.yaml', "other: 1\n");
+        $folder = (new TempFolder())->withFile('.sheriff.yaml', "other: 1\n");
 
         self::assertSame(
             [],
-            (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override'),
+            (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override'),
             'YamlDocument must return an empty section when the key is absent',
         );
     }
@@ -27,11 +27,11 @@ final class YamlDocumentTest extends TestCase
     #[Test]
     public function returnsEmptySectionForEmptyFile(): void
     {
-        $folder = (new TempFolder())->withFile('.piqule.yaml', '');
+        $folder = (new TempFolder())->withFile('.sheriff.yaml', '');
 
         self::assertSame(
             [],
-            (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override'),
+            (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override'),
             'YamlDocument must return an empty section when the file is empty',
         );
     }
@@ -40,13 +40,13 @@ final class YamlDocumentTest extends TestCase
     public function readsExistingSectionAsAssociativeArray(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n  phpstan.level: 8\n",
         );
 
         self::assertSame(
             ['phpstan.level' => 8],
-            (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override'),
+            (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override'),
             'YamlDocument must expose the named section as a string-keyed mapping',
         );
     }
@@ -54,38 +54,38 @@ final class YamlDocumentTest extends TestCase
     #[Test]
     public function rejectsMissingFile(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        (new YamlDocument('/nonexistent/path/.piqule.yaml'))->section('override');
+        (new YamlDocument('/nonexistent/path/.sheriff.yaml'))->section('override');
     }
 
     #[Test]
     public function rejectsTopLevelThatIsNotAMapping(): void
     {
-        $folder = (new TempFolder())->withFile('.piqule.yaml', "- a\n- b\n");
+        $folder = (new TempFolder())->withFile('.sheriff.yaml', "- a\n- b\n");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override');
+        (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override');
     }
 
     #[Test]
     public function rejectsSectionThatIsNotAMapping(): void
     {
-        $folder = (new TempFolder())->withFile('.piqule.yaml', "override: 8\n");
+        $folder = (new TempFolder())->withFile('.sheriff.yaml', "override: 8\n");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override');
+        (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override');
     }
 
     #[Test]
     public function rejectsMalformedYaml(): void
     {
-        $folder = (new TempFolder())->withFile('.piqule.yaml', "override:\n  bad: [unclosed\n");
+        $folder = (new TempFolder())->withFile('.sheriff.yaml', "override:\n  bad: [unclosed\n");
 
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        (new YamlDocument($folder->path() . '/.piqule.yaml'))->section('override');
+        (new YamlDocument($folder->path() . '/.sheriff.yaml'))->section('override');
     }
 }

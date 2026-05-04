@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Formula;
+namespace Haspadar\Sheriff\Tests\Constraint\Formula;
 
-use Haspadar\Piqule\Formula\Formula;
+use Haspadar\Sheriff\Formula\Formula;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFormulaResult extends Constraint

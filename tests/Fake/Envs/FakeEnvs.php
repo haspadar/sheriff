@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Envs;
+namespace Haspadar\Sheriff\Tests\Fake\Envs;
 
-use Haspadar\Piqule\Envs\Envs;
+use Haspadar\Sheriff\Envs\Envs;
 use Override;
 
 final readonly class FakeEnvs implements Envs

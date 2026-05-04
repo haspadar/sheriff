@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Patch;
+namespace Haspadar\Sheriff\Settings\Patch;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\RawValue;
-use Haspadar\Piqule\Settings\Value\ScalarValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\RawValue;
+use Haspadar\Sheriff\Settings\Value\ScalarValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\SheriffException;
 use TypeError;
 
 /**
- * Translates the `override` section of `.piqule.yaml` into Patch instances.
+ * Translates the `override` section of `.sheriff.yaml` into Patch instances.
  *
  * Example:
  *
@@ -34,7 +34,7 @@ final readonly class OverridePatches
     /**
      * Returns the list of Patch objects derived from the section.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      * @return list<Patch>
      */
     public function patches(): array
@@ -52,7 +52,7 @@ final readonly class OverridePatches
     /**
      * Builds a single override patch matching the runtime type of the payload.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      */
     private function patchOf(string $key, mixed $raw): Patch
     {
@@ -62,7 +62,7 @@ final readonly class OverridePatches
             $value instanceof ScalarValue => new OverrideScalar($key, $value),
             $value instanceof ListValue => new OverrideList($key, $value),
             $value instanceof TreeValue => new OverrideTree($key, $value),
-            default => throw new PiquleException(
+            default => throw new SheriffException(
                 sprintf('Override "%s" expects a scalar, list, or mapping', $key),
             ),
         };

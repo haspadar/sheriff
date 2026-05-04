@@ -33,12 +33,41 @@ final readonly class SheriffOverrides
             return $this->overrides;
         }
 
-        $legacy = $this->overrides['ci.piqule_bin'];
+        return [...$this->overrides, 'ci.sheriff_bin' => $this->legacy()];
+    }
 
-        if (!is_scalar($legacy) && !is_array($legacy)) {
+    /**
+     * Returns a validated legacy override value.
+     *
+     * @throws PiquleException
+     * @return scalar|list<scalar>
+     */
+    private function legacy(): array|bool|float|int|string
+    {
+        if (!array_key_exists('ci.piqule_bin', $this->overrides)) {
             throw new PiquleException('Override "ci.piqule_bin" must be scalar or list<scalar>');
         }
 
-        return [...$this->overrides, 'ci.sheriff_bin' => $legacy];
+        $legacy = $this->overrides['ci.piqule_bin'];
+
+        if (is_scalar($legacy)) {
+            return $legacy;
+        }
+
+        if (!is_array($legacy) || !array_is_list($legacy)) {
+            throw new PiquleException('Override "ci.piqule_bin" must be scalar or list<scalar>');
+        }
+
+        $values = [];
+
+        foreach ($legacy as $value) {
+            if (!is_scalar($value)) {
+                throw new PiquleException('Override "ci.piqule_bin" must be scalar or list<scalar>');
+            }
+
+            $values[] = $value;
+        }
+
+        return $values;
     }
 }

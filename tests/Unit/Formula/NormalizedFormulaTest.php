@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula;
+namespace Haspadar\Sheriff\Tests\Unit\Formula;
 
-use Haspadar\Piqule\Formula\NormalizedFormula;
+use Haspadar\Sheriff\Formula\NormalizedFormula;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

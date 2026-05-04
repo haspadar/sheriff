@@ -1,0 +1,18 @@
+# ============================================================
+# ShellCheck configuration (Sheriff managed)
+# ============================================================
+
+# Target shell (bash, sh, dash, ksh)
+shell=<< config(shellcheck.shell) >>
+
+# Minimum severity: error, warning, info, style
+severity=<< config(shellcheck.severity) >>
+
+# Allow sourcing external files
+external-sources=<< config(shellcheck.external_sources) >>
+
+# Additional include path for sourced files (optional)
+# source-path=<< config(shellcheck.source_path) >>
+
+# Excluded rules (one per line)
+<< config(shellcheck.exclude)|join("\n") >>

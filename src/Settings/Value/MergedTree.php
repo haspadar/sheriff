@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Value;
+namespace Haspadar\Sheriff\Settings\Value;
 
 /**
  * Tree produced by deep-merging an override tree onto a base tree.

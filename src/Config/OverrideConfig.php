@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -30,7 +30,7 @@ final readonly class OverrideConfig implements Config
     public function list(string $name): array
     {
         if (!$this->defaults->has($name)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Unknown config key "%s"', $name),
             );
         }
@@ -45,7 +45,7 @@ final readonly class OverrideConfig implements Config
     /**
      * Converts a raw override value to a validated scalar list.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return list<scalar>
      */
     private function normalizedValue(mixed $value, string $name): array
@@ -55,14 +55,14 @@ final readonly class OverrideConfig implements Config
         }
 
         if (!is_array($value) || !array_is_list($value)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Override "%s" must be scalar or list<scalar>', $name),
             );
         }
 
         foreach ($value as $item) {
             if (!is_scalar($item)) {
-                throw new PiquleException(
+                throw new SheriffException(
                     sprintf('Override "%s" must contain only scalars', $name),
                 );
             }

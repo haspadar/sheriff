@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings\Patch;
+namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch\AppendList;
-use Haspadar\Piqule\Settings\Patch\AppendPatches;
-use Haspadar\Piqule\Settings\Patch\AppendTree;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Patch\AppendList;
+use Haspadar\Sheriff\Settings\Patch\AppendPatches;
+use Haspadar\Sheriff\Settings\Patch\AppendTree;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -78,7 +78,7 @@ final class AppendPatchesTest extends TestCase
     #[Test]
     public function rejectsScalarPayloadAsConfigError(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new AppendPatches(['phpstan.level' => 8]))->patches();
     }

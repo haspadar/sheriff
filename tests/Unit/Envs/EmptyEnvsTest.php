@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Envs;
+namespace Haspadar\Sheriff\Tests\Unit\Envs;
 
-use Haspadar\Piqule\Envs\EmptyEnvs;
+use Haspadar\Sheriff\Envs\EmptyEnvs;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

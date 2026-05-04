@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Check;
+namespace Haspadar\Sheriff\Tests\Unit\Check;
 
-use Haspadar\Piqule\Check\CheckReport;
-use Haspadar\Piqule\Tests\Fake\Output\FakeOutput;
+use Haspadar\Sheriff\Check\CheckReport;
+use Haspadar\Sheriff\Tests\Fake\Output\FakeOutput;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

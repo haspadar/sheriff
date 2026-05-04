@@ -12,25 +12,16 @@
         "bin/sheriff-verify",
         "bin/sheriff-tokens-check",
         "bin/sheriff-agent-rules-check",
-        "bin/sheriff-agent-rules-install",
-        "bin/piqule-check",
-        "bin/piqule-fix",
-        "bin/piqule-sync",
-        "bin/piqule-pin",
-        "bin/piqule-verify",
-        "bin/piqule-tokens-check",
-        "bin/piqule-agent-rules-check",
-        "bin/piqule-agent-rules-install",
-        "bin/piqule"
+        "bin/sheriff-agent-rules-install"
     ],
     "autoload": {
         "psr-4": {
-            "Haspadar\\Piqule\\": "src/"
+            "Haspadar\\Sheriff\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Haspadar\\Piqule\\Tests\\": "tests/"
+            "Haspadar\\Sheriff\\Tests\\": "tests/"
         }
     },
     "authors": [

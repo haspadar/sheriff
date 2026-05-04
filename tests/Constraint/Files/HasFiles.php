@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Files;
+namespace Haspadar\Sheriff\Tests\Constraint\Files;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\Files\Files;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\Files\Files;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFiles extends Constraint

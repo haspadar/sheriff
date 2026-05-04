@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Storage;
+namespace Haspadar\Sheriff\Storage;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -24,7 +24,7 @@ final readonly class InMemoryStorage implements Storage
     public function read(string $location): string
     {
         if (!array_key_exists($location, $this->entries)) {
-            throw new PiquleException("Location not found: {$location}");
+            throw new SheriffException("Location not found: {$location}");
         }
 
         return $this->entries[$location]->contents();
@@ -34,7 +34,7 @@ final readonly class InMemoryStorage implements Storage
     public function mode(string $location): int
     {
         if (!array_key_exists($location, $this->entries)) {
-            throw new PiquleException("Location not found: {$location}");
+            throw new SheriffException("Location not found: {$location}");
         }
 
         return $this->entries[$location]->mode();

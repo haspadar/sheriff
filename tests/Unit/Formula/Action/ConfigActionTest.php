@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Action;
 
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\Config\OverrideConfig;
-use Haspadar\Piqule\Formula\Action\ConfigAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Tests\Constraint\Formula\Args\HasArgsValues;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\Config\OverrideConfig;
+use Haspadar\Sheriff\Formula\Action\ConfigAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Tests\Constraint\Formula\Args\HasArgsValues;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

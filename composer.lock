@@ -1831,7 +1831,7 @@
                 "phpstan/phpstan": "^2.0"
             },
             "require-dev": {
-                "haspadar/piqule": "dev-main",
+                "haspadar/sheriff": "dev-main",
                 "kubawerlos/php-cs-fixer-custom-fixers": "^3.36",
                 "slevomat/coding-standard": "^8.28"
             },

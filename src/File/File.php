@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\File;
+namespace Haspadar\Sheriff\File;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * A named file with content and POSIX permissions
@@ -19,7 +19,7 @@ interface File
     /**
      * Raw file content
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     public function contents(): string;
 

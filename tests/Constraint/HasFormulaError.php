@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint;
+namespace Haspadar\Sheriff\Tests\Constraint;
 
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFormulaError extends Constraint
@@ -26,7 +26,7 @@ final class HasFormulaError extends Constraint
             $other->contents();
 
             return false;
-        } catch (PiquleException $e) {
+        } catch (SheriffException $e) {
             $message = $e->getMessage();
 
             return str_contains($message, $this->fileName)

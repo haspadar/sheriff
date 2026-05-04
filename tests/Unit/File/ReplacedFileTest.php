@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\File;
+namespace Haspadar\Sheriff\Tests\Unit\File;
 
-use Haspadar\Piqule\File\ReplacedFile;
-use Haspadar\Piqule\File\TextFile;
+use Haspadar\Sheriff\File\ReplacedFile;
+use Haspadar\Sheriff\File\TextFile;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

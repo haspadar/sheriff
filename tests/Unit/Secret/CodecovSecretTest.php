@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Secret;
+namespace Haspadar\Sheriff\Tests\Unit\Secret;
 
-use Haspadar\Piqule\Secret\CodecovSecret;
-use Haspadar\Piqule\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Secret\CodecovSecret;
+use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

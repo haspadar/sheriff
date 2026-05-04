@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula\Action;
+namespace Haspadar\Sheriff\Formula\Action;
 
-use Haspadar\Piqule\Formula\Args\Args;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Args\Args;
+use Haspadar\Sheriff\SheriffException;
 use InvalidArgumentException;
 
 /**
@@ -16,7 +16,7 @@ interface Action
     /**
      * Applies this action to the given arguments and returns the result
      *
-     * @throws InvalidArgumentException|PiquleException
+     * @throws InvalidArgumentException|SheriffException
      */
     public function transformed(Args $args): Args;
 }

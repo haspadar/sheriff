@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Parse;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Map\EachFormatted;
-use Haspadar\Piqule\Chain\Map\Formatted;
-use Haspadar\Piqule\Chain\Parse\MapFormula;
-use Haspadar\Piqule\Chain\Plain\IntText;
-use Haspadar\Piqule\Chain\Plain\ListText;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Chain\Map\EachFormatted;
+use Haspadar\Sheriff\Chain\Map\Formatted;
+use Haspadar\Sheriff\Chain\Parse\MapFormula;
+use Haspadar\Sheriff\Chain\Plain\IntText;
+use Haspadar\Sheriff\Chain\Plain\ListText;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -51,7 +51,7 @@ final class MapFormulaTest extends TestCase
     #[Test]
     public function failsWhenPreviousPipelineStagesAreEmpty(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new MapFormula(Formatted::class, ['- %s']))
             ->op([], self::settings());
@@ -60,7 +60,7 @@ final class MapFormulaTest extends TestCase
     #[Test]
     public function failsWhenPreviousHasMoreThanOneOp(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new MapFormula(Formatted::class, ['- %s']))
             ->op(

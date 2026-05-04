@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Files;
+namespace Haspadar\Sheriff\Files;
 
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\Storage\Storage;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\Storage\Storage;
 use Override;
 
 /**

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Settings;
+namespace Haspadar\Sheriff\Tests\Fake\Settings;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\Value;
 
 final readonly class FakeSettings implements Settings
 {
@@ -23,7 +23,7 @@ final readonly class FakeSettings implements Settings
     public function value(string $name): Value
     {
         if (!$this->has($name)) {
-            throw new PiquleException(sprintf('Unknown config key "%s"', $name));
+            throw new SheriffException(sprintf('Unknown config key "%s"', $name));
         }
 
         return $this->values[$name];

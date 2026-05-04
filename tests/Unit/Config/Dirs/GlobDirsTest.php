@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config\Dirs;
+namespace Haspadar\Sheriff\Tests\Unit\Config\Dirs;
 
-use Haspadar\Piqule\Config\Dirs\GlobDirs;
+use Haspadar\Sheriff\Config\Dirs\GlobDirs;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
 /**
  * Polls a set of running processes and collects their results.

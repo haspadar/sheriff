@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
- * Loads project configuration from .piqule.yaml, .piqule.php, or defaults.
+ * Loads project configuration from .sheriff.yaml, .sheriff.php, or defaults.
  *
  * Example:
  *
@@ -47,9 +47,9 @@ final readonly class ProjectConfig implements Config
     }
 
     /**
-     * Resolves configuration from .piqule.yaml, .piqule.php, or defaults.
+     * Resolves configuration from .sheriff.yaml, .sheriff.php, or defaults.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function resolve(): Config
     {
@@ -59,8 +59,8 @@ final readonly class ProjectConfig implements Config
             new ConfigPaths(sprintf('%s/composer.json', $this->root)),
         );
 
-        $yamlPath = sprintf('%s/.piqule.yaml', $this->root);
-        $phpPath = sprintf('%s/.piqule.php', $this->root);
+        $yamlPath = sprintf('%s/.sheriff.yaml', $this->root);
+        $phpPath = sprintf('%s/.sheriff.php', $this->root);
 
         if (file_exists($yamlPath)) {
             return new YamlConfig($yamlPath, $defaults);
@@ -70,7 +70,7 @@ final readonly class ProjectConfig implements Config
             $loaded = require $phpPath;
 
             if (!$loaded instanceof Config) {
-                throw new PiquleException('.piqule.php must return an instance of Config');
+                throw new SheriffException('.sheriff.php must return an instance of Config');
             }
 
             return $loaded;

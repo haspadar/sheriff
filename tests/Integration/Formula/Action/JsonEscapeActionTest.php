@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Integration\Formula\Action;
 
-use Haspadar\Piqule\Formula\Action\JsonEscapeAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Action\JsonEscapeAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

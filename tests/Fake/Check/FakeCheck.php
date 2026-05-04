@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Check;
+namespace Haspadar\Sheriff\Tests\Fake\Check;
 
-use Haspadar\Piqule\Check\Check;
+use Haspadar\Sheriff\Check\Check;
 use Override;
 
 final readonly class FakeCheck implements Check

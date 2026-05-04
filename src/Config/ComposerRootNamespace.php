@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
 /**
  * Root namespace from the PSR-4 autoload section of composer.json.

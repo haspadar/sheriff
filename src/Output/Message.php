@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Output;
+namespace Haspadar\Sheriff\Output;
 
 /**
  * An immutable text message with a plain string body.

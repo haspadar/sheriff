@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Config;
+namespace Haspadar\Sheriff\Tests\Integration\Config;
 
-use Haspadar\Piqule\Config\ComposerRootNamespace;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Config\ComposerRootNamespace;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

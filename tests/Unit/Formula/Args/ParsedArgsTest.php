@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Args;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Args;
 
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Formula\Args\ParsedArgs;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Args\ParsedArgs;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

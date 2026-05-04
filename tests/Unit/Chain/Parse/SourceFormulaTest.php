@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Parse;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Parse\SourceFormula;
-use Haspadar\Piqule\Chain\Plain\BoolText;
-use Haspadar\Piqule\Chain\Plain\IntText;
-use Haspadar\Piqule\Chain\Plain\ListText;
-use Haspadar\Piqule\Chain\Render\Neon\NeonTree;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Chain\Parse\SourceFormula;
+use Haspadar\Sheriff\Chain\Plain\BoolText;
+use Haspadar\Sheriff\Chain\Plain\IntText;
+use Haspadar\Sheriff\Chain\Plain\ListText;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonTree;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -90,7 +90,7 @@ final class SourceFormulaTest extends TestCase
     #[Test]
     public function failsWhenArgumentCountIsNotExactlyOne(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new SourceFormula(IntText::class, []))
             ->op([], self::settings([]));
@@ -99,7 +99,7 @@ final class SourceFormulaTest extends TestCase
     #[Test]
     public function failsWithMultipleArguments(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new SourceFormula(IntText::class, ['phpstan.level', 'extra']))
             ->op([], self::settings(['phpstan.level' => new IntValue(9)]));
@@ -108,7 +108,7 @@ final class SourceFormulaTest extends TestCase
     #[Test]
     public function failsWhenSettingsKeyIsAbsent(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new SourceFormula(IntText::class, ['phpstan.unknown']))
             ->op([], self::settings([]));

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\Config\Dirs\NegatedGlobDirs;
-use Haspadar\Piqule\Config\Dirs\ProjectDirs;
-use Haspadar\Piqule\Config\Dirs\TrailingGlobDirs;
-use Haspadar\Piqule\Config\Dirs\TrailingSlashDirs;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Config\Dirs\NegatedGlobDirs;
+use Haspadar\Sheriff\Config\Dirs\ProjectDirs;
+use Haspadar\Sheriff\Config\Dirs\TrailingGlobDirs;
+use Haspadar\Sheriff\Config\Dirs\TrailingSlashDirs;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use stdClass;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -94,7 +94,7 @@ final readonly class DefaultConfig implements Config
     /**
      * Parses YAML and computes all defaults with dynamic path derivations.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, scalar|list<scalar>>
      */
     private function defaults(): array
@@ -109,7 +109,7 @@ final readonly class DefaultConfig implements Config
         try {
             $yaml = Yaml::parseFile($this->paths->configYaml());
         } catch (ParseException $e) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to parse config "%s": %s', $this->paths->configYaml(), $e->getMessage()),
                 0,
                 $e,
@@ -117,7 +117,7 @@ final readonly class DefaultConfig implements Config
         }
 
         if (!is_array($yaml) || !array_key_exists('defaults', $yaml) || !is_array($yaml['defaults'])) {
-            throw new PiquleException('Missing "defaults" section in config.yaml');
+            throw new SheriffException('Missing "defaults" section in config.yaml');
         }
 
         /** @var array<string, mixed> $base */
@@ -168,7 +168,7 @@ final readonly class DefaultConfig implements Config
             'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),
             'yamllint.ignore' => array_merge(
                 (new TrailingGlobDirs($excludes))->toList(),
-                ['.piqule/**/html/**', '.piqule/**/coverage-report/**'],
+                ['.sheriff/**/html/**', '.sheriff/**/coverage-report/**'],
             ),
         ];
     }

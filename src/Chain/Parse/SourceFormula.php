@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Parse;
+namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -40,7 +40,7 @@ final readonly class SourceFormula implements Formula
     public function op(array $previous, Settings $settings): Op
     {
         if (count($this->args) !== 1) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf(
                     'SourceFormula "%s" expects exactly one settings key, got %d arguments',
                     $this->target,
@@ -52,7 +52,7 @@ final readonly class SourceFormula implements Formula
         $key = $this->args[0];
 
         if (!$settings->has($key)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf(
                     'SourceFormula "%s" cannot find settings key "%s"',
                     $this->target,

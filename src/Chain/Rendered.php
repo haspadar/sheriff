@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain;
+namespace Haspadar\Sheriff\Chain;
 
 /**
  * Marker for chain ops that act as format-specific sources.

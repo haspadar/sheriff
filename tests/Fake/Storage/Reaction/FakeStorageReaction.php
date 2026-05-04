@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Storage\Reaction;
+namespace Haspadar\Sheriff\Tests\Fake\Storage\Reaction;
 
-use Haspadar\Piqule\Storage\Reaction\StorageReaction;
+use Haspadar\Sheriff\Storage\Reaction\StorageReaction;
 use Override;
 
 final class FakeStorageReaction implements StorageReaction

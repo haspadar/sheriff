@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\EnvVar;
+namespace Haspadar\Sheriff\EnvVar;
 
-use Haspadar\Piqule\Config\Config;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * Environment variable required on a developer machine
@@ -16,6 +16,6 @@ interface EnvVar
 
     public function url(): string;
 
-    /** @throws PiquleException */
+    /** @throws SheriffException */
     public function enabled(Config $config): bool;
 }

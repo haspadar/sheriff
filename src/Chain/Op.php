@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain;
+namespace Haspadar\Sheriff\Chain;
 
 /**
  * One step in a template chain that produces a string for substitution.

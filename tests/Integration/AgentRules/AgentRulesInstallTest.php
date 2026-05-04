@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\AgentRules;
+namespace Haspadar\Sheriff\Tests\Integration\AgentRules;
 
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -13,9 +13,9 @@ use function proc_open;
 
 final class AgentRulesInstallTest extends TestCase
 {
-    private const string SCRIPT = __DIR__ . '/../../../bin/piqule-agent-rules-install';
+    private const string SCRIPT = __DIR__ . '/../../../bin/sheriff-agent-rules-install';
 
-    private const string MARKER = '<!-- piqule:begin -->';
+    private const string MARKER = '<!-- sheriff:begin -->';
 
     #[Test]
     public function leavesDirectoryUntouchedWhenNoAgentFilePresent(): void
@@ -45,7 +45,7 @@ final class AgentRulesInstallTest extends TestCase
             self::assertStringContainsString(
                 self::MARKER,
                 (string) file_get_contents($folder->path() . '/CLAUDE.md'),
-                'piqule section must be appended to CLAUDE.md when marker is missing',
+                'sheriff section must be appended to CLAUDE.md when marker is missing',
             );
         } finally {
             $folder->close();
@@ -73,7 +73,7 @@ final class AgentRulesInstallTest extends TestCase
     #[Test]
     public function leavesClaudeUnchangedWhenMarkerAlreadyPresent(): void
     {
-        $original = "# Project rules\n" . self::MARKER . "\nstale content\n<!-- piqule:end -->\n";
+        $original = "# Project rules\n" . self::MARKER . "\nstale content\n<!-- sheriff:end -->\n";
         $folder = (new TempFolder())->withFile('CLAUDE.md', $original);
 
         try {
@@ -82,7 +82,7 @@ final class AgentRulesInstallTest extends TestCase
             self::assertSame(
                 $original,
                 (string) file_get_contents($folder->path() . '/CLAUDE.md'),
-                'CLAUDE.md must stay untouched when piqule marker is already present',
+                'CLAUDE.md must stay untouched when sheriff marker is already present',
             );
         } finally {
             $folder->close();
@@ -100,7 +100,7 @@ final class AgentRulesInstallTest extends TestCase
             self::assertStringContainsString(
                 self::MARKER,
                 (string) file_get_contents($folder->path() . '/AGENTS.md'),
-                'piqule section must be appended to AGENTS.md when marker is missing',
+                'sheriff section must be appended to AGENTS.md when marker is missing',
             );
         } finally {
             $folder->close();
@@ -117,7 +117,7 @@ final class AgentRulesInstallTest extends TestCase
         );
 
         if (!is_resource($proc)) {
-            self::fail('Failed to start piqule-agent-rules-install subprocess');
+            self::fail('Failed to start sheriff-agent-rules-install subprocess');
         }
 
         fclose($pipes[0]);
@@ -129,7 +129,7 @@ final class AgentRulesInstallTest extends TestCase
 
         if ($exitCode !== 0) {
             self::fail(sprintf(
-                'piqule-agent-rules-install exited with code %d: %s',
+                'sheriff-agent-rules-install exited with code %d: %s',
                 $exitCode,
                 $stderr,
             ));

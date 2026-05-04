@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\Config\Config;
+use Haspadar\Sheriff\Config\Config;
 use Override;
 
 /**

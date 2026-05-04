@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Render\Neon\NeonList;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonList;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

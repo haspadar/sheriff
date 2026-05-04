@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings\Patch;
+namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Piqule\Settings\Patch\OverrideTree;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Patch\OverrideTree;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TypeError;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Config;
+namespace Haspadar\Sheriff\Tests\Integration\Config;
 
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\Config\YamlConfig;
-use Haspadar\Piqule\Tests\Constraint\Config\HasConfigYamlKey;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\Config\YamlConfig;
+use Haspadar\Sheriff\Tests\Constraint\Config\HasConfigYamlKey;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -37,13 +37,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function overrideReplacesConfigValue(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    phpstan.level: 7\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('phpstan.level', 7),
                 'Override must replace phpstan.level with 7',
             );
@@ -56,13 +56,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function appendAddsNewValueToInfraExclude(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "append:\n    infra.exclude:\n        - dist\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('infra.exclude', ['vendor', 'tests', '.git', 'dist']),
                 'Append must add "dist" to infra.exclude',
             );
@@ -75,13 +75,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function overrideInfraExcludeCascadesToDerivedKeys(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    infra.exclude:\n        - dist\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('shellcheck.ignore_dirs', ['dist']),
                 'Override infra.exclude must cascade to shellcheck.ignore_dirs',
             );
@@ -94,13 +94,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function appendInfraExcludeCascadesToDerivedKeys(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "append:\n    infra.exclude:\n        - dist\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('shellcheck.ignore_dirs', ['vendor', 'tests', '.git', 'dist']),
                 'Append infra.exclude must cascade to shellcheck.ignore_dirs',
             );
@@ -113,13 +113,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function overridePhpSrcCascadesToDerivedKeys(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    php.src:\n        - lib\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('phpmd.paths', ['lib']),
                 'Override php.src must cascade to phpmd.paths',
             );
@@ -132,13 +132,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function appendPhpSrcCascadesToDerivedKeys(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "append:\n    php.src:\n        - lib\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('phpmd.paths', ['src', 'lib']),
                 'Append php.src must cascade to phpmd.paths',
             );
@@ -171,13 +171,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function overridePhpCsFixerExtendStoresRawString(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    php_cs_fixer.extend: \"'phpdoc_scalar' => false,\"\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('php_cs_fixer.extend', ["'phpdoc_scalar' => false,"]),
                 'Override must store the extend scalar verbatim',
             );
@@ -200,13 +200,13 @@ final class ConfigYamlTemplateTest extends TestCase
     public function overridePhpcsExtendStoresRawString(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule.yaml',
+            '.sheriff.yaml',
             "override:\n    phpcs.extend: \"<rule ref='Foo.Bar'><severity>0</severity></rule>\"\n",
         );
 
         try {
             self::assertThat(
-                new YamlConfig($folder->path() . '/.piqule.yaml', new DefaultConfig()),
+                new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
                 new HasConfigYamlKey('phpcs.extend', ["<rule ref='Foo.Bar'><severity>0</severity></rule>"]),
                 'Override must store the extend scalar verbatim',
             );

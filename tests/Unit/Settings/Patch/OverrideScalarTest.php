@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings\Patch;
+namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Piqule\Settings\Patch\OverrideScalar;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Patch\OverrideScalar;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

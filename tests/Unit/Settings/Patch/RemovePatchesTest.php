@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings\Patch;
+namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch\RemoveList;
-use Haspadar\Piqule\Settings\Patch\RemovePatches;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Settings\Patch\RemoveList;
+use Haspadar\Sheriff\Settings\Patch\RemovePatches;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -49,7 +49,7 @@ final class RemovePatchesTest extends TestCase
     #[Test]
     public function rejectsScalarPayloadAsConfigError(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new RemovePatches(['phpstan.level' => 8]))->patches();
     }
@@ -57,7 +57,7 @@ final class RemovePatchesTest extends TestCase
     #[Test]
     public function rejectsMappingPayloadAsConfigError(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new RemovePatches(['phpstan.parameters' => ['nested' => true]]))->patches();
     }

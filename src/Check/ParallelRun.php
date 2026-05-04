@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\Output\Output;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Runnable;
+use Haspadar\Sheriff\Output\Output;
+use Haspadar\Sheriff\Runnable;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -62,7 +62,7 @@ final readonly class ParallelRun implements Runnable
         if ($failed) {
             $report->failed('Checks failed', microtime(true) - $start);
 
-            throw new PiquleException('');
+            throw new SheriffException('');
         }
 
         $report->passed('All checks passed', microtime(true) - $start);
@@ -74,7 +74,7 @@ final readonly class ParallelRun implements Runnable
      * @param list<Check> $batch Checks to launch together
      * @param int $offset Ordinal offset of the first check in the overall run
      * @param CheckReport $report Reporter used to announce starts and outcomes
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function batch(array $batch, int $offset, CheckReport $report): bool
     {
@@ -84,7 +84,7 @@ final readonly class ParallelRun implements Runnable
             $handle = $this->spawn($check);
 
             if (!is_array($handle)) {
-                throw new PiquleException("Failed to start: {$check->name()}");
+                throw new SheriffException("Failed to start: {$check->name()}");
             }
 
             $report->started($check->name(), $offset + $index + 1);
@@ -99,7 +99,7 @@ final readonly class ParallelRun implements Runnable
      *
      * @param list<array{proc: resource, stdout: resource, stderr: resource, check: Check, start: float}> $handles Running process records produced by spawn()
      * @param CheckReport $report Reporter used to announce outcomes
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function collect(array $handles, CheckReport $report): bool
     {

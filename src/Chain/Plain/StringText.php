@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Plain;
+namespace Haspadar\Sheriff\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\Settings\Value\StringValue;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use Override;
 
 /**

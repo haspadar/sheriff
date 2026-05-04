@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Settings;
+namespace Haspadar\Sheriff\Tests\Unit\Settings;
 
-use Haspadar\Piqule\Settings\PatchedSettings;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Tests\Fake\Settings\EchoPatch;
-use Haspadar\Piqule\Tests\Fake\Settings\FakePatch;
-use Haspadar\Piqule\Tests\Fake\Settings\FakeSettings;
+use Haspadar\Sheriff\Settings\PatchedSettings;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Tests\Fake\Settings\EchoPatch;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakePatch;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

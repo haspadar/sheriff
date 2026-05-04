@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Check;
+namespace Haspadar\Sheriff\Tests\Unit\Check;
 
-use Haspadar\Piqule\Check\ConfigOption;
-use Haspadar\Piqule\Tests\Fake\Check\FakeCliOption;
+use Haspadar\Sheriff\Check\ConfigOption;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeCliOption;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

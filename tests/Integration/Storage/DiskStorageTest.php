@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Storage;
+namespace Haspadar\Sheriff\Tests\Integration\Storage;
 
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Storage\DiskStorage;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntries;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntry;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Storage\DiskStorage;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntries;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntry;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -72,7 +72,7 @@ final class DiskStorageTest extends TestCase
     #[Test]
     public function throwsWhenReadingMissingLocation(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new DiskStorage(
             (new TempFolder())->path(),
@@ -182,7 +182,7 @@ final class DiskStorageTest extends TestCase
     #[Test]
     public function throwsWhenReadingModeOfMissingLocation(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new DiskStorage(
             (new TempFolder())->path(),

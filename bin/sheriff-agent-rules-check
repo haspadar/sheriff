@@ -1,4 +1,40 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env php
+<?php
 
-exec "$(dirname "$0")/piqule-agent-rules-check" "$@"
+declare(strict_types=1);
+
+use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Storage\DiskStorage;
+
+require_once __DIR__ . '/bootstrap-autoload.php';
+
+const AGENT_MARKER = '<!-- sheriff:begin -->';
+const AGENT_FILES = ['CLAUDE.md', 'AGENTS.md'];
+
+$output = new Console();
+
+try {
+    $projectRoot = getcwd()
+        ?: throw new SheriffException('Cannot determine current working directory');
+
+    $disk = new DiskStorage($projectRoot);
+
+    foreach (AGENT_FILES as $name) {
+        if (!$disk->exists($name)) {
+            continue;
+        }
+
+        if (str_contains($disk->read($name), AGENT_MARKER)) {
+            continue;
+        }
+
+        $output->info(sprintf(
+            '[AGENT] %s has no Sheriff section. Run: vendor/bin/sheriff agent-rules-install',
+            $name,
+        ));
+    }
+} catch (SheriffException $e) {
+    $output->error($e->getMessage());
+    exit(1);
+}

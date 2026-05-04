@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Render\Neon\NeonFloat;
-use Haspadar\Piqule\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonFloat;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;

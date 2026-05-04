@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\Output\Output;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Runnable;
+use Haspadar\Sheriff\Output\Output;
+use Haspadar\Sheriff\Runnable;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -49,7 +49,7 @@ final readonly class SequentialRun implements Runnable
                 $report->failed($check->name(), $result->elapsed());
                 $report->failed('Checks failed', microtime(true) - $start);
 
-                throw new PiquleException('');
+                throw new SheriffException('');
             }
 
             $report->passed($check->name(), $result->elapsed());

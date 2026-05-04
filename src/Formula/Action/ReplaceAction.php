@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula\Action;
+namespace Haspadar\Sheriff\Formula\Action;
 
-use Haspadar\Piqule\Formula\Args\Args;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Formula\Args\StringifiedArgs;
-use Haspadar\Piqule\Formula\Args\UnquotedArgs;
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\Formula\Args\Args;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Args\StringifiedArgs;
+use Haspadar\Sheriff\Formula\Args\UnquotedArgs;
+use Haspadar\Sheriff\SheriffException;
 use InvalidArgumentException;
 use Override;
 
@@ -53,7 +53,7 @@ final readonly class ReplaceAction implements Action
     /**
      * Splits the raw argument string into (search, replace) with escape sequences resolved.
      *
-     * @throws InvalidArgumentException|PiquleException
+     * @throws InvalidArgumentException|SheriffException
      * @return array{string, string}
      */
     private function pair(): array
@@ -61,7 +61,7 @@ final readonly class ReplaceAction implements Action
         $parts = array_map('trim', explode(',', $this->raw, self::PAIR_COUNT));
 
         if (count($parts) !== self::PAIR_COUNT) {
-            throw new PiquleException(
+            throw new SheriffException(
                 'Action "replace" requires two arguments: search and replace',
             );
         }

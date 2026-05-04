@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Storage;
+namespace Haspadar\Sheriff\Tests\Unit\Storage;
 
-use Haspadar\Piqule\File\TextFile;
-use Haspadar\Piqule\Storage\AppendingStorage;
-use Haspadar\Piqule\Storage\InMemoryStorage;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntries;
-use Haspadar\Piqule\Tests\Constraint\Storage\HasEntry;
-use Haspadar\Piqule\Tests\Constraint\Storage\ReactionWasSilent;
-use Haspadar\Piqule\Tests\Fake\Storage\Reaction\FakeStorageReaction;
+use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\Storage\AppendingStorage;
+use Haspadar\Sheriff\Storage\InMemoryStorage;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntries;
+use Haspadar\Sheriff\Tests\Constraint\Storage\HasEntry;
+use Haspadar\Sheriff\Tests\Constraint\Storage\ReactionWasSilent;
+use Haspadar\Sheriff\Tests\Fake\Storage\Reaction\FakeStorageReaction;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -216,12 +216,12 @@ final class AppendingStorageTest extends TestCase
         $result = (new AppendingStorage(
             new InMemoryStorage(['hook' => new TextFile('hook', "#!/bin/sh\nexit 0", 0o755)]),
             new FakeStorageReaction(),
-            '# piqule',
-        ))->write(new TextFile('hook', '# piqule', 0o644));
+            '# sheriff',
+        ))->write(new TextFile('hook', '# sheriff', 0o644));
 
         self::assertThat(
             $result,
-            new HasEntry('hook', "#!/bin/sh\nexit 0\n# piqule", 0o755),
+            new HasEntry('hook', "#!/bin/sh\nexit 0\n# sheriff", 0o755),
             'appended file must retain the original file mode, not the incoming template mode',
         );
     }

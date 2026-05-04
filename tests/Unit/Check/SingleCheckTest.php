@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Check;
+namespace Haspadar\Sheriff\Tests\Unit\Check;
 
-use Haspadar\Piqule\Check\SingleCheck;
+use Haspadar\Sheriff\Check\SingleCheck;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

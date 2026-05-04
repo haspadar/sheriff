@@ -59,12 +59,12 @@ jobs:
         run: |
           NEW_DIGEST="${{ steps.build.outputs.digest }}"
           FILES=(
-            "templates/always/.piqule/config.yaml"
-            "templates/always/.piqule/_docker.sh"
-            "templates/always/.piqule/sonar/command.sh"
-            ".piqule/config.yaml"
-            ".piqule/_docker.sh"
-            ".piqule/sonar/command.sh"
+            "templates/always/.sheriff/config.yaml"
+            "templates/always/.sheriff/_docker.sh"
+            "templates/always/.sheriff/sonar/command.sh"
+            ".sheriff/config.yaml"
+            ".sheriff/_docker.sh"
+            ".sheriff/sonar/command.sh"
           )
           NEW_IMAGE="ghcr.io/${{ github.repository_owner }}/sheriff-infra@${NEW_DIGEST}"
           OLD_IMAGE=$(grep -o 'ghcr.io/[^"]*/sheriff-infra@sha256:[a-f0-9]*' "${FILES[0]}" | head -1)

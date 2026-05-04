@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Plain;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Plain;
 
-use Haspadar\Piqule\Chain\Plain\IntText;
-use Haspadar\Piqule\Settings\Value\IntValue;
+use Haspadar\Sheriff\Chain\Plain\IntText;
+use Haspadar\Sheriff\Settings\Value\IntValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

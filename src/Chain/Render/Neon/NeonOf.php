@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Rendered;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\FloatValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Chain\Rendered;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use TypeError;
 
 /**

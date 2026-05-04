@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Formula\Args;
+namespace Haspadar\Sheriff\Tests\Constraint\Formula\Args;
 
-use Haspadar\Piqule\Formula\Args\Args;
+use Haspadar\Sheriff\Formula\Args\Args;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasArgsValues extends Constraint

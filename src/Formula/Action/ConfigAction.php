@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula\Action;
+namespace Haspadar\Sheriff\Formula\Action;
 
-use Haspadar\Piqule\Config\Config;
-use Haspadar\Piqule\Formula\Args\Args;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\Formula\Args\StringifiedArgs;
+use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\Formula\Args\Args;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\Formula\Args\StringifiedArgs;
 use Override;
 
 /**

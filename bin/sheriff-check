@@ -1,4 +1,61 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env php
+<?php
 
-exec "$(dirname "$0")/piqule-check" "$@"
+declare(strict_types=1);
+
+use Haspadar\Sheriff\Check\ConfigChecks;
+use Haspadar\Sheriff\Check\ConfigDefault;
+use Haspadar\Sheriff\Check\ConfigOption;
+use Haspadar\Sheriff\Check\EnabledChecks;
+use Haspadar\Sheriff\Check\FastChecks;
+use Haspadar\Sheriff\Check\ParallelRun;
+use Haspadar\Sheriff\Check\RequestedCheck;
+use Haspadar\Sheriff\Check\SequentialRun;
+use Haspadar\Sheriff\Check\SingleCheck;
+use Haspadar\Sheriff\Check\ToggleOption;
+use Haspadar\Sheriff\Config\ProjectConfig;
+use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\SheriffException;
+
+require_once __DIR__ . '/bootstrap-autoload.php';
+
+$projectRoot = getcwd()
+    ?: throw new RuntimeException('Cannot determine cwd');
+
+try {
+    $config = new ProjectConfig($projectRoot);
+    $output = new Console();
+
+    $requested = new RequestedCheck($argv);
+    $verbose = new ToggleOption($argv, ['-v', '--verbose']);
+    $parallel = new ConfigOption(
+        new ToggleOption($argv, ['-p', '--parallel']),
+        new ToggleOption($argv, ['-P', '--no-parallel']),
+        new ConfigDefault($config, 'check.parallel'),
+    );
+    $full = new ConfigOption(
+        new ToggleOption($argv, ['-f', '--full']),
+        new ToggleOption($argv, ['-F', '--no-full']),
+        new ConfigDefault($config, 'check.full'),
+    );
+
+    $checks = $requested->name() !== ''
+        ? new SingleCheck($requested->name(), $projectRoot)
+        : new EnabledChecks(
+            $full->enabled()
+                ? new ConfigChecks($config, $projectRoot)
+                : new FastChecks(new ConfigChecks($config, $projectRoot), $config),
+            $config,
+        );
+
+    ($parallel->enabled() && $requested->name() === ''
+        ? new ParallelRun($checks, $output, $verbose)
+        : new SequentialRun($checks, $output, $verbose)
+    )->run();
+} catch (SheriffException $e) {
+    if ($e->getMessage() !== '') {
+        fwrite(STDERR, $e->getMessage() . "\n");
+    }
+
+    exit(1);
+}

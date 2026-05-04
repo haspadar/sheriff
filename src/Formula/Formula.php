@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Formula;
+namespace Haspadar\Sheriff\Formula;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use InvalidArgumentException;
 
 /**
@@ -15,7 +15,7 @@ interface Formula
     /**
      * Evaluates the expression and returns the resulting string
      *
-     * @throws InvalidArgumentException|PiquleException
+     * @throws InvalidArgumentException|SheriffException
      */
     public function result(): string;
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Envs;
+namespace Haspadar\Sheriff\Envs;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * Environment variables for CI workflows.
@@ -12,7 +12,7 @@ use Haspadar\Piqule\PiquleException;
 interface Envs
 {
     /**
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, string> variable name => shell command
      */
     public function vars(): array;

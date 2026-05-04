@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use Symfony\Component\Yaml\Exception\ParseException as YamlParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Loads project configuration from a .piqule.yaml file.
+ * Loads project configuration from a .sheriff.yaml file.
  *
  * Supports two sections:
  * - override: replaces default values
  * - append: adds values to existing lists
  *
- * Example .piqule.yaml:
+ * Example .sheriff.yaml:
  *
  *     override:
  *         phpstan.level: 8
@@ -33,7 +33,7 @@ final readonly class YamlConfig implements Config
     /**
      * Initializes with a YAML file path and default configuration.
      *
-     * @param string $path Path to the .piqule.yaml project configuration file
+     * @param string $path Path to the .sheriff.yaml project configuration file
      * @param DefaultConfig $defaults Base configuration providing built-in key defaults
      */
     public function __construct(private string $path, private DefaultConfig $defaults)
@@ -62,14 +62,14 @@ final readonly class YamlConfig implements Config
     /**
      * Parses the YAML file and builds the layered configuration.
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     private function parse(): Config
     {
         try {
             $data = Yaml::parseFile($this->path);
         } catch (YamlParseException $e) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Failed to parse "%s": %s', $this->path, $e->getMessage()),
                 0,
                 $e,
@@ -77,7 +77,7 @@ final readonly class YamlConfig implements Config
         }
 
         if (!is_array($data)) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Invalid configuration file "%s": expected a mapping', $this->path),
             );
         }
@@ -86,7 +86,6 @@ final readonly class YamlConfig implements Config
         $overrides = array_key_exists('override', $data) && is_array($data['override'])
             ? $data['override']
             : [];
-        $overrides = (new SheriffOverrides($overrides))->toArray();
 
         /** @var array<string, mixed> $appends */
         $appends = array_key_exists('append', $data) && is_array($data['append'])

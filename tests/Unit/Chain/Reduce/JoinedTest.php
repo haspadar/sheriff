@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Reduce;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Reduce;
 
-use Haspadar\Piqule\Chain\Reduce\Joined;
-use Haspadar\Piqule\Chain\Render\Neon\NeonBool;
-use Haspadar\Piqule\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Chain\Reduce\Joined;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonBool;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

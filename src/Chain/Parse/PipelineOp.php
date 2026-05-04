@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Parse;
+namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Settings;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -39,7 +39,7 @@ final readonly class PipelineOp implements Op
     public function rendered(): string
     {
         if ($this->formulas === []) {
-            throw new PiquleException(
+            throw new SheriffException(
                 'PipelineOp requires at least one formula to render',
             );
         }

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Settings\Patch;
+namespace Haspadar\Sheriff\Settings\Patch;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\RawValue;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\RawValue;
+use Haspadar\Sheriff\SheriffException;
 use TypeError;
 
 /**
- * Translates the `remove` section of `.piqule.yaml` into Patch instances.
+ * Translates the `remove` section of `.sheriff.yaml` into Patch instances.
  *
  * Yaml input always produces RemoveList. RemoveTree (drop named keys from a
  * tree) is constructed programmatically because the parser cannot tell a
@@ -36,7 +36,7 @@ final readonly class RemovePatches
     /**
      * Returns the list of Patch objects derived from the section.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      * @return list<Patch>
      */
     public function patches(): array
@@ -54,14 +54,14 @@ final readonly class RemovePatches
     /**
      * Builds a RemoveList patch from a yaml list payload.
      *
-     * @throws PiquleException|TypeError
+     * @throws SheriffException|TypeError
      */
     private function patchOf(string $key, mixed $raw): Patch
     {
         $value = (new RawValue($raw))->value();
 
         if (!$value instanceof ListValue) {
-            throw new PiquleException(
+            throw new SheriffException(
                 sprintf('Remove "%s" expects a list of items to drop', $key),
             );
         }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Config;
+namespace Haspadar\Sheriff\Tests\Fake\Config;
 
-use Haspadar\Piqule\Config\Config;
+use Haspadar\Sheriff\Config\Config;
 
 final class FakeConfig implements Config
 {

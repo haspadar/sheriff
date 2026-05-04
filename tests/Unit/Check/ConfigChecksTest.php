@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Check;
+namespace Haspadar\Sheriff\Tests\Unit\Check;
 
-use Haspadar\Piqule\Check\ConfigChecks;
-use Haspadar\Piqule\Tests\Fake\Config\FakeConfig;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Check\ConfigChecks;
+use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ final class ConfigChecksTest extends TestCase
     public function yieldsCheckWhenCommandFileExists(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule/phpstan/command.sh',
+            '.sheriff/phpstan/command.sh',
             '#!/bin/bash',
         );
 
@@ -45,7 +45,7 @@ final class ConfigChecksTest extends TestCase
     public function skipsKeysNotEndingWithCli(): void
     {
         $folder = (new TempFolder())->withFile(
-            '.piqule/phpstan/command.sh',
+            '.sheriff/phpstan/command.sh',
             '#!/bin/bash',
         );
 

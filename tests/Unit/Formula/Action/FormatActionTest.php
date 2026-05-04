@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula\Action;
+namespace Haspadar\Sheriff\Tests\Unit\Formula\Action;
 
-use Haspadar\Piqule\Formula\Action\FormatAction;
-use Haspadar\Piqule\Formula\Args\ListArgs;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Constraint\Formula\Args\HasArgsValues;
+use Haspadar\Sheriff\Formula\Action\FormatAction;
+use Haspadar\Sheriff\Formula\Args\ListArgs;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Constraint\Formula\Args\HasArgsValues;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +39,7 @@ final class FormatActionTest extends TestCase
     #[Test]
     public function throwsWhenInputContainsMultipleValues(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FormatAction('%s'))
             ->transformed(new ListArgs(['a', 'b']));
@@ -100,7 +100,7 @@ final class FormatActionTest extends TestCase
     #[Test]
     public function throwsWhenSprintfFails(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FormatAction('%1$s %2$s'))
             ->transformed(new ListArgs(['only-one']));
@@ -109,7 +109,7 @@ final class FormatActionTest extends TestCase
     #[Test]
     public function throwsWhenSprintfRaisesValueError(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new FormatAction('"%z"'))
             ->transformed(new ListArgs(['a']));

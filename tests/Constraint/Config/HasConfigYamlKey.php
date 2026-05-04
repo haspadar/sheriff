@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Constraint\Config;
+namespace Haspadar\Sheriff\Tests\Constraint\Config;
 
-use Haspadar\Piqule\Config\Config;
+use Haspadar\Sheriff\Config\Config;
 use PHPUnit\Framework\Constraint\Constraint;
 
 /**

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Files;
+namespace Haspadar\Sheriff\Files;
 
 use Closure;
-use Haspadar\Piqule\File\File;
-use Haspadar\Piqule\Runnable;
+use Haspadar\Sheriff\File\File;
+use Haspadar\Sheriff\Runnable;
 use Override;
 
 /**

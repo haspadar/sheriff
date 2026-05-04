@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain\Parse;
+namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Piqule\Chain\Op;
-use Haspadar\Piqule\Settings\Settings;
+use Haspadar\Sheriff\Chain\Op;
+use Haspadar\Sheriff\Settings\Settings;
 
 /**
  * One stage of a template pipeline expressed as `Name(args)`.

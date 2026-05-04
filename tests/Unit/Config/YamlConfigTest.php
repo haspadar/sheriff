@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Config;
+namespace Haspadar\Sheriff\Tests\Unit\Config;
 
-use Haspadar\Piqule\Config\DefaultConfig;
-use Haspadar\Piqule\Config\YamlConfig;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Config\DefaultConfig;
+use Haspadar\Sheriff\Config\YamlConfig;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -28,9 +28,9 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function throwsWhenFileContainsInvalidYaml(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        $path = $this->folder->withFile('.piqule.yaml', ": invalid: yaml: :")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', ": invalid: yaml: :")->path() . '/.sheriff.yaml';
 
         (new YamlConfig($path, new DefaultConfig()))->has('');
     }
@@ -38,9 +38,9 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function throwsWhenFileContainsScalarYaml(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        $path = $this->folder->withFile('.piqule.yaml', "just a string\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "just a string\n")->path() . '/.sheriff.yaml';
 
         (new YamlConfig($path, new DefaultConfig()))->has('');
     }
@@ -48,7 +48,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function returnsDelegatedHasWhenNoOverrides(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override: {}\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override: {}\n")->path() . '/.sheriff.yaml';
 
         self::assertTrue(
             (new YamlConfig($path, new DefaultConfig()))->has('phpstan.level'),
@@ -59,7 +59,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function returnsDefaultValueWhenNoOverridesOrAppends(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "{}\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "{}\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             [9],
@@ -71,7 +71,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function returnsOverriddenValueWhenOverrideSectionPresent(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             [7],
@@ -81,59 +81,59 @@ final class YamlConfigTest extends TestCase
     }
 
     #[Test]
-    public function returnsSheriffBinaryWhenLegacyPiquleBinaryIsOverridden(): void
+    public function returnsSheriffBinaryWhenSheriffBinaryIsOverridden(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin: bin/sheriff\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    ci.sheriff_bin: bin/sheriff\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['bin/sheriff'],
             (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin'),
-            'YamlConfig must map the legacy CI binary override to the Sheriff key',
+            'YamlConfig must return a direct CI binary override',
         );
     }
 
     #[Test]
-    public function returnsSheriffBinaryListWhenLegacyPiquleBinaryListIsOverridden(): void
+    public function returnsSheriffBinaryListWhenSheriffBinaryListIsOverridden(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        - bin/sheriff\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    ci.sheriff_bin:\n        - bin/sheriff\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['bin/sheriff'],
             (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin'),
-            'YamlConfig must map legacy CI binary list overrides to the Sheriff key',
+            'YamlConfig must return a direct CI binary list override',
         );
     }
 
     #[Test]
-    public function preservesSiblingOverrideWhenLegacyPiquleBinaryIsMapped(): void
+    public function preservesSiblingOverrideWhenSheriffBinaryIsOverridden(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin: bin/sheriff\n    phpstan.level: 7\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    ci.sheriff_bin: bin/sheriff\n    phpstan.level: 7\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             [7],
             (new YamlConfig($path, new DefaultConfig()))->list('phpstan.level'),
-            'YamlConfig must preserve sibling overrides when mapping the legacy CI binary key',
+            'YamlConfig must preserve sibling overrides when reading the CI binary key',
         );
     }
 
     #[Test]
-    public function throwsWhenLegacyPiquleBinaryOverrideIsNested(): void
+    public function throwsWhenSheriffBinaryOverrideContainsNestedList(): void
     {
-        $this->expectException(PiquleException::class);
-        $this->expectExceptionMessage('Override "ci.piqule_bin" must be scalar or list<scalar>');
+        $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('Override "ci.sheriff_bin" must contain only scalars');
 
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        - [bin/sheriff]\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    ci.sheriff_bin:\n        - [bin/sheriff]\n")->path() . '/.sheriff.yaml';
 
         (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin');
     }
 
     #[Test]
-    public function throwsWhenLegacyPiquleBinaryOverrideIsMapping(): void
+    public function throwsWhenSheriffBinaryOverrideIsMapping(): void
     {
-        $this->expectException(PiquleException::class);
-        $this->expectExceptionMessage('Override "ci.piqule_bin" must be scalar or list<scalar>');
+        $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('Override "ci.sheriff_bin" must be scalar or list<scalar>');
 
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        path: bin/sheriff\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    ci.sheriff_bin:\n        path: bin/sheriff\n")->path() . '/.sheriff.yaml';
 
         (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin');
     }
@@ -141,7 +141,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function returnsAppendedValuesWhenAppendSectionPresent(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "append:\n    phpstan.neon_includes:\n        - ../../rules.neon\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "append:\n    phpstan.neon_includes:\n        - ../../rules.neon\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['../../vendor/phpstan/phpstan-strict-rules/rules.neon', '../../vendor/haspadar/phpstan-rules/rules.neon', '../../rules.neon'],
@@ -153,7 +153,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function appendsToExistingDefaultList(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "append:\n    phpstan.neon_includes:\n        - ../../extra.neon\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "append:\n    phpstan.neon_includes:\n        - ../../extra.neon\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             ['../../vendor/phpstan/phpstan-strict-rules/rules.neon', '../../vendor/haspadar/phpstan-rules/rules.neon', '../../extra.neon'],
@@ -165,7 +165,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function toArrayIncludesOverriddenValue(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.sheriff.yaml';
 
         self::assertSame(
             [7],
@@ -177,7 +177,7 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function returnsCachedConfigOnRepeatedAccess(): void
     {
-        $path = $this->folder->withFile('.piqule.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "override:\n    phpstan.level: 7\n")->path() . '/.sheriff.yaml';
         $config = new YamlConfig($path, new DefaultConfig());
         $config->has('phpstan.level');
 
@@ -191,9 +191,9 @@ final class YamlConfigTest extends TestCase
     #[Test]
     public function throwsWhenListCalledForUndeclaredKey(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
-        $path = $this->folder->withFile('.piqule.yaml', "{}\n")->path() . '/.piqule.yaml';
+        $path = $this->folder->withFile('.sheriff.yaml', "{}\n")->path() . '/.sheriff.yaml';
 
         (new YamlConfig($path, new DefaultConfig()))->list('phpstan.nonexistent');
     }

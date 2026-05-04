@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Formula;
+namespace Haspadar\Sheriff\Tests\Unit\Formula;
 
-use Haspadar\Piqule\Formula\ExecutedFormula;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Constraint\Formula\HasFormulaResult;
-use Haspadar\Piqule\Tests\Fake\Formula\FakeAction;
-use Haspadar\Piqule\Tests\Fake\Formula\FakeActions;
+use Haspadar\Sheriff\Formula\ExecutedFormula;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Constraint\Formula\HasFormulaResult;
+use Haspadar\Sheriff\Tests\Fake\Formula\FakeAction;
+use Haspadar\Sheriff\Tests\Fake\Formula\FakeActions;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -55,7 +55,7 @@ final class ExecutedFormulaTest extends TestCase
     #[Test]
     public function throwsWhenFormulaDoesNotReduceToSingleValue(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new ExecutedFormula(
             new FakeActions([

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Settings;
+namespace Haspadar\Sheriff\Tests\Fake\Settings;
 
-use Haspadar\Piqule\Settings\Patch;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\Value\Value;
 
 final readonly class EchoPatch implements Patch
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Fake\Check;
+namespace Haspadar\Sheriff\Tests\Fake\Check;
 
-use Haspadar\Piqule\Check\CliOption;
+use Haspadar\Sheriff\Check\CliOption;
 
 final readonly class FakeCliOption implements CliOption
 {

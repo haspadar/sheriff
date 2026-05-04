@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Chain;
+namespace Haspadar\Sheriff\Chain;
 
 /**
  * Marker for chain ops that transform one rendered string into another.

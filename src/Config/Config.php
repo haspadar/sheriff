@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Config;
+namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Piqule\PiquleException;
+use Haspadar\Sheriff\SheriffException;
 
 /**
  * Read-only access to flat dot-notated configuration keys
@@ -14,7 +14,7 @@ interface Config
     /**
      * Returns true if the key is declared in this configuration
      *
-     * @throws PiquleException
+     * @throws SheriffException
      */
     public function has(string $name): bool;
 
@@ -23,13 +23,13 @@ interface Config
      *
      * Missing paths and explicitly empty lists are both represented as an empty list
      *
-     * @throws PiquleException
+     * @throws SheriffException
      * @return list<scalar>
      */
     public function list(string $name): array;
 
     /**
-     * @throws PiquleException
+     * @throws SheriffException
      * @return array<string, scalar|list<scalar>>
      */
     public function toArray(): array;

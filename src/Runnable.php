@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule;
+namespace Haspadar\Sheriff;
 
 use UnexpectedValueException;
 
 /** A unit of work that can be executed. */
 interface Runnable
 {
-    /** @throws PiquleException|UnexpectedValueException */
+    /** @throws SheriffException|UnexpectedValueException */
     public function run(): void;
 }

@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Chain\Render\Neon;
+namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Neon;
 
-use Haspadar\Piqule\Chain\Render\Neon\NeonBool;
-use Haspadar\Piqule\Chain\Render\Neon\NeonFloat;
-use Haspadar\Piqule\Chain\Render\Neon\NeonInt;
-use Haspadar\Piqule\Chain\Render\Neon\NeonList;
-use Haspadar\Piqule\Chain\Render\Neon\NeonOf;
-use Haspadar\Piqule\Chain\Render\Neon\NeonString;
-use Haspadar\Piqule\Chain\Render\Neon\NeonTree;
-use Haspadar\Piqule\Settings\Value\BoolValue;
-use Haspadar\Piqule\Settings\Value\FloatValue;
-use Haspadar\Piqule\Settings\Value\IntValue;
-use Haspadar\Piqule\Settings\Value\ListValue;
-use Haspadar\Piqule\Settings\Value\StringValue;
-use Haspadar\Piqule\Settings\Value\TreeValue;
-use Haspadar\Piqule\Settings\Value\Value;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonBool;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonFloat;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonInt;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonList;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonOf;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonString;
+use Haspadar\Sheriff\Chain\Render\Neon\NeonTree;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\Settings\Value\Value;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use TypeError;

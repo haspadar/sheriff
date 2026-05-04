@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Unit\Storage;
+namespace Haspadar\Sheriff\Tests\Unit\Storage;
 
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Storage\SafePath;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Storage\SafePath;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -64,7 +64,7 @@ final class SafePathTest extends TestCase
     #[Test]
     public function throwsWhenDotDotEscapesRoot(): void
     {
-        $this->expectException(PiquleException::class);
+        $this->expectException(SheriffException::class);
 
         (new SafePath('/root'))->resolve('../etc/passwd');
     }

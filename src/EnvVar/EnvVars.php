@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\EnvVar;
+namespace Haspadar\Sheriff\EnvVar;
 
 /**
  * Collection of local environment variables.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Check;
+namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Piqule\Output\Output;
+use Haspadar\Sheriff\Output\Output;
 
 /**
  * Formats check execution progress to output.

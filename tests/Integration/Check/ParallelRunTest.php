@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Piqule\Tests\Integration\Check;
+namespace Haspadar\Sheriff\Tests\Integration\Check;
 
-use Haspadar\Piqule\Check\ParallelRun;
-use Haspadar\Piqule\PiquleException;
-use Haspadar\Piqule\Tests\Fake\Check\FakeCheck;
-use Haspadar\Piqule\Tests\Fake\Check\FakeChecks;
-use Haspadar\Piqule\Tests\Fake\Check\FakeCliOption;
-use Haspadar\Piqule\Tests\Fake\Output\FakeOutput;
-use Haspadar\Piqule\Tests\Fixture\TempFolder;
+use Haspadar\Sheriff\Check\ParallelRun;
+use Haspadar\Sheriff\SheriffException;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeCheck;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeChecks;
+use Haspadar\Sheriff\Tests\Fake\Check\FakeCliOption;
+use Haspadar\Sheriff\Tests\Fake\Output\FakeOutput;
+use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -128,7 +128,7 @@ final class ParallelRunTest extends TestCase
 
         try {
             self::expectOutputString("failed\n");
-            self::expectException(PiquleException::class);
+            self::expectException(SheriffException::class);
 
             (new ParallelRun(
                 new FakeChecks([new FakeCheck('loud', $folder->path() . '/loud.sh')]),
@@ -153,7 +153,7 @@ final class ParallelRunTest extends TestCase
                     $output,
                     new FakeCliOption(false),
                 ))->run();
-            } catch (PiquleException) {
+            } catch (SheriffException) {
             }
 
             self::assertCount(
@@ -182,7 +182,7 @@ final class ParallelRunTest extends TestCase
                     $output,
                     new FakeCliOption(false),
                 ))->run();
-            } catch (PiquleException) {
+            } catch (SheriffException) {
             }
 
             self::assertSame(
@@ -201,7 +201,7 @@ final class ParallelRunTest extends TestCase
         $folder = (new TempFolder())->withFile('broken.sh', 'exit 1');
 
         try {
-            self::expectException(PiquleException::class);
+            self::expectException(SheriffException::class);
 
             (new ParallelRun(
                 new FakeChecks([new FakeCheck('broken', $folder->path() . '/broken.sh')]),

@@ -38,11 +38,16 @@ final readonly class SeparatedTexts
         }
 
         return array_map(
-            fn(string $value): string => trim($value),
+            static fn(string $value): string => trim($value),
             $values,
         );
     }
 
+    /**
+     * Returns the regex used to find separators outside quoted text.
+     *
+     * @return non-empty-string
+     */
     private function pattern(): string
     {
         return sprintf(

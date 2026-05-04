@@ -73,18 +73,22 @@ final readonly class FormulaArgs
             if ($escaped) {
                 $result .= $this->escaped($char);
                 $escaped = false;
+
                 continue;
             }
 
             if ($char === '\\') {
                 $escaped = true;
+
                 continue;
             }
 
             $result .= $char;
         }
 
-        return $escaped ? sprintf('%s\\', $result) : $result;
+        return $escaped
+            ? sprintf('%s\\', $result)
+            : $result;
     }
 
     private function escaped(string $char): string

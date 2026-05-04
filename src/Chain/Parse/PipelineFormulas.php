@@ -31,7 +31,7 @@ final readonly class PipelineFormulas
     public function formulas(): array
     {
         return array_map(
-            fn(string $text): Formula => (new PipelineFormula($text))->formula(),
+            static fn(string $text): Formula => (new PipelineFormula($text))->formula(),
             (new SeparatedTexts($this->pipeline, '|'))->values(),
         );
     }

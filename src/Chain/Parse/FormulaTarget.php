@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Chain\Parse;
 
 use Haspadar\Sheriff\Chain\Op;
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 
 /**
  * Formula class resolved from a template formula name.
@@ -27,7 +27,7 @@ final readonly class FormulaTarget
     /**
      * Returns the Formula implementation for the resolved Chain class.
      *
-     * @throws SheriffException
+     * @throws InvalidArgumentException
      */
     public function formula(): Formula
     {
@@ -50,7 +50,7 @@ final readonly class FormulaTarget
             return new ReduceFormula($target, $this->args);
         }
 
-        throw new SheriffException(sprintf('Unknown pipeline formula "%s"', $this->name));
+        throw new InvalidArgumentException(sprintf('Unknown pipeline formula "%s"', $this->name));
     }
 
     /**

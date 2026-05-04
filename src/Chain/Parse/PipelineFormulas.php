@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 
 /**
  * Formula stages parsed from a template pipeline string.
@@ -25,7 +25,7 @@ final readonly class PipelineFormulas
     /**
      * Returns formulas in source-to-tail order.
      *
-     * @throws SheriffException
+     * @throws InvalidArgumentException
      * @return list<Formula>
      */
     public function formulas(): array

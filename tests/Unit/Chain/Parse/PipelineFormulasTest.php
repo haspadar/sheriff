@@ -6,7 +6,7 @@ namespace Haspadar\Sheriff\Tests\Unit\Chain\Parse;
 
 use Haspadar\Sheriff\Chain\Parse\PipelineFormulas;
 use Haspadar\Sheriff\Chain\Parse\PipelineOp;
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\Settings\Value\IntValue;
 use Haspadar\Sheriff\Settings\Value\ListValue;
@@ -83,7 +83,7 @@ final class PipelineFormulasTest extends TestCase
     #[Test]
     public function failsWhenFormulaNameIsUnknown(): void
     {
-        $this->expectException(SheriffException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new PipelineFormulas('MissingFormula(app.name)'))->formulas();
     }
@@ -91,7 +91,7 @@ final class PipelineFormulasTest extends TestCase
     #[Test]
     public function failsWhenFormulaSyntaxIsInvalid(): void
     {
-        $this->expectException(SheriffException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new PipelineFormulas('StringText'))->formulas();
     }

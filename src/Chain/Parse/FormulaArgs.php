@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 
 /**
  * Argument list from one pipeline formula call.
@@ -29,7 +29,7 @@ final readonly class FormulaArgs
     /**
      * Returns unquoted argument values.
      *
-     * @throws SheriffException
+     * @throws InvalidArgumentException
      * @return list<string>
      */
     public function values(): array

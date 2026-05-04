@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 
 /**
  * Text split by a separator that is ignored inside quoted fragments.
@@ -26,7 +26,7 @@ final readonly class SeparatedTexts
     /**
      * Returns trimmed fragments while preserving quoted contents.
      *
-     * @throws SheriffException
+     * @throws InvalidArgumentException
      * @return list<string>
      */
     public function values(): array
@@ -34,7 +34,7 @@ final readonly class SeparatedTexts
         $values = preg_split($this->pattern(), $this->text);
 
         if (!is_array($values)) {
-            throw new SheriffException(sprintf('Cannot split "%s"', $this->text));
+            throw new InvalidArgumentException(sprintf('Cannot split "%s"', $this->text));
         }
 
         return array_map(

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Chain\Parse;
 
-use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 
 /**
  * One textual `Name(args)` stage from a template pipeline.
@@ -29,12 +29,12 @@ final readonly class PipelineFormula
     /**
      * Returns the executable Formula represented by this text.
      *
-     * @throws SheriffException
+     * @throws InvalidArgumentException
      */
     public function formula(): Formula
     {
         if (preg_match('/^\s*([A-Z][A-Za-z0-9]*)\s*\((.*)\)\s*$/s', $this->text, $match) !== 1) {
-            throw new SheriffException(sprintf('Invalid pipeline formula "%s"', $this->text));
+            throw new InvalidArgumentException(sprintf('Invalid pipeline formula "%s"', $this->text));
         }
 
         return (new FormulaTarget(

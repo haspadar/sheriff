@@ -8,6 +8,7 @@ use Haspadar\Sheriff\Chain\Parse\PipelineFormulas;
 use Haspadar\Sheriff\Chain\Parse\PipelineOp;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\SheriffException;
+use InvalidArgumentException;
 use Override;
 use TypeError;
 
@@ -58,7 +59,7 @@ final readonly class TemplateFile implements File
                 (new PipelineFormulas($expression))->formulas(),
                 $this->settings,
             ))->rendered();
-        } catch (SheriffException | TypeError $e) {
+        } catch (InvalidArgumentException | SheriffException | TypeError $e) {
             throw new SheriffException(
                 sprintf(
                     'File "%s", pipeline "%s": %s',

@@ -23,10 +23,12 @@ try {
     $projectRoot = getcwd()
         ?: throw new PiquleException('Cannot determine current working directory');
 
-    $installPath = InstalledVersions::getInstallPath('haspadar/piqule');
+    $installPath = InstalledVersions::isInstalled('haspadar/sheriff')
+        ? InstalledVersions::getInstallPath('haspadar/sheriff')
+        : InstalledVersions::getInstallPath('haspadar/piqule');
 
     if ($installPath === null || $installPath === '') {
-        throw new PiquleException('Cannot determine piqule install path');
+        throw new PiquleException('Cannot determine Sheriff install path');
     }
 
     $sectionPath = $installPath . '/templates/agent/section.md';
@@ -54,7 +56,7 @@ try {
     if ($touched === 0) {
         $output->info(
             'No agent files found (CLAUDE.md, AGENTS.md). '
-            . 'Create one of these manually and re-run `snob agent-rules-install`.',
+            . 'Create one of these manually and re-run `sheriff agent-rules-install`.',
         );
     }
 } catch (PiquleException $e) {

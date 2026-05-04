@@ -22,9 +22,9 @@ ARG SHELLCHECK_VERSION
 ARG JSONLINT_VERSION
 ARG SONAR_SCANNER_VERSION
 
-LABEL org.opencontainers.image.title="Piqule Infra"
-LABEL org.opencontainers.image.description="Infrastructure linters for Piqule"
-LABEL org.opencontainers.image.source="https://github.com/haspadar/piqule"
+LABEL org.opencontainers.image.title="Sheriff Infra"
+LABEL org.opencontainers.image.description="Infrastructure linters for Sheriff"
+LABEL org.opencontainers.image.source="https://github.com/haspadar/sheriff"
 LABEL org.opencontainers.image.licenses="MIT"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -130,9 +130,9 @@ RUN set -eux; \
     # --------------------------------------------------------\
     # Non-root runtime \
     # --------------------------------------------------------\
-    useradd -m -u 10001 piqule; \
+    useradd -m -u 10001 sheriff; \
     mkdir -p /project; \
-    chown -R piqule:piqule /project
+    chown -R sheriff:sheriff /project
 
-USER piqule
+USER sheriff
 WORKDIR /project

@@ -1,4 +1,4 @@
-name: Build Snob Infra Image
+name: Build Sheriff Infra Image
 
 on:
   push:
@@ -50,7 +50,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/${{ github.repository_owner }}/piqule-infra:latest
+            ghcr.io/${{ github.repository_owner }}/sheriff-infra:latest
 
       # ------------------------------------------------------------
       # Update pinned digest in config template when image changes
@@ -60,12 +60,17 @@ jobs:
           NEW_DIGEST="${{ steps.build.outputs.digest }}"
           FILES=(
             "templates/always/.piqule/config.yaml"
+            "templates/always/.piqule/_docker.sh"
+            "templates/always/.piqule/sonar/command.sh"
             ".piqule/config.yaml"
             ".piqule/_docker.sh"
+            ".piqule/sonar/command.sh"
           )
-          OLD_DIGEST=$(grep -o 'sha256:[a-f0-9]*' "${FILES[0]}" | head -1)
+          NEW_IMAGE="ghcr.io/${{ github.repository_owner }}/sheriff-infra@${NEW_DIGEST}"
+          OLD_IMAGE=$(grep -o 'ghcr.io/[^"]*/sheriff-infra@sha256:[a-f0-9]*' "${FILES[0]}" | head -1)
+          OLD_DIGEST=$(printf '%s' "$OLD_IMAGE" | grep -o 'sha256:[a-f0-9]*' || true)
           if [ -z "$OLD_DIGEST" ]; then
-            echo "::error::Could not extract existing digest from ${FILES[0]}"
+            echo "::error::Could not extract existing Sheriff image digest from ${FILES[0]}"
             exit 1
           fi
           if [ -z "$NEW_DIGEST" ]; then
@@ -76,7 +81,7 @@ jobs:
             BRANCH="auto-digest-${NEW_DIGEST:7:12}"
             git push origin --delete "$BRANCH" 2>/dev/null || true
             for file in "${FILES[@]}"; do
-              sed -i "s|$OLD_DIGEST|$NEW_DIGEST|" "$file"
+              sed -i "s|$OLD_IMAGE|$NEW_IMAGE|g" "$file"
             done
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"

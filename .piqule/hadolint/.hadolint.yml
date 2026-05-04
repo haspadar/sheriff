@@ -1,4 +1,4 @@
-# Hadolint configuration (Snob managed)
+# Hadolint configuration (Sheriff managed)
 
 failure-threshold: error
 

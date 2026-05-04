@@ -17,20 +17,20 @@ shift || true
 
 case "$COMMAND" in
   sync)
-    "$(dirname "$0")/piqule-sync" "$@"
-    "$(dirname "$0")/piqule-pin"
-    "$(dirname "$0")/piqule-tokens-check"
-    "$(dirname "$0")/piqule-agent-rules-check"
+    "$(dirname "$0")/sheriff-sync" "$@"
+    "$(dirname "$0")/sheriff-pin"
+    "$(dirname "$0")/sheriff-tokens-check"
+    "$(dirname "$0")/sheriff-agent-rules-check"
     ;;
   check|fix)
     ensure_project_root
-    "$(dirname "$0")/piqule-verify"
-    "$(dirname "$0")/piqule-${COMMAND}" "$@"
-    "$(dirname "$0")/piqule-tokens-check"
-    "$(dirname "$0")/piqule-agent-rules-check"
+    "$(dirname "$0")/sheriff-verify"
+    "$(dirname "$0")/sheriff-${COMMAND}" "$@"
+    "$(dirname "$0")/sheriff-tokens-check"
+    "$(dirname "$0")/sheriff-agent-rules-check"
     ;;
   agent-rules-install)
-    "$(dirname "$0")/piqule-agent-rules-install" "$@"
+    "$(dirname "$0")/sheriff-agent-rules-install" "$@"
     ;;
   *)
     echo "Usage: ${PROGRAM} [sync|check|fix|agent-rules-install]"

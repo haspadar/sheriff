@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Piqule PHPCS Rules">
+<ruleset name="Sheriff PHPCS Rules">
     <description>Structural and semantic PHP rules</description>
 
 << config(phpcs.files)

@@ -1,4 +1,4 @@
-# Release Drafter configuration for Snob
+# Release Drafter configuration for Sheriff
 # Versioning is driven strictly by PR labels
 
 name-template: "v$RESOLVED_VERSION"

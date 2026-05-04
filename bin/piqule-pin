@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LIBRARY_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+library_root() {
+  local path="$0"
+  local dir
+  local target
+
+  while [ -L "$path" ]; do
+    dir="$(cd -P "$(dirname "$path")" && pwd)"
+    target="$(readlink "$path")"
+    case "$target" in
+      /*) path="$target" ;;
+      *) path="${dir}/${target}" ;;
+    esac
+  done
+
+  cd -P "$(dirname "$path")/.." && pwd
+}
+
+LIBRARY_ROOT="$(library_root)"
 TEMPLATES_DIR="${LIBRARY_ROOT}/templates"
 OUTPUT=".piqule/templates.md5"
 

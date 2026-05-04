@@ -1,15 +1,15 @@
 #!/usr/bin/env sh
 set -e
 
-if [ -x "vendor/bin/piqule" ]; then
-  vendor/bin/piqule check
+if [ -x "vendor/bin/sheriff" ]; then
+  vendor/bin/sheriff check
   exit $?
 fi
 
 if command -v composer >/dev/null 2>&1; then
-  composer exec -- piqule check
+  composer exec -- sheriff check
   exit $?
 fi
 
-echo "Piqule is not installed"
+echo "Sheriff is not installed"
 exit 1

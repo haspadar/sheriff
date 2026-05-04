@@ -1,10 +1,26 @@
 {
-    "name": "haspadar/piqule",
+    "name": "haspadar/sheriff",
     "description": "Picky standards for PHP projects",
     "type": "library",
     "license": "MIT",
     "bin": [
-        "bin/snob",
+        "bin/sheriff",
+        "bin/sheriff-check",
+        "bin/sheriff-fix",
+        "bin/sheriff-sync",
+        "bin/sheriff-pin",
+        "bin/sheriff-verify",
+        "bin/sheriff-tokens-check",
+        "bin/sheriff-agent-rules-check",
+        "bin/sheriff-agent-rules-install",
+        "bin/piqule-check",
+        "bin/piqule-fix",
+        "bin/piqule-sync",
+        "bin/piqule-pin",
+        "bin/piqule-verify",
+        "bin/piqule-tokens-check",
+        "bin/piqule-agent-rules-check",
+        "bin/piqule-agent-rules-install",
         "bin/piqule"
     ],
     "autoload": {

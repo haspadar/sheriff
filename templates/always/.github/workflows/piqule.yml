@@ -1,4 +1,4 @@
-name: Snob
+name: Sheriff
 
 on:
   push:
@@ -62,7 +62,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run check
-        run: << config(ci.piqule_bin)|join("") >> check ${{ matrix.check }}
+        run: << config(ci.sheriff_bin)|join("") >> check ${{ matrix.check }}
 
 
   # ============================================================
@@ -98,7 +98,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run static check
-        run: << config(ci.piqule_bin)|join("") >> check ${{ matrix.check }}
+        run: << config(ci.sheriff_bin)|join("") >> check ${{ matrix.check }}
 
 
   # ============================================================

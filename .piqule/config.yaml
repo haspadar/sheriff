@@ -18,7 +18,8 @@ defaults:
   check.parallel: true
   check.slow: ["infection", "sonar"]
 
-  ci.piqule_bin: "vendor/bin/snob"
+  ci.sheriff_bin: "vendor/bin/sheriff"
+  ci.piqule_bin: "vendor/bin/sheriff"
   ci.pr.max_lines_changed: 250
 
   coverage.patch.target: 80
@@ -32,7 +33,7 @@ defaults:
   coderabbit.cloud: true
   coderabbit.cli: false
 
-  docker.image: "ghcr.io/haspadar/piqule-infra@sha256:f1a41bcaab12ca89e65ecbf1cb42eddd400b0dac89f7b4d7a190ade6be089799"
+  docker.image: "ghcr.io/haspadar/sheriff-infra@sha256:f1a41bcaab12ca89e65ecbf1cb42eddd400b0dac89f7b4d7a190ade6be089799"
 
   actionlint.cli: true
 

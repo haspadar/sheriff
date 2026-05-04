@@ -81,6 +81,64 @@ final class YamlConfigTest extends TestCase
     }
 
     #[Test]
+    public function returnsSheriffBinaryWhenLegacyPiquleBinaryIsOverridden(): void
+    {
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin: bin/sheriff\n")->path() . '/.piqule.yaml';
+
+        self::assertSame(
+            ['bin/sheriff'],
+            (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin'),
+            'YamlConfig must map the legacy CI binary override to the Sheriff key',
+        );
+    }
+
+    #[Test]
+    public function returnsSheriffBinaryListWhenLegacyPiquleBinaryListIsOverridden(): void
+    {
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        - bin/sheriff\n")->path() . '/.piqule.yaml';
+
+        self::assertSame(
+            ['bin/sheriff'],
+            (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin'),
+            'YamlConfig must map legacy CI binary list overrides to the Sheriff key',
+        );
+    }
+
+    #[Test]
+    public function preservesSiblingOverrideWhenLegacyPiquleBinaryIsMapped(): void
+    {
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin: bin/sheriff\n    phpstan.level: 7\n")->path() . '/.piqule.yaml';
+
+        self::assertSame(
+            [7],
+            (new YamlConfig($path, new DefaultConfig()))->list('phpstan.level'),
+            'YamlConfig must preserve sibling overrides when mapping the legacy CI binary key',
+        );
+    }
+
+    #[Test]
+    public function throwsWhenLegacyPiquleBinaryOverrideIsNested(): void
+    {
+        $this->expectException(PiquleException::class);
+        $this->expectExceptionMessage('Override "ci.piqule_bin" must be scalar or list<scalar>');
+
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        - [bin/sheriff]\n")->path() . '/.piqule.yaml';
+
+        (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin');
+    }
+
+    #[Test]
+    public function throwsWhenLegacyPiquleBinaryOverrideIsMapping(): void
+    {
+        $this->expectException(PiquleException::class);
+        $this->expectExceptionMessage('Override "ci.piqule_bin" must be scalar or list<scalar>');
+
+        $path = $this->folder->withFile('.piqule.yaml', "override:\n    ci.piqule_bin:\n        path: bin/sheriff\n")->path() . '/.piqule.yaml';
+
+        (new YamlConfig($path, new DefaultConfig()))->list('ci.sheriff_bin');
+    }
+
+    #[Test]
     public function returnsAppendedValuesWhenAppendSectionPresent(): void
     {
         $path = $this->folder->withFile('.piqule.yaml', "append:\n    phpstan.neon_includes:\n        - ../../rules.neon\n")->path() . '/.piqule.yaml';

@@ -1,4 +1,4 @@
-# Snob configuration. All available keys and their defaults are in .piqule/config.yaml.
+# Sheriff configuration. All available keys and their defaults are in .piqule/config.yaml.
 #
 # override:
 #     phpstan.level: 8

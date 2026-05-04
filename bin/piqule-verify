@@ -1,7 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LIBRARY_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+library_root() {
+  local path="$0"
+  local dir
+  local target
+
+  while [ -L "$path" ]; do
+    dir="$(cd -P "$(dirname "$path")" && pwd)"
+    target="$(readlink "$path")"
+    case "$target" in
+      /*) path="$target" ;;
+      *) path="${dir}/${target}" ;;
+    esac
+  done
+
+  cd -P "$(dirname "$path")/.." && pwd
+}
+
+LIBRARY_ROOT="$(library_root)"
 TEMPLATES_DIR="${LIBRARY_ROOT}/templates"
 PINNED=".piqule/templates.md5"
 
@@ -25,7 +42,7 @@ CURRENT="$(find "$TEMPLATES_DIR/always" "$TEMPLATES_DIR/git" -type f \
   | awk '{print $1}')"
 
 if [ "$CURRENT" != "$(cat "$PINNED")" ]; then
-  printf "\033[31mTemplates have changed. Run: piqule sync\033[0m\n\n"
+  printf "\033[31mTemplates have changed. Run: sheriff sync\033[0m\n\n"
 else
   printf "\033[90mTemplates are up to date\033[0m\n\n"
 fi

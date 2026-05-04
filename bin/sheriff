@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PIQULE_COMMAND_NAME=sheriff exec "$(dirname "$0")/piqule" "$@"

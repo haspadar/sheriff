@@ -86,6 +86,8 @@ final readonly class YamlConfig implements Config
         $overrides = array_key_exists('override', $data) && is_array($data['override'])
             ? $data['override']
             : [];
+        $overrides = (new SheriffOverrides($overrides))->toArray();
+
         /** @var array<string, mixed> $appends */
         $appends = array_key_exists('append', $data) && is_array($data['append'])
             ? $data['append']

@@ -23,7 +23,7 @@ final class TemplateFileTest extends TestCase
             new TemplateFile(
                 new TextFile(
                     'phpstan.neon',
-                    'paths: << ListText(phpstan.paths)|EachFormatted("- %s")|Joined("\n") >>',
+                    'paths: {% ListText(phpstan.paths)|EachFormatted("- %s")|Joined("\n") %}',
                 ),
                 new FakeSettings([
                     'phpstan.paths' => new ListValue([
@@ -68,7 +68,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('broken.neon', '<< MissingFormula(phpstan.paths) >>'),
+                new TextFile('broken.neon', '{% MissingFormula(phpstan.paths) %}'),
                 new FakeSettings([]),
             ),
             new HasFormulaError(
@@ -84,7 +84,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('missing.neon', '<< StringText(app.name) >>'),
+                new TextFile('missing.neon', '{% StringText(app.name) %}'),
                 new FakeSettings([]),
             ),
             new HasFormulaError(
@@ -100,7 +100,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('typed.neon', '<< StringText(phpstan.paths) >>'),
+                new TextFile('typed.neon', '{% StringText(phpstan.paths) %}'),
                 new FakeSettings([
                     'phpstan.paths' => new ListValue([
                         new StringValue('src'),

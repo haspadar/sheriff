@@ -35,7 +35,7 @@ final readonly class TemplateFile implements File
     public function contents(): string
     {
         return (string) preg_replace_callback(
-            '/<<\s*(.*?)\s*>>/s',
+            '/\{%\s*(.*?)\s*%\}/s',
             fn(array $match): string => $this->replaced($match[1]),
             $this->origin->contents(),
         );

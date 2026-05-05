@@ -1,9 +1,9 @@
 # Hadolint configuration (Sheriff managed)
 
-failure-threshold: << config(hadolint.failure_threshold) >>
+failure-threshold: {% StringText(hadolint.failure_threshold) %}
 
-ignored: << config(hadolint.ignored_yaml) >>
+ignored: {% StringText(hadolint.ignored_yaml) %}
 
 override:
-  error: << config(hadolint.override.error_yaml) >>
-  warning: << config(hadolint.override.warning_yaml) >>
+  error: {% StringText(hadolint.override.error_yaml) %}
+  warning: {% StringText(hadolint.override.warning_yaml) %}

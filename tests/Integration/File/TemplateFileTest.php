@@ -19,7 +19,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('hadolint.yml', 'failure-threshold: << StringText(hadolint.failure_threshold) >>'),
+                new TextFile('hadolint.yml', 'failure-threshold: {% StringText(hadolint.failure_threshold) %}'),
                 new DefaultSettings(),
             ),
             new HasFileContents('failure-threshold: error'),
@@ -32,7 +32,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('phpstan.neon', 'level: << IntText(phpstan.level) >>'),
+                new TextFile('phpstan.neon', 'level: {% IntText(phpstan.level) %}'),
                 new DefaultSettings(),
             ),
             new HasFileContents('level: 9'),
@@ -51,7 +51,7 @@ final class TemplateFileTest extends TestCase
 
         self::assertThat(
             new TemplateFile(
-                new TextFile('matrix.yml', 'php: [<< ListText(php.versions)|Joined(", ") >>]'),
+                new TextFile('matrix.yml', 'php: [{% ListText(php.versions)|Joined(", ") %}]'),
                 $settings,
             ),
             new HasFileContents(sprintf('php: [%s]', implode(', ', $versions))),
@@ -70,7 +70,7 @@ final class TemplateFileTest extends TestCase
 
         self::assertThat(
             new TemplateFile(
-                new TextFile('docker.yml', 'image: << ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") >>'),
+                new TextFile('docker.yml', 'image: {% ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") %}'),
                 $settings,
             ),
             new HasFileContents(sprintf('image: %s', implode(' ', $versions))),
@@ -83,7 +83,7 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('codecov.yml', 'cloud: << BoolText(codecov.cloud) >>'),
+                new TextFile('codecov.yml', 'cloud: {% BoolText(codecov.cloud) %}'),
                 new DefaultSettings(),
             ),
             new HasFileContents('cloud: true'),

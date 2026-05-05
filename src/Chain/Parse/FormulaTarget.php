@@ -39,15 +39,11 @@ final readonly class FormulaTarget
                 continue;
             }
 
-            if ($candidate['kind'] === 'source') {
-                return new SourceFormula($target, $this->args);
-            }
-
-            if ($candidate['kind'] === 'map') {
-                return new MapFormula($target, $this->args);
-            }
-
-            return new ReduceFormula($target, $this->args);
+            return match ($candidate['kind']) {
+                'source' => new SourceFormula($target, $this->args),
+                'map' => new MapFormula($target, $this->args),
+                'reduce' => new ReduceFormula($target, $this->args),
+            };
         }
 
         throw new InvalidArgumentException(sprintf('Unknown pipeline formula "%s"', $this->name));

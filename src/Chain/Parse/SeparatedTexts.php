@@ -16,10 +16,10 @@ use InvalidArgumentException;
 final readonly class SeparatedTexts
 {
     /**
-     * Initializes with the raw text and a single-character separator.
+     * Initializes with the raw text and a separator string.
      *
      * @param string $text Text to split
-     * @param string $separator Separator character
+     * @param string $separator Separator string
      */
     public function __construct(private string $text, private string $separator) {}
 

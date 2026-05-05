@@ -66,8 +66,9 @@ final readonly class FormulaArgs
     {
         $result = '';
         $escaped = false;
+        $length = strlen($argument);
 
-        for ($offset = 0; $offset < strlen($argument); ++$offset) {
+        for ($offset = 0; $offset < $length; ++$offset) {
             $char = $argument[$offset];
 
             if ($escaped) {

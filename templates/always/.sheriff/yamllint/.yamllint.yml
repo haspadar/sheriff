@@ -1,7 +1,9 @@
 extends: default
 
 ignore: |
-<< config(yamllint.ignore)|format_each("  %s")|join("\n") >>
+{% ListText(infra.exclude)|EachFormatted("%s/**")|EachFormatted("  %s")|Joined("\n") %}
+  .sheriff/**/html/**
+  .sheriff/**/coverage-report/**
 
 rules:
   document-start: disable
@@ -13,5 +15,5 @@ rules:
   # line-length max is configurable via yamllint.line_length.max; longer limits are common
   # in CI workflows where commands cannot be easily split across lines
   line-length:
-    max: << config(yamllint.line_length.max)|join("") >>
+    max: {% IntText(yamllint.line_length.max) %}
     level: warning

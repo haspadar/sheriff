@@ -6,5 +6,5 @@ binary = false
 
 [files]
 extend-exclude = [
-<< config(typos.exclude)|format_each('    "%s",')|join("\n") >>
+{% ListText(infra.exclude)|EachFormatted("%s/")|EachFormatted('    "%s",')|Joined("\n") %}
 ]

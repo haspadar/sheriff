@@ -7,6 +7,7 @@ namespace Haspadar\Sheriff\Tests\Integration\File;
 use Haspadar\Sheriff\File\TemplateFile;
 use Haspadar\Sheriff\File\TextFile;
 use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Tests\Constraint\Files\HasFileContents;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -42,12 +43,18 @@ final class TemplateFileTest extends TestCase
     #[Test]
     public function rendersListValueJoinedFromDefaultSettings(): void
     {
+        $settings = new DefaultSettings();
+        $versions = array_map(
+            static fn(StringValue $v): string => $v->raw,
+            $settings->value('php.versions')->children,
+        );
+
         self::assertThat(
             new TemplateFile(
                 new TextFile('matrix.yml', 'php: [<< ListText(php.versions)|Joined(", ") >>]'),
-                new DefaultSettings(),
+                $settings,
             ),
-            new HasFileContents('php: [8.3]'),
+            new HasFileContents(sprintf('php: [%s]', implode(', ', $versions))),
             'TemplateFile must render ListText joined from DefaultSettings',
         );
     }
@@ -55,12 +62,18 @@ final class TemplateFileTest extends TestCase
     #[Test]
     public function rendersListValueWithEachFormattedFromDefaultSettings(): void
     {
+        $settings = new DefaultSettings();
+        $versions = array_map(
+            static fn(StringValue $v): string => $v->raw . '-alpine',
+            $settings->value('php.versions')->children,
+        );
+
         self::assertThat(
             new TemplateFile(
                 new TextFile('docker.yml', 'image: << ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") >>'),
-                new DefaultSettings(),
+                $settings,
             ),
-            new HasFileContents('image: 8.3-alpine'),
+            new HasFileContents(sprintf('image: %s', implode(' ', $versions))),
             'TemplateFile must render EachFormatted pipeline from DefaultSettings',
         );
     }

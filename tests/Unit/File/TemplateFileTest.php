@@ -78,4 +78,40 @@ final class TemplateFileTest extends TestCase
             ),
         );
     }
+
+    #[Test]
+    public function wrapsMissingSettingErrorsWithFileContext(): void
+    {
+        self::assertThat(
+            new TemplateFile(
+                new TextFile('missing.neon', '<< StringText(app.name) >>'),
+                new FakeSettings([]),
+            ),
+            new HasFormulaError(
+                'missing.neon',
+                'StringText(app.name)',
+                'cannot find settings key',
+            ),
+        );
+    }
+
+    #[Test]
+    public function wrapsTypeErrorsWithFileContext(): void
+    {
+        self::assertThat(
+            new TemplateFile(
+                new TextFile('typed.neon', '<< StringText(phpstan.paths) >>'),
+                new FakeSettings([
+                    'phpstan.paths' => new ListValue([
+                        new StringValue('src'),
+                    ]),
+                ]),
+            ),
+            new HasFormulaError(
+                'typed.neon',
+                'StringText(phpstan.paths)',
+                'StringValue',
+            ),
+        );
+    }
 }

@@ -81,6 +81,19 @@ final class PipelineFormulasTest extends TestCase
     }
 
     #[Test]
+    public function parsesMultilineFormulaArguments(): void
+    {
+        self::assertSame(
+            "x\nSheriff",
+            (new PipelineOp(
+                (new PipelineFormulas("StringText(app.name)|Formatted(\"x\n%s\")"))->formulas(),
+                self::settings(['app.name' => new StringValue('Sheriff')]),
+            ))->rendered(),
+            'PipelineFormulas must allow multiline quoted arguments',
+        );
+    }
+
+    #[Test]
     public function failsWhenFormulaNameIsUnknown(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -94,6 +107,22 @@ final class PipelineFormulasTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         (new PipelineFormulas('StringText'))->formulas();
+    }
+
+    #[Test]
+    public function failsWhenFormulaHasLeadingJunk(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        (new PipelineFormulas('junk StringText(app.name)'))->formulas();
+    }
+
+    #[Test]
+    public function failsWhenFormulaHasTrailingJunk(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        (new PipelineFormulas('StringText(app.name) junk'))->formulas();
     }
 
     /**

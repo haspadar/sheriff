@@ -12,49 +12,49 @@
     <!-- Cyclomatic complexity -->
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
         <properties>
-            <property name="reportLevel" value="<< config(phpmd.cyclomatic)|join("") >>"/>
+            <property name="reportLevel" value="{% IntText(phpmd.cyclomatic) %}"/>
         </properties>
     </rule>
 
     <!-- NPath complexity -->
     <rule ref="rulesets/codesize.xml/NPathComplexity">
         <properties>
-            <property name="reportLevel" value="<< config(phpmd.npath)|join("") >>"/>
+            <property name="reportLevel" value="{% IntText(phpmd.npath) %}"/>
         </properties>
     </rule>
 
     <!-- Method length -->
     <rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
         <properties>
-            <property name="minimum" value="<< config(phpmd.method_length)|join("") >>"/>
+            <property name="minimum" value="{% IntText(phpmd.method_length) %}"/>
         </properties>
     </rule>
 
     <!-- Class length -->
     <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
         <properties>
-            <property name="minimum" value="<< config(phpmd.class_length)|join("") >>"/>
+            <property name="minimum" value="{% IntText(phpmd.class_length) %}"/>
         </properties>
     </rule>
 
     <!-- Number of methods -->
     <rule ref="rulesets/codesize.xml/TooManyMethods">
         <properties>
-            <property name="maxmethods" value="<< config(phpmd.max_methods)|join("") >>"/>
+            <property name="maxmethods" value="{% IntText(phpmd.max_methods) %}"/>
         </properties>
     </rule>
 
     <!-- Too many fields -->
     <rule ref="rulesets/codesize.xml/TooManyFields">
         <properties>
-            <property name="maxfields" value="<< config(phpmd.max_fields)|join("") >>"/>
+            <property name="maxfields" value="{% IntText(phpmd.max_fields) %}"/>
         </properties>
     </rule>
 
     <!-- Excessive parameter list -->
     <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
         <properties>
-            <property name="minimum" value="<< config(phpmd.max_parameters)|join("") >>"/>
+            <property name="minimum" value="{% IntText(phpmd.max_parameters) %}"/>
         </properties>
     </rule>
 
@@ -64,7 +64,7 @@
     <!-- Excessive class complexity (WMC) -->
     <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
         <properties>
-            <property name="maximum" value="<< config(phpmd.class_complexity)|join("") >>"/>
+            <property name="maximum" value="{% IntText(phpmd.class_complexity) %}"/>
         </properties>
     </rule>
 

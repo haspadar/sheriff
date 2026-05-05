@@ -3,10 +3,7 @@
 
   "source": {
     "directories": [
-<< config(infection.source.directories)
-    |format_each('        "%s"')
-    |join(",")
->>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('        "%s"')|Joined(",") %}
     ]
   },
 
@@ -16,10 +13,10 @@
     "configDir": "../phpunit"
   },
 
-  "initialTestsPhpOptions": "<< config(infection.php_options)|join(' ') >>",
-  "timeout": << config(infection.timeout) >>,
-  "minMsi": << config(infection.min_msi) >>,
-  "minCoveredMsi": << config(infection.min_covered_msi) >>,
+  "initialTestsPhpOptions": "{% StringText(infection.php_options) %}",
+  "timeout": {% IntText(infection.timeout) %},
+  "minMsi": {% IntText(infection.min_msi) %},
+  "minCoveredMsi": {% IntText(infection.min_covered_msi) %},
   "logs": {
     "text": "infection.log",
     "summary": "infection-summary.log",

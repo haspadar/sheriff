@@ -49,7 +49,7 @@ defaults:
   jsonlint.continue: true
   jsonlint.duplicate_keys: false
   jsonlint.mode: ["json5"]
-  jsonlint.patterns: ["**/*.json", "**/*.json5", "**/*.jsonc", "!vendor/**", "!tests/**", "!.git/**"]
+  jsonlint.patterns: ["**/*.json", "**/*.json5", "**/*.jsonc"]
 
   markdownlint.cli: true
   markdownlint.ignores: ["vendor/**", "tests/**", ".git/**"]

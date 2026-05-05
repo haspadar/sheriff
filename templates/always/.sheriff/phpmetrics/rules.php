@@ -2,28 +2,28 @@
 
 return [
     'complexity' => [
-        'max_cyclomatic_per_method' => << config(phpmetrics.complexity.max_cyclomatic_per_method)|join("") >>,
-        'max_weighted_methods_per_class' => << config(phpmetrics.complexity.max_weighted_methods_per_class)|join("") >>,
+        'max_cyclomatic_per_method' => {% IntText(phpmetrics.complexity.max_cyclomatic_per_method) %},
+        'max_weighted_methods_per_class' => {% IntText(phpmetrics.complexity.max_weighted_methods_per_class) %},
     ],
     'size' => [
-        'max_loc_per_class' => << config(phpmetrics.size.max_loc_per_class)|join("") >>,
-        'max_logical_loc_per_class' => << config(phpmetrics.size.max_logical_loc_per_class)|join("") >>,
-        'max_logical_loc_per_method' => << config(phpmetrics.size.max_logical_loc_per_method)|join("") >>,
+        'max_loc_per_class' => {% IntText(phpmetrics.size.max_loc_per_class) %},
+        'max_logical_loc_per_class' => {% IntText(phpmetrics.size.max_logical_loc_per_class) %},
+        'max_logical_loc_per_method' => {% IntText(phpmetrics.size.max_logical_loc_per_method) %},
     ],
     'halstead' => [
-        'max_volume_per_method' => << config(phpmetrics.halstead.max_volume_per_method)|join("") >>,
-        'max_difficulty_per_method' => << config(phpmetrics.halstead.max_difficulty_per_method)|join("") >>,
-        'max_effort_per_method' => << config(phpmetrics.halstead.max_effort_per_method)|join("") >>,
-        'max_bugs_per_method' => << config(phpmetrics.halstead.max_bugs_per_method)|join("") >>,
+        'max_volume_per_method' => {% IntText(phpmetrics.halstead.max_volume_per_method) %},
+        'max_difficulty_per_method' => {% IntText(phpmetrics.halstead.max_difficulty_per_method) %},
+        'max_effort_per_method' => {% IntText(phpmetrics.halstead.max_effort_per_method) %},
+        'max_bugs_per_method' => {% FloatText(phpmetrics.halstead.max_bugs_per_method) %},
     ],
     'inheritance' => [
-        'max_depth' => << config(phpmetrics.inheritance.max_depth)|join("") >>,
+        'max_depth' => {% IntText(phpmetrics.inheritance.max_depth) %},
     ],
     'structure' => [
-        'max_methods_per_class' => << config(phpmetrics.structure.max_methods_per_class)|join("") >>,
+        'max_methods_per_class' => {% IntText(phpmetrics.structure.max_methods_per_class) %},
     ],
     'coupling' => [
-        'max_afferent' => << config(phpmetrics.coupling.max_afferent)|join("") >>,
-        'max_efferent' => << config(phpmetrics.coupling.max_efferent)|join("") >>,
+        'max_afferent' => {% IntText(phpmetrics.coupling.max_afferent) %},
+        'max_efferent' => {% IntText(phpmetrics.coupling.max_efferent) %},
     ],
 ];

@@ -11,6 +11,6 @@
 
   // Ignore dependency/vendor directories to avoid linting third-party content.
   "ignores": [
-<< config(markdownlint.ignores)|format_each('    "%s"')|join(",\n") >>
+{% ListText(infra.exclude)|EachFormatted("%s/**")|EachFormatted('    "%s"')|Joined(",\n") %}
   ]
 }

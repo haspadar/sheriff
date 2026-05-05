@@ -2,13 +2,13 @@ coverage:
   status:
     project:
       default:
-        target: << config(coverage.project.target)|format("%s%%") >>
-        threshold: << config(coverage.project.threshold)|format("%s%%") >>
+        target: {% IntText(coverage.project.target)|Formatted("%s%%") %}
+        threshold: {% IntText(coverage.project.threshold)|Formatted("%s%%") %}
 
     patch:
       default:
-        target: << config(coverage.patch.target)|format("%s%%") >>
-        threshold: << config(coverage.patch.threshold)|format("%s%%") >>
+        target: {% IntText(coverage.patch.target)|Formatted("%s%%") %}
+        threshold: {% IntText(coverage.patch.threshold)|Formatted("%s%%") %}
 
 comment:
   layout: "reach, diff, flags, files"

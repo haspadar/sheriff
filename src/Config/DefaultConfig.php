@@ -148,7 +148,6 @@ final readonly class DefaultConfig implements Config
         return [
             'php.src' => $sources,
             'infra.exclude' => $excludes,
-            'hadolint.ignore' => $excludes,
             'jsonlint.patterns' => ['**/*.json', '**/*.json5', '**/*.jsonc'],
             'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),

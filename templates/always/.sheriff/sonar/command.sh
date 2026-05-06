@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CLOUD="<< config(sonar.cloud)|first()|join("") >>"
-if [ "$CLOUD" = "1" ] || [ "$CLOUD" = "true" ] || [ "$CLOUD" = "yes" ] || [ "$CLOUD" = "on" ]; then
+CLOUD="{% BoolText(sonar.cloud) %}"
+if [ "$CLOUD" = "true" ]; then
   printf '\033[33m[SKIP] SonarCloud automatic analysis — no local scanner needed\033[0m\n'
   exit 0
 fi
@@ -37,7 +37,7 @@ else
 fi
 
 PROJECT_ROOT="$(pwd)"
-DEFAULT_IMAGE="<< config(docker.image) >>"
+DEFAULT_IMAGE="{% StringText(docker.image) %}"
 IMAGE="${SHERIFF_INFRA_IMAGE:-$DEFAULT_IMAGE}"
 
 docker run --rm \

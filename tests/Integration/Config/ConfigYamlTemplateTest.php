@@ -120,8 +120,8 @@ final class ConfigYamlTemplateTest extends TestCase
         try {
             self::assertThat(
                 new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
-                new HasConfigYamlKey('phpmd.paths', ['lib']),
-                'Override php.src must cascade to phpmd.paths',
+                new HasConfigYamlKey('infection.source.directories', ['../../lib']),
+                'Override php.src must cascade to infection.source.directories',
             );
         } finally {
             $folder->close();
@@ -139,8 +139,8 @@ final class ConfigYamlTemplateTest extends TestCase
         try {
             self::assertThat(
                 new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
-                new HasConfigYamlKey('phpmd.paths', ['src', 'lib']),
-                'Append php.src must cascade to phpmd.paths',
+                new HasConfigYamlKey('infection.source.directories', ['../../src', '../../lib']),
+                'Append php.src must cascade to infection.source.directories',
             );
         } finally {
             $folder->close();
@@ -152,8 +152,8 @@ final class ConfigYamlTemplateTest extends TestCase
     {
         self::assertThat(
             new DefaultConfig(['lib', 'app']),
-            new HasConfigYamlKey('phpmd.paths', ['lib', 'app']),
-            'Custom include must cascade to phpmd.paths',
+            new HasConfigYamlKey('infection.source.directories', ['../../lib', '../../app']),
+            'Custom include must cascade to infection.source.directories',
         );
     }
 

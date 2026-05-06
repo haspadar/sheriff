@@ -113,6 +113,12 @@ final class ReduceFormulaTest extends TestCase
             {
                 throw new \LogicException('not used');
             }
+
+            #[Override]
+            public function keys(): array
+            {
+                return [];
+            }
         };
     }
 }

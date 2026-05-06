@@ -5,81 +5,46 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Check;
 
 use Haspadar\Sheriff\Check\ConfigDefault;
-use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class ConfigDefaultTest extends TestCase
 {
     #[Test]
-    public function enabledWhenConfigValueIsTrue(): void
+    public function enabledWhenSettingsValueIsTrue(): void
     {
         self::assertTrue(
             (new ConfigDefault(
-                new FakeConfig(['check.verbose' => ['true']]),
+                new FakeSettings(['check.verbose' => new BoolValue(true)]),
                 'check.verbose',
             ))->enabled(),
-            'ConfigDefault must be enabled when config value is "true"',
+            'ConfigDefault must be enabled when the boolean setting is true',
         );
     }
 
     #[Test]
-    public function enabledWhenConfigValueIsOne(): void
-    {
-        self::assertTrue(
-            (new ConfigDefault(
-                new FakeConfig(['check.verbose' => ['1']]),
-                'check.verbose',
-            ))->enabled(),
-            'ConfigDefault must be enabled when config value is "1"',
-        );
-    }
-
-    #[Test]
-    public function disabledWhenConfigValueIsFalse(): void
+    public function disabledWhenSettingsValueIsFalse(): void
     {
         self::assertFalse(
             (new ConfigDefault(
-                new FakeConfig(['check.verbose' => ['false']]),
+                new FakeSettings(['check.verbose' => new BoolValue(false)]),
                 'check.verbose',
             ))->enabled(),
-            'ConfigDefault must be disabled when config value is "false"',
+            'ConfigDefault must be disabled when the boolean setting is false',
         );
     }
 
     #[Test]
-    public function disabledWhenConfigValueIsZero(): void
+    public function disabledWhenSettingsKeyAbsent(): void
     {
         self::assertFalse(
             (new ConfigDefault(
-                new FakeConfig(['check.verbose' => ['0']]),
+                new FakeSettings([]),
                 'check.verbose',
             ))->enabled(),
-            'ConfigDefault must be disabled when config value is "0"',
-        );
-    }
-
-    #[Test]
-    public function disabledWhenConfigKeyAbsent(): void
-    {
-        self::assertFalse(
-            (new ConfigDefault(
-                new FakeConfig([]),
-                'check.verbose',
-            ))->enabled(),
-            'ConfigDefault must be disabled when config key is absent',
-        );
-    }
-
-    #[Test]
-    public function disabledWhenConfigValueIsUnparseable(): void
-    {
-        self::assertFalse(
-            (new ConfigDefault(
-                new FakeConfig(['check.verbose' => ['maybe']]),
-                'check.verbose',
-            ))->enabled(),
-            'ConfigDefault must be disabled when config value cannot be parsed as boolean',
+            'ConfigDefault must default to disabled when the settings key is absent',
         );
     }
 }

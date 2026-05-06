@@ -147,6 +147,12 @@ final class PipelineFormulasTest extends TestCase
             {
                 return $this->values[$name];
             }
+
+            #[Override]
+            public function keys(): array
+            {
+                return array_keys($this->values);
+            }
         };
     }
 }

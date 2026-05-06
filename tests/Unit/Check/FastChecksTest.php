@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Check;
 
 use Haspadar\Sheriff\Check\FastChecks;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Tests\Fake\Check\FakeCheck;
 use Haspadar\Sheriff\Tests\Fake\Check\FakeChecks;
-use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -21,17 +23,15 @@ final class FastChecksTest extends TestCase
                 new FakeCheck('phpstan'),
                 new FakeCheck('phpunit'),
             ]),
-            new FakeConfig(['check.slow' => []]),
-        );
-
-        $names = array_map(
-            static fn($c) => $c->name(),
-            iterator_to_array($checks->all()),
+            new FakeSettings(['check.slow' => new ListValue([])]),
         );
 
         self::assertSame(
             ['phpstan', 'phpunit'],
-            $names,
+            array_map(
+                static fn($c) => $c->name(),
+                iterator_to_array($checks->all()),
+            ),
             'FastChecks must yield all checks when check.slow is empty',
         );
     }
@@ -45,18 +45,46 @@ final class FastChecksTest extends TestCase
                 new FakeCheck('infection'),
                 new FakeCheck('phpunit'),
             ]),
-            new FakeConfig(['check.slow' => ['infection']]),
-        );
-
-        $names = array_map(
-            static fn($c) => $c->name(),
-            iterator_to_array($checks->all()),
+            new FakeSettings([
+                'check.slow' => new ListValue([new StringValue('infection')]),
+            ]),
         );
 
         self::assertSame(
             ['phpstan', 'phpunit'],
-            $names,
-            'FastChecks must exclude checks listed in check.slow config',
+            array_map(
+                static fn($c) => $c->name(),
+                iterator_to_array($checks->all()),
+            ),
+            'FastChecks must exclude checks listed in check.slow',
+        );
+    }
+
+    #[Test]
+    public function excludesEverySlowEntryFromMultiEntryList(): void
+    {
+        $checks = new FastChecks(
+            new FakeChecks([
+                new FakeCheck('phpstan'),
+                new FakeCheck('infection'),
+                new FakeCheck('sonar'),
+                new FakeCheck('phpunit'),
+            ]),
+            new FakeSettings([
+                'check.slow' => new ListValue([
+                    new StringValue('infection'),
+                    new StringValue('sonar'),
+                ]),
+            ]),
+        );
+
+        self::assertSame(
+            ['phpstan', 'phpunit'],
+            array_map(
+                static fn($c) => $c->name(),
+                iterator_to_array($checks->all()),
+            ),
+            'FastChecks must drop every entry listed in check.slow, not just the first',
         );
     }
 
@@ -65,11 +93,13 @@ final class FastChecksTest extends TestCase
     {
         $checks = new FastChecks(
             new FakeChecks([new FakeCheck('infection')]),
-            new FakeConfig(['check.slow' => ['infection']]),
+            new FakeSettings([
+                'check.slow' => new ListValue([new StringValue('infection')]),
+            ]),
         );
 
-        self::assertCount(
-            0,
+        self::assertSame(
+            [],
             iterator_to_array($checks->all()),
             'FastChecks must yield nothing when all checks are slow',
         );

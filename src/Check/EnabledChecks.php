@@ -4,33 +4,30 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\BoolSetting;
 use Override;
 
 /**
- * Yields only checks that are not explicitly disabled via config.
+ * Yields only checks that are not explicitly disabled via settings.
  */
 final readonly class EnabledChecks implements Checks
 {
     /**
-     * Initializes with a check collection and project configuration.
+     * Initializes with a check collection and project settings.
      *
      * @param Checks $origin Underlying collection to filter
-     * @param Config $config Configuration holding the "<tool>.cli" toggles
+     * @param Settings $settings Settings holding the "<tool>.cli" toggles
      */
-    public function __construct(private Checks $origin, private Config $config) {}
+    public function __construct(private Checks $origin, private Settings $settings) {}
 
     #[Override]
     public function all(): iterable
     {
         foreach ($this->origin->all() as $check) {
-            $key = "{$check->name()}.cli";
-
-            if ($this->config->has($key) && !(bool) ($this->config->list($key)[0] ?? true)) {
-                continue;
+            if ((new BoolSetting($this->settings, "{$check->name()}.cli", true))->raw()) {
+                yield $check;
             }
-
-            yield $check;
         }
     }
 }

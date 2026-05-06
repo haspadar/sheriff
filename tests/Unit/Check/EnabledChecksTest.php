@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Check;
 
 use Haspadar\Sheriff\Check\EnabledChecks;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Tests\Fake\Check\FakeCheck;
 use Haspadar\Sheriff\Tests\Fake\Check\FakeChecks;
-use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ final class EnabledChecksTest extends TestCase
                 new FakeCheck('phpstan'),
                 new FakeCheck('phpunit'),
             ]),
-            new FakeConfig([]),
+            new FakeSettings([]),
         );
 
         $names = array_map(
@@ -32,19 +33,19 @@ final class EnabledChecksTest extends TestCase
         self::assertSame(
             ['phpstan', 'phpunit'],
             $names,
-            'EnabledChecks must yield all checks when no cli config disables them',
+            'EnabledChecks must yield all checks when no cli toggle disables them',
         );
     }
 
     #[Test]
-    public function skipsCheckWhenCliConfigIsFalse(): void
+    public function skipsCheckWhenCliToggleIsFalse(): void
     {
         $checks = new EnabledChecks(
             new FakeChecks([
                 new FakeCheck('phpstan'),
                 new FakeCheck('phpunit'),
             ]),
-            new FakeConfig(['phpstan.cli' => [false]]),
+            new FakeSettings(['phpstan.cli' => new BoolValue(false)]),
         );
 
         $names = array_map(
@@ -55,16 +56,16 @@ final class EnabledChecksTest extends TestCase
         self::assertSame(
             ['phpunit'],
             $names,
-            'EnabledChecks must skip checks whose .cli config is false',
+            'EnabledChecks must skip checks whose .cli toggle is false',
         );
     }
 
     #[Test]
-    public function yieldsCheckWhenCliConfigIsTrue(): void
+    public function yieldsCheckWhenCliToggleIsTrue(): void
     {
         $checks = new EnabledChecks(
             new FakeChecks([new FakeCheck('phpstan')]),
-            new FakeConfig(['phpstan.cli' => [true]]),
+            new FakeSettings(['phpstan.cli' => new BoolValue(true)]),
         );
 
         $names = array_map(
@@ -75,7 +76,7 @@ final class EnabledChecksTest extends TestCase
         self::assertSame(
             ['phpstan'],
             $names,
-            'EnabledChecks must yield check when .cli config is true',
+            'EnabledChecks must yield checks whose .cli toggle is true',
         );
     }
 }

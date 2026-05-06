@@ -151,7 +151,6 @@ final readonly class DefaultConfig implements Config
             'hadolint.ignore' => $excludes,
             'jsonlint.patterns' => ['**/*.json', '**/*.json5', '**/*.jsonc'],
             'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
-            'phpcs.files' => $projectIncludes,
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),
             'phpmd.paths' => $sources,
             'phpmetrics.includes' => $projectIncludes,

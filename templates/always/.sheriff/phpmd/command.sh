@@ -10,7 +10,7 @@ fi
 
 BIN="$(.sheriff/_composer.sh phpmd)"
 
-exec .sheriff/_skip_if_empty.sh src '*.php' PHPMD -- \
+exec .sheriff/_skip_if_empty.sh {% ListText(php.src)|First() %} '*.php' PHPMD -- \
   "$BIN" \
   {% ListText(php.src)|Joined(" ") %} \
   text \

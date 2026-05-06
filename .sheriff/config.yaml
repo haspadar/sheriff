@@ -76,8 +76,6 @@ defaults:
   phpmd.npath: 200
 
   phpmetrics.cli: true
-  phpmetrics.includes: ["../../src"]
-  phpmetrics.excludes: ["vendor", "tests", ".git"]
   phpmetrics.extensions: ["php"]
   phpmetrics.complexity.max_cyclomatic_per_method: 10
   phpmetrics.complexity.max_weighted_methods_per_class: 20

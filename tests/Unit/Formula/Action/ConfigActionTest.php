@@ -21,9 +21,9 @@ final class ConfigActionTest extends TestCase
             (new ConfigAction(
                 new OverrideConfig(
                     new DefaultConfig(),
-                    ['phpmetrics.includes' => ['mbstring', 'intl']],
+                    ['phpmetrics.extensions' => ['mbstring', 'intl']],
                 ),
-                'phpmetrics.includes',
+                'phpmetrics.extensions',
             ))->transformed(new ListArgs([])),
             new HasArgsValues(['mbstring', 'intl']),
             'ConfigAction must return list values from the config for the given key',

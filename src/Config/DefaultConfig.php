@@ -153,7 +153,6 @@ final readonly class DefaultConfig implements Config
             'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),
             'phpmd.paths' => $sources,
-            'phpunit.source.include' => $projectIncludes,
             'infection.source.directories' => $projectIncludes,
             'shellcheck.ignore_dirs' => $excludes,
             'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),

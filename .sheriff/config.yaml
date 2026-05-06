@@ -61,9 +61,7 @@ defaults:
   php_cs_fixer.paths: ["../.."]
 
   phpcs.cli: true
-  phpcs.excludes: ["vendor/*", "tests/*", ".git/*"]
   phpcs.extend: ""
-  phpcs.files: ["../../src"]
   phpcs.root_namespace: ""
 
   phpmd.cli: true

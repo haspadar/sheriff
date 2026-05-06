@@ -2,13 +2,9 @@
 <ruleset name="Sheriff PHPCS Rules">
     <description>Structural and semantic PHP rules</description>
 
-<< config(phpcs.files)
-    |format_each("    <file>%s</file>")
-    |join("\n") >>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted("    <file>%s</file>")|Joined("\n") %}
 
-<< config(phpcs.excludes)
-    |format_each("    <exclude-pattern>%s</exclude-pattern>")
-    |join("\n") >>
+{% ListText(infra.exclude)|EachFormatted("%s/*")|EachFormatted("    <exclude-pattern>%s</exclude-pattern>")|Joined("\n") %}
 
     <arg name="extensions" value="php"/>
     <arg name="colors"/>
@@ -22,5 +18,5 @@
     <rule ref=".sheriff/phpcs/slevomat-flow.xml"/>
     <rule ref=".sheriff/phpcs/slevomat-style.xml"/>
 
-<< config(phpcs.extend)|join("") >>
+{% StringText(phpcs.extend) %}
 </ruleset>

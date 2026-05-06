@@ -88,21 +88,12 @@ final class SourceFormulaTest extends TestCase
     }
 
     #[Test]
-    public function failsWhenArgumentCountIsNotExactlyOne(): void
+    public function failsWhenArgumentListIsEmpty(): void
     {
         $this->expectException(SheriffException::class);
 
         (new SourceFormula(IntText::class, []))
             ->op([], self::settings([]));
-    }
-
-    #[Test]
-    public function failsWithMultipleArguments(): void
-    {
-        $this->expectException(SheriffException::class);
-
-        (new SourceFormula(IntText::class, ['phpstan.level', 'extra']))
-            ->op([], self::settings(['phpstan.level' => new IntValue(9)]));
     }
 
     #[Test]

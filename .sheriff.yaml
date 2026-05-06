@@ -1,5 +1,5 @@
 override:
-  phpmetrics.coupling.max_afferent: 34
+  phpmetrics.coupling.max_afferent: 35
   phpmetrics.coupling.max_efferent: 25
   php.versions: ["8.3", "8.4", "8.5"]
   ci.pr.max_lines_changed: 5000

@@ -10,7 +10,7 @@ fi
 
 BIN="$(.sheriff/_composer.sh phpstan)"
 
-exec .sheriff/_skip_if_empty.sh src '*.php' PHPStan -- \
+exec .sheriff/_skip_if_empty.sh {% ListText(php.src)|First() %} '*.php' PHPStan -- \
   "$BIN" analyse \
   -c "$CONFIG" \
-  --memory-limit=<< config(phpstan.memory) >>
+  --memory-limit={% StringText(phpstan.memory) %}

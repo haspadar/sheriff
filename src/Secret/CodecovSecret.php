@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Secret;
 
-use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Override;
 
 /**
@@ -25,16 +26,16 @@ final readonly class CodecovSecret implements Secret
     }
 
     #[Override]
-    public function enabled(Config $config): bool
+    public function enabled(Settings $settings): bool
     {
-        if (!$config->has('phpunit.cli')) {
+        if (!$settings->has('phpunit.cli')) {
             return true;
         }
 
-        return filter_var(
-            $config->list('phpunit.cli')[0] ?? true,
-            FILTER_VALIDATE_BOOLEAN,
-            FILTER_NULL_ON_FAILURE,
-        ) ?? true;
+        $value = $settings->value('phpunit.cli');
+
+        return $value instanceof BoolValue
+            ? $value->raw
+            : true;
     }
 }

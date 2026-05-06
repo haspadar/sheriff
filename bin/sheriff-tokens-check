@@ -3,10 +3,15 @@
 
 declare(strict_types=1);
 
-use Haspadar\Sheriff\Config\ProjectConfig;
 use Haspadar\Sheriff\EnvVar\EnvVars;
 use Haspadar\Sheriff\EnvVar\SonarEnvVar;
 use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\Settings\ComposerSettings;
+use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\PatchedSettings;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\YamlPatches;
 use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Secret\CodecovSecret;
 use Haspadar\Sheriff\Secret\InfectionSecret;
@@ -18,8 +23,18 @@ $output = new Console();
 
 $projectRoot = getcwd() ?: throw new RuntimeException('Cannot determine cwd');
 
+$yamlPath = $projectRoot . '/.sheriff.yaml';
+
 try {
-    $config = new ProjectConfig($projectRoot);
+    $patched = file_exists($yamlPath)
+        ? array_reduce(
+            (new YamlPatches($yamlPath))->patches(),
+            static fn(Settings $base, Patch $patch): Settings => new PatchedSettings($base, $patch),
+            new DefaultSettings(),
+        )
+        : new DefaultSettings();
+
+    $settings = new ComposerSettings($patched, $projectRoot . '/composer.json');
 } catch (SheriffException $e) {
     $output->error($e->getMessage());
     exit(1);
@@ -36,7 +51,7 @@ $secrets = new Secrets([
 
 $enabledEnvVars = array_filter(
     $envVars->items(),
-    fn($var) => $var->enabled($config),
+    fn($var) => $var->enabled($settings),
 );
 
 foreach ($enabledEnvVars as $var) {
@@ -53,7 +68,7 @@ foreach ($enabledEnvVars as $var) {
 
 $enabledSecrets = array_filter(
     $secrets->items(),
-    fn($secret) => $secret->enabled($config),
+    fn($secret) => $secret->enabled($settings),
 );
 
 if ($enabledSecrets === []) {

@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Secret;
 
 use Haspadar\Sheriff\Secret\InfectionSecret;
-use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -14,9 +15,8 @@ final class InfectionSecretTest extends TestCase
     #[Test]
     public function enabledWhenInfectionEnabled(): void
     {
-        self::assertSame(
-            true,
-            (new InfectionSecret())->enabled(new FakeConfig(['infection.cli' => [true]])),
+        self::assertTrue(
+            (new InfectionSecret())->enabled(new FakeSettings(['infection.cli' => new BoolValue(true)])),
             'InfectionSecret must be enabled when infection.cli is true',
         );
     }
@@ -24,40 +24,18 @@ final class InfectionSecretTest extends TestCase
     #[Test]
     public function enabledWhenKeyAbsent(): void
     {
-        self::assertSame(
-            true,
-            (new InfectionSecret())->enabled(new FakeConfig([])),
-            'InfectionSecret must be enabled when infection.cli key is absent',
+        self::assertTrue(
+            (new InfectionSecret())->enabled(new FakeSettings([])),
+            'InfectionSecret must default to enabled when infection.cli key is absent',
         );
     }
 
     #[Test]
     public function disabledWhenInfectionDisabled(): void
     {
-        self::assertSame(
-            false,
-            (new InfectionSecret())->enabled(new FakeConfig(['infection.cli' => [false]])),
+        self::assertFalse(
+            (new InfectionSecret())->enabled(new FakeSettings(['infection.cli' => new BoolValue(false)])),
             'InfectionSecret must be disabled when infection.cli is false',
-        );
-    }
-
-    #[Test]
-    public function enabledWhenKeyPresentButEmpty(): void
-    {
-        self::assertSame(
-            true,
-            (new InfectionSecret())->enabled(new FakeConfig(['infection.cli' => []])),
-            'InfectionSecret must be enabled when infection.cli key is present but list is empty',
-        );
-    }
-
-    #[Test]
-    public function enabledWhenValueIsNotParsableAsBoolean(): void
-    {
-        self::assertSame(
-            true,
-            (new InfectionSecret())->enabled(new FakeConfig(['infection.cli' => ['maybe']])),
-            'InfectionSecret must be enabled when infection.cli value cannot be parsed as boolean',
         );
     }
 

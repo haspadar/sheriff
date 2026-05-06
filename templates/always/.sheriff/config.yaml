@@ -103,7 +103,6 @@ defaults:
 
   phpunit.cli: true
   phpunit.php_options: "-d memory_limit=1G"
-  phpunit.source.include: ["../../src"]
   phpunit.testsuites.unit: ["../../tests/Unit"]
   phpunit.testsuites.integration: ["../../tests/Integration"]
 
@@ -128,9 +127,8 @@ defaults:
 
   sonar.cloud: true
   sonar.cli: false
-  sonar.organization: []
-  sonar.projectKey: []
-  sonar.sources: ["src"]
+  sonar.organization: ""
+  sonar.projectKey: ""
   sonar.tests: ["tests"]
   sonar.exclusions: []
   sonar.php.coverage.reportPaths: [".sheriff/codecov/coverage.xml"]

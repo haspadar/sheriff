@@ -20,7 +20,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  *     new DefaultConfig();
  *
- *     new DefaultConfig(paths: new ConfigPaths(composer: '/path/to/composer.json'));
+ *     new DefaultConfig(paths: new ConfigPaths(config: '/path/to/config.yaml'));
  */
 final readonly class DefaultConfig implements Config
 {
@@ -150,7 +150,6 @@ final readonly class DefaultConfig implements Config
             'infra.exclude' => $excludes,
             'jsonlint.patterns' => ['**/*.json', '**/*.json5', '**/*.jsonc'],
             'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
-            'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),
             'infection.source.directories' => $projectIncludes,
             'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),
             'yamllint.ignore' => array_merge(

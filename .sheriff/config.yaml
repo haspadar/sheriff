@@ -100,7 +100,6 @@ defaults:
   phpstan.cli: true
   phpstan.level: 9
   phpstan.memory: "1G"
-  phpstan.paths: ["../../src"]
   phpstan.checked_exceptions: ['\Throwable']
   phpstan.neon_includes: ["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]
   phpstan.afferent_coupling.ignore_interfaces: true

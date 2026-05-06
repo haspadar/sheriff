@@ -122,7 +122,6 @@ defaults:
   shellcheck.cli: true
   shellcheck.exclude: []
   shellcheck.external_sources: true
-  shellcheck.ignore_dirs: ["vendor", "tests", ".git"]
   shellcheck.severity: "warning"
   shellcheck.shell: "bash"
   shellcheck.source_path: "."

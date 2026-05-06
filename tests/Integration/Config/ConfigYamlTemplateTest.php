@@ -82,8 +82,8 @@ final class ConfigYamlTemplateTest extends TestCase
         try {
             self::assertThat(
                 new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
-                new HasConfigYamlKey('shellcheck.ignore_dirs', ['dist']),
-                'Override infra.exclude must cascade to shellcheck.ignore_dirs',
+                new HasConfigYamlKey('markdownlint.ignores', ['dist/**']),
+                'Override infra.exclude must cascade to markdownlint.ignores',
             );
         } finally {
             $folder->close();
@@ -101,8 +101,8 @@ final class ConfigYamlTemplateTest extends TestCase
         try {
             self::assertThat(
                 new YamlConfig($folder->path() . '/.sheriff.yaml', new DefaultConfig()),
-                new HasConfigYamlKey('shellcheck.ignore_dirs', ['vendor', 'tests', '.git', 'dist']),
-                'Append infra.exclude must cascade to shellcheck.ignore_dirs',
+                new HasConfigYamlKey('markdownlint.ignores', ['vendor/**', 'tests/**', '.git/**', 'dist/**']),
+                'Append infra.exclude must cascade to markdownlint.ignores',
             );
         } finally {
             $folder->close();

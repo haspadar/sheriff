@@ -22,10 +22,7 @@ while IFS= read -r -d '' file; do
 done < <(
   find . \
     -type f \
-<< config(shellcheck.ignore_dirs)
-   |format_each('    ! -path "./%s/*" \')
-   |join("\n")
->>
+{% ListText(infra.exclude)|EachFormatted('    ! -path "./%s/*" \\')|Joined("\n") %}
     -print0
 )
 

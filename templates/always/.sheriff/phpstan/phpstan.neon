@@ -1,11 +1,11 @@
 includes:
-<< config(phpstan.neon_includes)|format_each("    - %s")|join("\n") >>
+{% ListText(phpstan.neon_includes)|EachFormatted("    - %s")|Joined("\n") %}
 
 parameters:
-    level: << config(phpstan.level)|join("") >>
+    level: {% IntText(phpstan.level) %}
 
     paths:
-<< config(phpstan.paths)|format_each("        - %s")|join("\n") >>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted("        - %s")|Joined("\n") %}
 
     errorFormat: table
     reportUnmatchedIgnoredErrors: true
@@ -16,9 +16,9 @@ parameters:
 
     exceptions:
         checkedExceptionClasses:
-<< config(phpstan.checked_exceptions)|format_each("            - %s")|join("\n") >>
+{% ListText(phpstan.checked_exceptions)|EachFormatted("            - %s")|Joined("\n") %}
 
     haspadar:
         afferentCoupling:
-            ignoreInterfaces: << config(phpstan.afferent_coupling.ignore_interfaces)|join("") >>
-<< config(phpstan.afferent_coupling.excluded_classes)|format_each("                - %s")|join("\n")|if_not_empty()|format("            excludedClasses:\n%s") >>
+            ignoreInterfaces: {% BoolText(phpstan.afferent_coupling.ignore_interfaces) %}
+{% ListText(phpstan.afferent_coupling.excluded_classes)|EachFormatted("                - %s")|Joined("\n")|WhenNotEmpty("            excludedClasses:\n%s") %}

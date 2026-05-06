@@ -406,7 +406,6 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `hadolint.cli` | `true` | Enable Dockerfile linting |
 | `hadolint.failure_threshold` | `"error"` | Minimum severity to fail |
-| `hadolint.ignore` | `["vendor", "tests", ".git"]` | Ignored directories |
 | `hadolint.ignored_yaml` | `"[]"` | Ignored rules (YAML literal) |
 | `hadolint.override.error_yaml` | `"[]"` | Rules promoted to error (YAML literal) |
 | `hadolint.override.warning_yaml` | `"[]"` | Rules promoted to warning (YAML literal) |

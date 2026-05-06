@@ -1,11 +1,10 @@
 {
-  "mode": << config(jsonlint.mode)|format_each('"%s"')|join("") >>,
-  "compact": << config(jsonlint.compact) >>,
-  "continue": << config(jsonlint.continue) >>,
-  "duplicate-keys": << config(jsonlint.duplicate_keys) >>,
+  "mode": {% ListText(jsonlint.mode)|EachFormatted('"%s"')|Joined("") %},
+  "compact": {% BoolText(jsonlint.compact) %},
+  "continue": {% BoolText(jsonlint.continue) %},
+  "duplicate-keys": {% BoolText(jsonlint.duplicate_keys) %},
   "patterns": [
-<< config(jsonlint.patterns)
-   |format_each('    "%s"')
-   |join(",\n") >>
+{% ListText(jsonlint.patterns)|EachFormatted('    "%s"')|Joined(",\n") %},
+{% ListText(infra.exclude)|EachFormatted("!%s/**")|EachFormatted('    "%s"')|Joined(",\n") %}
   ]
 }

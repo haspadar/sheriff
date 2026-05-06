@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Config;
 
-use Haspadar\Sheriff\Config\Dirs\NegatedGlobDirs;
 use Haspadar\Sheriff\Config\Dirs\ProjectDirs;
 use Haspadar\Sheriff\Config\Dirs\TrailingGlobDirs;
 use Haspadar\Sheriff\Config\Dirs\TrailingSlashDirs;
@@ -150,10 +149,7 @@ final readonly class DefaultConfig implements Config
             'php.src' => $sources,
             'infra.exclude' => $excludes,
             'hadolint.ignore' => $excludes,
-            'jsonlint.patterns' => array_merge(
-                ['**/*.json', '**/*.json5', '**/*.jsonc'],
-                (new NegatedGlobDirs($excludes))->toList(),
-            ),
+            'jsonlint.patterns' => ['**/*.json', '**/*.json5', '**/*.jsonc'],
             'markdownlint.ignores' => (new TrailingGlobDirs($excludes))->toList(),
             'phpcs.files' => $projectIncludes,
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),

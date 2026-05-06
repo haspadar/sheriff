@@ -127,9 +127,8 @@ defaults:
 
   sonar.cloud: true
   sonar.cli: false
-  sonar.organization: []
-  sonar.projectKey: []
-  sonar.sources: ["src"]
+  sonar.organization: ""
+  sonar.projectKey: ""
   sonar.tests: ["tests"]
   sonar.exclusions: []
   sonar.php.coverage.reportPaths: [".sheriff/codecov/coverage.xml"]

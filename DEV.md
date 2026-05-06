@@ -122,7 +122,7 @@ Example:
 | `StringText(key)` | `StringValue` | raw string, no quoting |
 | `ListText(key)` | `ListValue` | Listed pipeline of per-item sources |
 | `EnvsText(key, indent)` | `TreeValue` (or empty `ListValue`) | GitHub Actions step exporting env vars; empty tree → empty string |
-| `NeonTree(key, depth)` | `TreeValue` | nested neon block mapping at the given indent depth |
+| `NeonTree(key, depth)` | `TreeValue` | nested neon block mapping; `depth` is optional (default `0`) and controls indentation |
 
 ### Map ops
 
@@ -274,8 +274,6 @@ Settings → Chain → File → Files → Storage
 - **Output** (`src/Output/`) — console output interface; `Console` writes to stdout, `Message` is a value object for a single line.
 - **Check** (`src/Check/`) — discovers and runs tool checks; `ConfigChecks` enumerates available `<tool>.cli` keys via `Settings::keys()`, `EnabledChecks`/`FastChecks` filter on settings, `ParallelRun`/`SequentialRun` execute them.
 
-For a full description of every class and the decorator pattern, see [docs/architecture.md](docs/architecture.md).
-
 ---
 
 ## Adding a New Tool
@@ -293,9 +291,11 @@ For a full description of every class and the decorator pattern, see [docs/archi
 
 1. Add the key to the `defaults:` section of `templates/always/.sheriff/config.yaml` with a typed default (scalar, list, or map). The YAML type drives the `Value` subclass (`IntValue`, `StringValue`, `ListValue`, `TreeValue`, …).
 2. Reference the key from a template through the matching source op (e.g. `{% IntText(my.new.key) %}` for an int).
-3. Optionally let the user override or extend it via `override:` / `append:` in `.sheriff.yaml`.
+3. Optionally let the user override or extend it via `override:`, `append:`, or `remove:` in `.sheriff.yaml`. Each verb resolves to a `Patch` (`OverrideScalar/List/Tree`, `AppendList/Tree`, `RemoveList/Tree`).
 
 Keys are flat dot-separated names. Accessing an undeclared key throws `SheriffException`. Type mismatches between the source op and the stored `Value` surface as PHP `TypeError` at render time.
+
+Note: an empty YAML mapping `{}` parses as an empty PHP array, which `RawValue` wraps as an empty `ListValue` — not `TreeValue`. `OverrideTree` accepts that shape as an empty tree to keep the override flow predictable. Defaults that need a tree-typed key with a non-empty schema should ship at least one entry.
 
 ---
 

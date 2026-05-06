@@ -10,7 +10,7 @@ fi
 
 INFECTION_BIN="$(.sheriff/_composer.sh infection)"
 
-PHP_OPTIONS_STR="<< config(infection.php_options)|join(' ') >>"
+PHP_OPTIONS_STR="{% StringText(infection.php_options) %}"
 PHP_OPTIONS=()
 if [ -n "$PHP_OPTIONS_STR" ]; then
   read -ra PHP_OPTIONS <<< "$PHP_OPTIONS_STR"
@@ -24,7 +24,7 @@ if [ "$PHP_OPTIONS_RC" -ne 0 ] || [ -n "$PHP_OPTIONS_DIAG" ]; then
   exit 1
 fi
 
-exec .sheriff/_skip_if_empty.sh src '*.php' Infection -- \
+exec .sheriff/_skip_if_empty.sh {% ListText(php.src)|First() %} '*.php' Infection -- \
   env XDEBUG_MODE=coverage \
   php "${PHP_OPTIONS[@]+"${PHP_OPTIONS[@]}"}" \
   "$INFECTION_BIN" \

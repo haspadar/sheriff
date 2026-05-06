@@ -120,10 +120,9 @@ defaults:
   psalm.suppress.possibly_unused: []
 
   infection.cli: true
-  infection.min_msi: 50
-  infection.min_covered_msi: 80
+  infection.min_msi: 50.0
+  infection.min_covered_msi: 80.0
   infection.php_options: "-d memory_limit=1G"
-  infection.source.directories: ["../../src"]
   infection.timeout: 30
 
   shellcheck.cli: true

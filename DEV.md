@@ -547,7 +547,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `sonar.cloud` | `true` | Use SonarCloud automatic analysis (skip local scanner and SONAR_TOKEN) |
+| `sonar.cloud` | `true` | Use SonarCloud automatic analysis (skip local scanner and SONAR_TOKEN). Must be a YAML boolean (`true`/`false`); aliases like `yes`/`on`/`1` are parsed as strings/ints and rejected. |
 | `sonar.cli` | `false` | Enable local sonar-scanner |
 | `sonar.organization` | `""` | SonarCloud organization |
 | `sonar.projectKey` | `""` | SonarCloud project key |

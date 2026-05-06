@@ -1,25 +1,16 @@
 {
   "composer": false,
   "includes": [
-<< config(phpmetrics.includes)
-|format_each('    "%s"')
-|join(",\n")
->>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('    "%s"')|Joined(",\n") %}
   ],
   "excludes": [
-<< config(phpmetrics.excludes)
-|format_each('    "%s"')
-|join(",\n")
->>
+{% ListText(infra.exclude)|EachFormatted('    "%s"')|Joined(",\n") %}
   ],
   "extensions": [
-<< config(phpmetrics.extensions)
-|format_each('    "%s"')
-|join(",\n")
->>
+{% ListText(phpmetrics.extensions)|EachFormatted('    "%s"')|Joined(",\n") %}
   ],
   "report": {
-    "html": "<< config(phpmetrics.report.html)|join("") >>",
-    "json": "<< config(phpmetrics.report.json)|join("") >>"
+    "html": "{% ListText(phpmetrics.report.html)|Joined("") %}",
+    "json": "{% ListText(phpmetrics.report.json)|Joined("") %}"
   }
 }

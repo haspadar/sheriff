@@ -26,7 +26,7 @@ jobs:
 
       - uses: maidsafe/pr_size_checker@948bfb3e96d93fbeeef4e207375163e8dae5665e
         with:
-          max_lines_changed: << config(ci.pr.max_lines_changed)|join("") >>
+          max_lines_changed: {% IntText(ci.pr.max_lines_changed) %}
 
 
   # ============================================================
@@ -55,14 +55,14 @@ jobs:
 
       - uses: shivammathur/setup-php@690cb7c9d81dbfe51eba732cfca0a00ca42db777
         with:
-          php-version: << config(php.versions)|first() >>
+          php-version: {% ListText(php.versions)|First() %}
 
-<< envs("      ") >>
+{% EnvsText(envs, "      ") %}
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run check
-        run: << config(ci.sheriff_bin)|join("") >> check ${{ matrix.check }}
+        run: {% StringText(ci.sheriff_bin) %} check ${{ matrix.check }}
 
 
   # ============================================================
@@ -77,7 +77,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [<< config(php.versions)|format_each('"%s"')|join(", ") >>]
+        php: [{% ListText(php.versions)|EachFormatted('"%s"')|Joined(", ") %}]
         check:
           - phpcs
           - phpstan
@@ -93,19 +93,19 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mbstring, dom, json
 
-<< envs("      ") >>
+{% EnvsText(envs, "      ") %}
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run static check
-        run: << config(ci.sheriff_bin)|join("") >> check ${{ matrix.check }}
+        run: {% StringText(ci.sheriff_bin) %} check ${{ matrix.check }}
 
 
   # ============================================================
   # PHP TESTS + COVERAGE + MUTATION
   # ============================================================
   php-tests:
-    name: Tests / Coverage / Mutation (PHP << config(php.versions)|first() >>)
+    name: Tests / Coverage / Mutation (PHP {% ListText(php.versions)|First() %})
     runs-on: ubuntu-latest
     needs: php-static
     permissions:
@@ -116,11 +116,11 @@ jobs:
 
       - uses: shivammathur/setup-php@690cb7c9d81dbfe51eba732cfca0a00ca42db777
         with:
-          php-version: << config(php.versions)|first() >>
+          php-version: {% ListText(php.versions)|First() %}
           coverage: xdebug
           extensions: mbstring, dom, json
 
-<< envs("      ") >>
+{% EnvsText(envs, "      ") %}
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
@@ -135,7 +135,7 @@ jobs:
       # Upload coverage to Codecov (if coverage exists)
       # ------------------------------------------------------------
       - name: Upload coverage to Codecov
-        if: << config(codecov.cloud)|first()|join("") >> == true && hashFiles('.sheriff/codecov/coverage.xml') != ''
+        if: {% BoolText(codecov.cloud) %} == true && hashFiles('.sheriff/codecov/coverage.xml') != ''
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

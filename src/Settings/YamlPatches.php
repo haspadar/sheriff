@@ -41,8 +41,24 @@ final readonly class YamlPatches
     {
         return [
             ...(new OverridePatches($this->document->section('override')))->patches(),
+            ...(new OverridePatches($this->envsOverride()))->patches(),
             ...(new AppendPatches($this->document->section('append')))->patches(),
             ...(new RemovePatches($this->document->section('remove')))->patches(),
         ];
+    }
+
+    /**
+     * Lifts the top-level `envs:` section into an override on the `envs` key.
+     *
+     * @throws SheriffException
+     * @return array<string, mixed>
+     */
+    private function envsOverride(): array
+    {
+        $envs = $this->document->section('envs');
+
+        return $envs === []
+            ? []
+            : ['envs' => $envs];
     }
 }

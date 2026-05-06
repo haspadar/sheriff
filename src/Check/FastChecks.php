@@ -7,6 +7,7 @@ namespace Haspadar\Sheriff\Check;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 
 /**
@@ -37,6 +38,7 @@ final readonly class FastChecks implements Checks
     /**
      * Returns the names of slow checks declared in the settings.
      *
+     * @throws SheriffException
      * @return list<string>
      */
     private function slow(): array
@@ -48,15 +50,19 @@ final readonly class FastChecks implements Checks
         $value = $this->settings->value('check.slow');
 
         if (!$value instanceof ListValue) {
-            return [];
+            throw new SheriffException('"check.slow" must be a list of strings');
         }
 
         $names = [];
 
-        foreach ($value->children as $child) {
-            if ($child instanceof StringValue) {
-                $names[] = $child->raw;
+        foreach ($value->children as $index => $child) {
+            if (!$child instanceof StringValue) {
+                throw new SheriffException(
+                    sprintf('"check.slow" entry #%d must be a string', $index),
+                );
             }
+
+            $names[] = $child->raw;
         }
 
         return $names;

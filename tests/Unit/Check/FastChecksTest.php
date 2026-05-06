@@ -61,6 +61,34 @@ final class FastChecksTest extends TestCase
     }
 
     #[Test]
+    public function excludesEverySlowEntryFromMultiEntryList(): void
+    {
+        $checks = new FastChecks(
+            new FakeChecks([
+                new FakeCheck('phpstan'),
+                new FakeCheck('infection'),
+                new FakeCheck('sonar'),
+                new FakeCheck('phpunit'),
+            ]),
+            new FakeSettings([
+                'check.slow' => new ListValue([
+                    new StringValue('infection'),
+                    new StringValue('sonar'),
+                ]),
+            ]),
+        );
+
+        self::assertSame(
+            ['phpstan', 'phpunit'],
+            array_map(
+                static fn($c) => $c->name(),
+                iterator_to_array($checks->all()),
+            ),
+            'FastChecks must drop every entry listed in check.slow, not just the first',
+        );
+    }
+
+    #[Test]
     public function yieldsNothingWhenAllAreSlow(): void
     {
         $checks = new FastChecks(

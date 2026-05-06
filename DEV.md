@@ -98,66 +98,78 @@ Note:
 
 Syntax:
 
-`<< config(path.to.value) >>`
+`{% Op(settings.key) %}`
+
+Templates resolve placeholders via the Chain DSL: a settings key feeds a typed source op, which can be transformed through map ops and collapsed by a reduce op.
 
 Example:
 
-`<< config(phpstan.level) >>`
+`{% IntText(phpstan.level) %}`
 
-### Supported actions
+### Pipeline stages
 
-- `config(key)` — loads a list of values from configuration
-- `envs(indent)` — renders a GitHub Actions step that exports environment variables via `$GITHUB_ENV`; returns empty string when no envs configured
-- `first()` — extracts the first element from the list; empty input becomes `['']`
-- `format_each(template)` — formats each list item via `sprintf`
-- `join(delimiter)` — reduces the list to a single scalar value; supports escape sequences (`\n`, `\t`, `\r`, `\\`)
-- `replace(search, replace)` — replaces every occurrence of `search` with `replace` in each list item; supports escape sequences (`\n`, `\t`, `\r`, `\\`); arguments are split on the first `,`, so `search` cannot contain a literal comma (any commas after the first separator are preserved as part of `replace`)
-- `shell_quote()` — wraps each list item in POSIX single-quoted form for safe interpolation into shell commands; combines with `join(' ')` to produce a list of safe argv tokens
-- `json_escape()` — escapes each list item for safe interpolation inside a JSON string literal (quotes, backslashes, control chars become escape sequences); does not add surrounding quotes
-- `if_not_empty()` — guard: empty input (`[]` or `['']`) becomes `[]`, non-empty passes through unchanged
-- `if_empty()` — inverse guard: non-empty input becomes `[]`, empty passes through unchanged
-- `format(template)` — formats a single value via `sprintf`; empty input (`[]`) passes through as `[]`; supports escape sequences (`\n`, `\t`, `\r`, `\\`)
+1. **Source** — instantiated from a settings key. The resolved `Value` is fed into the constructor; type mismatches surface as PHP `TypeError` so misconfigured templates fail loudly.
+2. **Map (optional)** — wraps the previous op into a decorator. Listed sources stay listed for further iteration.
+3. **Reduce (optional)** — collapses a Listed pipeline into a single string.
 
-### Semantics
+### Source ops
 
-The DSL operates in stages:
+| Op | Settings type | Renders |
+|----|----|----|
+| `IntText(key)` | `IntValue` | decimal integer (`9`) |
+| `FloatText(key)` | `FloatValue` | decimal float (`0.5`); rejects `INF`/`NAN` |
+| `BoolText(key)` | `BoolValue` | `true` / `false` |
+| `StringText(key)` | `StringValue` | raw string, no quoting |
+| `ListText(key)` | `ListValue` | Listed pipeline of per-item sources |
+| `EnvsText(key, indent)` | `TreeValue` (or empty `ListValue`) | GitHub Actions step exporting env vars; empty tree → empty string |
+| `NeonTree(key, depth)` | `TreeValue` | nested neon block mapping; `depth` is optional (default `0`) and controls indentation |
 
-1. `config(...)` produces a list of values
-2. List-level actions:
-   - `first` — picks the first element
-   - `format_each`
-   - `shell_quote` — wraps each item in POSIX single quotes
-   - `json_escape` — escapes each item for a JSON string literal
-3. `join` reduces the list to a single value
-4. Conditional guards (optional, placed after `join`):
-   - `if_not_empty` — drops empty values, enabling conditional block rendering
-   - `if_empty` — drops non-empty values
-5. Scalar-level actions:
-   - `format`
+### Map ops
 
-When a guard returns `[]`, downstream `format` passes it through as `[]`, which resolves to an empty string in the final output. This enables conditional template blocks without `if`/`endif` syntax.
+| Op | Effect |
+|----|----|
+| `Formatted("tpl")` | applies a sprintf template to a single rendered value |
+| `EachFormatted("tpl")` | sprintf template applied to each part of a Listed pipeline |
+| `Replaced("needle", "replacement")` | `str_replace` over a single rendered value |
+| `EachReplaced("needle", "replacement")` | `str_replace` over each part of a Listed pipeline |
+| `WhenNotEmpty("tpl")` | applies the sprintf template only when the source rendered output is non-empty; otherwise renders empty string (suppresses surrounding markup) |
+
+### Reduce ops
+
+| Op | Effect |
+|----|----|
+| `Joined("sep")` | concatenates all parts of a Listed pipeline with the given separator |
+| `First()` | renders only the first part; throws when the pipeline is empty |
 
 ### Examples
 
 List formatting:
 
-`<< config(phpunit.testsuites.unit)|format_each("            <directory>%s</directory>")|join("\n") >>`
+`{% ListText(phpunit.testsuites.unit)|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
 
-Final value formatting:
+Per-item rewriting before formatting:
 
-`<< config(phpstan.level)|join(",")|format('level: %s') >>`
+`{% ListText(php.versions)|EachReplaced(".", "x")|EachFormatted("        '@PHP%sMigration' => true,")|Joined("\n") %}`
 
-Conditional block (rendered only when config key is non-empty):
+Single-value formatting:
 
-`<< config(psalm.project.files)|format_each('        <file name="%s" />')|join("\n")|if_not_empty()|format('<handler>\n%s\n</handler>') >>`
+`{% IntText(coverage.project.target)|Formatted("%s%%") %}`
 
-Shell argv composition (safe interpolation of arbitrary values into a shell command):
+Optional block (rendered only when the source list is non-empty):
 
-`<< config(phpunit.php_options)|shell_quote()|join(' ') >>`
+`{% ListText(psalm.project.files)|EachFormatted('        <file name="%s" />')|Joined("\n")|WhenNotEmpty("<handler>\n%s\n</handler>") %}`
 
-JSON string interpolation (safe insertion of arbitrary values into a JSON string literal):
+Picking the first list element:
 
-`"description": "<< config(project.description)|json_escape()|join("") >>"`
+`{% ListText(php.versions)|First() %}`
+
+Tree rendering (neon block):
+
+`{% NeonTree(phpstan.parameters, 1) %}`
+
+Environment-variable export step for GitHub Actions:
+
+`{% EnvsText(envs, "      ") %}`
 
 ---
 
@@ -251,41 +263,39 @@ Updated via Renovate.
 Source code is organized into layers. Each layer depends only on its own interfaces:
 
 ```
-Config → Formula → File → Files → Storage
+Settings → Chain → File → Files → Storage
 ```
 
-- **Config** (`src/Config/`) — flat key-value store; `DefaultConfig` declares all valid keys, `OverrideConfig` applies user overrides
-- **Formula** (`src/Formula/`) — evaluates `<< ... >>` placeholder expressions via a pipeline of `Action` objects
-- **File** (`src/File/`) — represents a single file with `name()`, `contents()`, `mode()`; decorators add behaviour (placeholder resolution, path prefix, string replacement)
-- **Files** (`src/Files/`) — iterable collection of `File` objects; composable via decorators
-- **Storage** (`src/Storage/`) — filesystem abstraction; decorators add write policy (diffing, once-only, or appending) and reactions
-- **Output** (`src/Output/`) — console output interface; `Console` writes to stdout, `Message` is a value object for a single line
-
-For a full description of every class and the decorator pattern, see [docs/architecture.md](docs/architecture.md).
+- **Settings** (`src/Settings/`) — typed key-value store. `DefaultSettings` reads `templates/always/.sheriff/config.yaml`; `PatchedSettings` applies one `Patch` (override / append / remove) on top; `ComposerSettings` derives extra keys (e.g. `phpcs.root_namespace`) from the project's `composer.json`. Values implement the `Value` interface — `IntValue`, `FloatValue`, `BoolValue`, `StringValue`, `ListValue`, `TreeValue`. `BoolSetting` is a small helper for strict boolean lookups with a default.
+- **Chain** (`src/Chain/`) — DSL that resolves `{% Op(settings.key)|Op(...)|Op(...) %}` template placeholders. Source ops live in `Chain/Plain/` (format-neutral text) and `Chain/Render/<Format>/` (format-specific renderers like `NeonTree`); `Chain/Map/` and `Chain/Reduce/` hold transformations. `Chain/Parse/` translates a placeholder string into a pipeline of ops.
+- **File** (`src/File/`) — represents a single file with `name()`, `contents()`, `mode()`; decorators add behaviour (`TemplateFile` resolves `{% %}` placeholders, `PrefixedFile` rewrites the path).
+- **Files** (`src/Files/`) — iterable collection of `File` objects; composable via decorators.
+- **Storage** (`src/Storage/`) — filesystem abstraction; decorators add write policy (diffing, once-only, or appending) and reactions.
+- **Output** (`src/Output/`) — console output interface; `Console` writes to stdout, `Message` is a value object for a single line.
+- **Check** (`src/Check/`) — discovers and runs tool checks; `ConfigChecks` enumerates available `<tool>.cli` keys via `Settings::keys()`, `EnabledChecks`/`FastChecks` filter on settings, `ParallelRun`/`SequentialRun` execute them.
 
 ---
 
 ## Adding a New Tool
 
 1. Create `templates/always/.sheriff/<tool>/` and add a `command.sh` inside it
-2. Add any config keys the tool needs to `src/Config/DefaultConfig.php` (`DEFAULTS` array)
-3. Register the new key type in `src/Config/OverrideConfig.php` (`OverrideMap` PHPDoc)
-4. Add the tool name to `$checks` in `bin/sheriff-check`
-5. Add `'<tool>.cli' => true` to `DefaultConfig` and `'<tool>.cli'?: bool` to `OverrideMap` in `OverrideConfig`
-6. Run `vendor/bin/sheriff sync` to verify template rendering
-7. Write unit and integration tests
+2. Add any settings keys the tool needs to the `defaults:` section of `templates/always/.sheriff/config.yaml` (typed YAML scalars, lists, or maps)
+3. Add `<tool>.cli: true` to the same defaults section so `EnabledChecks` keeps the tool on by default
+4. Reference the keys from the template via the Chain DSL (`{% StringText(<tool>.foo) %}`, `{% ListText(<tool>.bar)|EachFormatted("- %s")|Joined("\n") %}`, etc.)
+5. Run `bin/sheriff sync` to verify template rendering
+6. Write unit and integration tests
 
 ---
 
-## Adding a Config Key
+## Adding a Settings Key
 
-1. Add the key to `DEFAULTS` in `src/Config/DefaultConfig.php`:
-   - Scalar value → stored as-is, returned as single-element list
-   - List value → `list<scalar>`
-2. Add the corresponding entry to the `OverrideMap` PHPDoc type in `src/Config/OverrideConfig.php`
-3. Use the key in a template placeholder: `<< config(my.new.key) >>`
+1. Add the key to the `defaults:` section of `templates/always/.sheriff/config.yaml` with a typed default (scalar, list, or map). The YAML type drives the `Value` subclass (`IntValue`, `StringValue`, `ListValue`, `TreeValue`, …).
+2. Reference the key from a template through the matching source op (e.g. `{% IntText(my.new.key) %}` for an int).
+3. Optionally let the user override or extend it via `override:`, `append:`, or `remove:` in `.sheriff.yaml`. Each verb resolves to a `Patch` (`OverrideScalar/List/Tree`, `AppendList/Tree`, `RemoveList/Tree`).
 
-Keys are flat dot-separated names. Accessing an undeclared key throws `SheriffException`.
+Keys are flat dot-separated names. Accessing an undeclared key throws `SheriffException`. Type mismatches between the source op and the stored `Value` surface as PHP `TypeError` at render time.
+
+Note: an empty YAML mapping `{}` parses as an empty PHP array, which `RawValue` wraps as an empty `ListValue` — not `TreeValue`. `OverrideTree` accepts that shape as an empty tree to keep the override flow predictable. Defaults that need a tree-typed key with a non-empty schema should ship at least one entry.
 
 ---
 

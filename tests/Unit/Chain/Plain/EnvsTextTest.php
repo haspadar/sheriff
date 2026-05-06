@@ -64,6 +64,28 @@ final class EnvsTextTest extends TestCase
     }
 
     #[Test]
+    public function rejectsCommandWithDoubleQuoteToPreventShellInjection(): void
+    {
+        $this->expectException(SheriffException::class);
+
+        (new EnvsText(
+            new TreeValue(['VAR' => new StringValue('echo "x"')]),
+            '      ',
+        ))->rendered();
+    }
+
+    #[Test]
+    public function rejectsCommandWithBackslashToPreventShellInjection(): void
+    {
+        $this->expectException(SheriffException::class);
+
+        (new EnvsText(
+            new TreeValue(['VAR' => new StringValue('echo a\\b')]),
+            '      ',
+        ))->rendered();
+    }
+
+    #[Test]
     public function rejectsNonStringValueCommand(): void
     {
         $this->expectException(SheriffException::class);

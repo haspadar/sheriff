@@ -106,6 +106,12 @@ final readonly class EnvsText implements Op
             );
         }
 
+        if (preg_match('/["\\\\]/', $value->raw) === 1) {
+            throw new SheriffException(
+                sprintf('Environment variable "%s" command must not contain " or \\ characters', $name),
+            );
+        }
+
         return $value->raw;
     }
 }

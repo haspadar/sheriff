@@ -6,8 +6,8 @@ override:
   ci.sheriff_bin: bin/sheriff
   sonar.organization: haspadar-org
   sonar.projectKey: haspadar_sheriff
-  infection.min_msi: 80
-  infection.min_covered_msi: 90
+  infection.min_msi: 80.0
+  infection.min_covered_msi: 90.0
   coverage.project.target: 85
   coverage.project.threshold: 1
   coverage.patch.target: 85

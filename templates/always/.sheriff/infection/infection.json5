@@ -15,8 +15,8 @@
 
   "initialTestsPhpOptions": "{% StringText(infection.php_options) %}",
   "timeout": {% IntText(infection.timeout) %},
-  "minMsi": {% IntText(infection.min_msi) %},
-  "minCoveredMsi": {% IntText(infection.min_covered_msi) %},
+  "minMsi": {% FloatText(infection.min_msi) %},
+  "minCoveredMsi": {% FloatText(infection.min_covered_msi) %},
   "logs": {
     "text": "infection.log",
     "summary": "infection-summary.log",

@@ -3,10 +3,15 @@
 
 declare(strict_types=1);
 
-use Haspadar\Sheriff\Config\ProjectConfig;
 use Haspadar\Sheriff\EnvVar\EnvVars;
 use Haspadar\Sheriff\EnvVar\SonarEnvVar;
 use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\Settings\ComposerSettings;
+use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\PatchedSettings;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\YamlPatches;
 use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Secret\CodecovSecret;
 use Haspadar\Sheriff\Secret\InfectionSecret;
@@ -18,12 +23,7 @@ $output = new Console();
 
 $projectRoot = getcwd() ?: throw new RuntimeException('Cannot determine cwd');
 
-try {
-    $config = new ProjectConfig($projectRoot);
-} catch (SheriffException $e) {
-    $output->error($e->getMessage());
-    exit(1);
-}
+$yamlPath = $projectRoot . '/.sheriff.yaml';
 
 $envVars = new EnvVars([
     new SonarEnvVar(),
@@ -34,10 +34,30 @@ $secrets = new Secrets([
     new InfectionSecret(),
 ]);
 
-$enabledEnvVars = array_filter(
-    $envVars->items(),
-    fn($var) => $var->enabled($config),
-);
+try {
+    $patched = file_exists($yamlPath)
+        ? array_reduce(
+            (new YamlPatches($yamlPath))->patches(),
+            static fn(Settings $base, Patch $patch): Settings => new PatchedSettings($base, $patch),
+            new DefaultSettings(),
+        )
+        : new DefaultSettings();
+
+    $settings = new ComposerSettings($patched, $projectRoot . '/composer.json');
+
+    $enabledEnvVars = array_filter(
+        $envVars->items(),
+        fn($var) => $var->enabled($settings),
+    );
+
+    $enabledSecrets = array_filter(
+        $secrets->items(),
+        fn($secret) => $secret->enabled($settings),
+    );
+} catch (SheriffException $e) {
+    $output->error($e->getMessage());
+    exit(1);
+}
 
 foreach ($enabledEnvVars as $var) {
     $env = getenv($var->name());
@@ -50,11 +70,6 @@ foreach ($enabledEnvVars as $var) {
     $output->info(sprintf('[ENV] export %s=<your-token>  (bash/zsh)', $var->name()));
     $output->info(sprintf('[ENV] set -Ux %s <your-token>  (fish)', $var->name()));
 }
-
-$enabledSecrets = array_filter(
-    $secrets->items(),
-    fn($secret) => $secret->enabled($config),
-);
 
 if ($enabledSecrets === []) {
     exit(0);

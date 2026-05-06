@@ -103,7 +103,6 @@ defaults:
 
   phpunit.cli: true
   phpunit.php_options: "-d memory_limit=1G"
-  phpunit.source.include: ["../../src"]
   phpunit.testsuites.unit: ["../../tests/Unit"]
   phpunit.testsuites.integration: ["../../tests/Integration"]
 

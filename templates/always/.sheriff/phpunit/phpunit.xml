@@ -11,17 +11,17 @@
 >
     <testsuites>
         <testsuite name="unit">
-<< config(phpunit.testsuites.unit)|format_each("            <directory suffix="Test.php">%s</directory>")|join("\n") >>
+{% ListText(phpunit.testsuites.unit)|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
         </testsuite>
 
         <testsuite name="integration">
-<< config(phpunit.testsuites.integration)|format_each("            <directory suffix="Test.php">%s</directory>")|join("\n") >>
+{% ListText(phpunit.testsuites.integration)|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
         </testsuite>
     </testsuites>
 
     <source>
         <include>
-<< config(phpunit.source.include)|format_each("            <directory suffix=".php">%s</directory>")|join("\n") >>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('            <directory suffix=".php">%s</directory>')|Joined("\n") %}
         </include>
     </source>
 </phpunit>

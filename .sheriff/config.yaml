@@ -38,7 +38,6 @@ defaults:
 
   hadolint.cli: true
   hadolint.failure_threshold: "error"
-  hadolint.ignore: ["vendor", "tests", ".git"]
   hadolint.ignored_yaml: "[]"
   hadolint.override.error_yaml: "[]"
   hadolint.override.warning_yaml: "[]"
@@ -64,7 +63,6 @@ defaults:
   phpcs.root_namespace: ""
 
   phpmd.cli: true
-  phpmd.paths: ["src"]
   phpmd.class_complexity: 50
   phpmd.class_length: 200
   phpmd.cyclomatic: 10

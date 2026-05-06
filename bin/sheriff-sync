@@ -16,6 +16,7 @@ use Haspadar\Sheriff\Files\FilteredFiles;
 use Haspadar\Sheriff\Files\FolderFiles;
 use Haspadar\Sheriff\Files\MappedFiles;
 use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\Settings\ComposerSettings;
 use Haspadar\Sheriff\Settings\DefaultSettings;
 use Haspadar\Sheriff\Settings\Patch;
 use Haspadar\Sheriff\Settings\PatchedSettings;
@@ -56,13 +57,15 @@ try {
 
     $actions = (new FormulaActions($config, $envs))->map();
 
-    $settings = file_exists($yamlPath)
+    $patched = file_exists($yamlPath)
         ? array_reduce(
             (new YamlPatches($yamlPath))->patches(),
             static fn(Settings $base, Patch $patch): Settings => new PatchedSettings($base, $patch),
             new DefaultSettings(),
         )
         : new DefaultSettings();
+
+    $settings = new ComposerSettings($patched, $projectRoot . '/composer.json');
 
     $reactions = new StorageReactions([new ReportingStorageReaction($output)]);
     $disk = new DiskStorage($projectRoot);

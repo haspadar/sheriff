@@ -26,7 +26,7 @@ return (new PhpCsFixer\Config())
     [
 
         '@PER-CS2.0' => true,
-<< config(php.versions)|replace(".", "x")|format_each("        '@PHP%sMigration' => true,")|join("\n") >>
+{% ListText(php.versions)|EachReplaced(".", "x")|EachFormatted("        '@PHP%sMigration' => true,")|Joined("\n") %}
 
         // Arrays
         'array_syntax' => ['syntax' => 'short'],
@@ -106,6 +106,6 @@ return (new PhpCsFixer\Config())
         // PHP 8.4 compatibility: keep parentheses around `new` expressions
         // so tools based on pdepend (phpmd) can still parse the code
         'new_expression_parentheses' => ['use_parentheses' => true],
-<< config(php_cs_fixer.extend)|join("") >>
+{% StringText(php_cs_fixer.extend) %}
     ]))
-    ->setUnsupportedPhpVersionAllowed(<< config(php_cs_fixer.allow_unsupported)|join("") >>);
+    ->setUnsupportedPhpVersionAllowed({% ListText(php_cs_fixer.allow_unsupported)|Joined("") %});

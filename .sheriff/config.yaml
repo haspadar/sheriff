@@ -56,7 +56,6 @@ defaults:
 
   php-cs-fixer.cli: true
   php_cs_fixer.allow_unsupported: ["true"]
-  php_cs_fixer.exclude: ["vendor", "tests", ".git"]
   php_cs_fixer.extend: ""
   php_cs_fixer.paths: ["../.."]
 

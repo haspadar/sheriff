@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\EnvVar;
 
 use Haspadar\Sheriff\Settings\Settings;
-use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\BoolSetting;
 use Override;
 
 /**
@@ -28,23 +28,10 @@ final readonly class SonarEnvVar implements EnvVar
     #[Override]
     public function enabled(Settings $settings): bool
     {
-        if ($this->boolean($settings, 'sonar.cloud', true)) {
+        if ((new BoolSetting($settings, 'sonar.cloud', true))->raw()) {
             return false;
         }
 
-        return $this->boolean($settings, 'sonar.cli', true);
-    }
-
-    private function boolean(Settings $settings, string $key, bool $default): bool
-    {
-        if (!$settings->has($key)) {
-            return $default;
-        }
-
-        $value = $settings->value($key);
-
-        return $value instanceof BoolValue
-            ? $value->raw
-            : $default;
+        return (new BoolSetting($settings, 'sonar.cli', true))->raw();
     }
 }

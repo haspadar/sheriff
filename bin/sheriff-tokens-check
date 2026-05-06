@@ -25,6 +25,15 @@ $projectRoot = getcwd() ?: throw new RuntimeException('Cannot determine cwd');
 
 $yamlPath = $projectRoot . '/.sheriff.yaml';
 
+$envVars = new EnvVars([
+    new SonarEnvVar(),
+]);
+
+$secrets = new Secrets([
+    new CodecovSecret(),
+    new InfectionSecret(),
+]);
+
 try {
     $patched = file_exists($yamlPath)
         ? array_reduce(
@@ -35,24 +44,20 @@ try {
         : new DefaultSettings();
 
     $settings = new ComposerSettings($patched, $projectRoot . '/composer.json');
+
+    $enabledEnvVars = array_filter(
+        $envVars->items(),
+        fn($var) => $var->enabled($settings),
+    );
+
+    $enabledSecrets = array_filter(
+        $secrets->items(),
+        fn($secret) => $secret->enabled($settings),
+    );
 } catch (SheriffException $e) {
     $output->error($e->getMessage());
     exit(1);
 }
-
-$envVars = new EnvVars([
-    new SonarEnvVar(),
-]);
-
-$secrets = new Secrets([
-    new CodecovSecret(),
-    new InfectionSecret(),
-]);
-
-$enabledEnvVars = array_filter(
-    $envVars->items(),
-    fn($var) => $var->enabled($settings),
-);
 
 foreach ($enabledEnvVars as $var) {
     $env = getenv($var->name());
@@ -65,11 +70,6 @@ foreach ($enabledEnvVars as $var) {
     $output->info(sprintf('[ENV] export %s=<your-token>  (bash/zsh)', $var->name()));
     $output->info(sprintf('[ENV] set -Ux %s <your-token>  (fish)', $var->name()));
 }
-
-$enabledSecrets = array_filter(
-    $secrets->items(),
-    fn($secret) => $secret->enabled($settings),
-);
 
 if ($enabledSecrets === []) {
     exit(0);

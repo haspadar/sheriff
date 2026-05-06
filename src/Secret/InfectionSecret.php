@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Secret;
 
 use Haspadar\Sheriff\Settings\Settings;
-use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\BoolSetting;
 use Override;
 
 /**
@@ -28,14 +28,6 @@ final readonly class InfectionSecret implements Secret
     #[Override]
     public function enabled(Settings $settings): bool
     {
-        if (!$settings->has('infection.cli')) {
-            return true;
-        }
-
-        $value = $settings->value('infection.cli');
-
-        return $value instanceof BoolValue
-            ? $value->raw
-            : true;
+        return (new BoolSetting($settings, 'infection.cli', true))->raw();
     }
 }

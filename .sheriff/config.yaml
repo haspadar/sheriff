@@ -114,7 +114,6 @@ defaults:
 
   psalm.cli: true
   psalm.error_level: 1
-  psalm.project.directories: ["../../src"]
   psalm.project.files: []
   psalm.project.ignore: []
   psalm.suppress.possibly_unused: []

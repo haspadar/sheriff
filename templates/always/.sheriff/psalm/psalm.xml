@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-        errorLevel="<< config(psalm.error_level)|join("") >>"
+        errorLevel="{% IntText(psalm.error_level) %}"
         xmlns="https://getpsalm.org/schema/config"
         findUnusedCode="true"
         findUnusedBaselineEntry="true"
@@ -8,19 +8,19 @@
         reportMixedIssues="true"
 >
     <projectFiles>
-<< config(psalm.project.directories)|format_each('        <directory name="%s" />')|join("\n") >>
-<< config(psalm.project.files)|format_each('        <file name="%s" />')|join("\n") >>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('        <directory name="%s" />')|Joined("\n") %}
+{% ListText(psalm.project.files)|EachFormatted('        <file name="%s" />')|Joined("\n") %}
         <ignoreFiles>
-<< config(psalm.project.ignore)|format_each('            <directory name="%s" />')|join("\n") >>
+{% ListText(psalm.project.ignore)|EachFormatted('            <directory name="%s" />')|Joined("\n") %}
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
         <InvalidAttribute errorLevel="suppress" />
         <UnusedClass errorLevel="suppress">
             <errorLevel type="suppress">
-<< config(psalm.project.directories)|format_each('                <directory name="%s" />')|join("\n") >>
+{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('                <directory name="%s" />')|Joined("\n") %}
             </errorLevel>
         </UnusedClass>
-<< config(psalm.suppress.possibly_unused)|format_each('                <directory name="%s" />')|join("\n")|if_not_empty()|format('        <PossiblyUnusedMethod errorLevel="suppress">\n            <errorLevel type="suppress">\n%s\n            </errorLevel>\n        </PossiblyUnusedMethod>') >>
+{% ListText(psalm.suppress.possibly_unused)|EachFormatted('                <directory name="%s" />')|Joined("\n")|WhenNotEmpty("        <PossiblyUnusedMethod errorLevel=\"suppress\">\n            <errorLevel type=\"suppress\">\n%s\n            </errorLevel>\n        </PossiblyUnusedMethod>") %}
     </issueHandlers>
 </psalm>

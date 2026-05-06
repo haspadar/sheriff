@@ -157,7 +157,6 @@ final readonly class DefaultConfig implements Config
             'phpmetrics.includes' => $projectIncludes,
             'phpstan.paths' => $projectIncludes,
             'phpunit.source.include' => $projectIncludes,
-            'psalm.project.directories' => $projectIncludes,
             'infection.source.directories' => $projectIncludes,
             'shellcheck.ignore_dirs' => $excludes,
             'sonar.sources' => $sources,

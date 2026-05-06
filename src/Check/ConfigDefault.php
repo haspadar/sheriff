@@ -4,29 +4,26 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Check;
 
-use Haspadar\Sheriff\Config\Config;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\BoolSetting;
 use Override;
 
 /**
- * A CLI option whose value comes from a boolean config key.
+ * A CLI option whose value comes from a boolean settings key.
  */
 final readonly class ConfigDefault implements CliOption
 {
     /**
-     * Initializes with project configuration and the config key.
+     * Initializes with project settings and the boolean key.
      *
-     * @param Config $config Configuration to read the boolean value from
-     * @param string $key Dot-separated config key holding the boolean default
+     * @param Settings $settings Settings to read the boolean value from
+     * @param string $key Dot-separated key holding the boolean default
      */
-    public function __construct(private Config $config, private string $key) {}
+    public function __construct(private Settings $settings, private string $key) {}
 
     #[Override]
     public function enabled(): bool
     {
-        return filter_var(
-            $this->config->list($this->key)[0] ?? false,
-            FILTER_VALIDATE_BOOLEAN,
-            FILTER_NULL_ON_FAILURE,
-        ) ?? false;
+        return (new BoolSetting($this->settings, $this->key, false))->raw();
     }
 }

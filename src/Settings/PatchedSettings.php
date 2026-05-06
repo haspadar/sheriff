@@ -37,4 +37,10 @@ final readonly class PatchedSettings implements Settings
             ? $this->patch->applied($this->base->value($name))
             : $this->base->value($name);
     }
+
+    #[Override]
+    public function keys(): array
+    {
+        return $this->base->keys();
+    }
 }

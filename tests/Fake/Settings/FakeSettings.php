@@ -28,4 +28,9 @@ final readonly class FakeSettings implements Settings
 
         return $this->values[$name];
     }
+
+    public function keys(): array
+    {
+        return array_keys($this->values);
+    }
 }

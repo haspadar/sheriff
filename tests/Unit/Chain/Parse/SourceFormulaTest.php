@@ -136,6 +136,12 @@ final class SourceFormulaTest extends TestCase
             {
                 return $this->values[$name];
             }
+
+            #[Override]
+            public function keys(): array
+            {
+                return array_keys($this->values);
+            }
         };
     }
 }

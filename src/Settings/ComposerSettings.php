@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Sheriff\Config\ComposerRootNamespace;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
@@ -48,5 +47,15 @@ final readonly class ComposerSettings implements Settings
         }
 
         return $this->base->value($name);
+    }
+
+    #[Override]
+    public function keys(): array
+    {
+        $baseKeys = $this->base->keys();
+
+        return in_array(self::ROOT_NAMESPACE_KEY, $baseKeys, true)
+            ? $baseKeys
+            : [...$baseKeys, self::ROOT_NAMESPACE_KEY];
     }
 }

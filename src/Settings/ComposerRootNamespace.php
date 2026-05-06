@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Sheriff\Config;
+namespace Haspadar\Sheriff\Settings;
 
 /**
  * Root namespace from the PSR-4 autoload section of composer.json.

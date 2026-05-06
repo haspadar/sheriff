@@ -22,4 +22,11 @@ interface Settings
      * Throws when the key is not declared.
      */
     public function value(string $name): Value;
+
+    /**
+     * Returns every declared key in deterministic order.
+     *
+     * @return list<string>
+     */
+    public function keys(): array;
 }

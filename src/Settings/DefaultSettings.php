@@ -52,6 +52,12 @@ final readonly class DefaultSettings implements Settings
         return (new RawValue($this->defaults()[$name]))->value();
     }
 
+    #[Override]
+    public function keys(): array
+    {
+        return array_keys($this->defaults());
+    }
+
     /**
      * Parses the YAML file and caches the defaults map.
      *

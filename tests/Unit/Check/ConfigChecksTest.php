@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Check;
 
 use Haspadar\Sheriff\Check\ConfigChecks;
-use Haspadar\Sheriff\Tests\Fake\Config\FakeConfig;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
+use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -21,24 +23,22 @@ final class ConfigChecksTest extends TestCase
         );
 
         $checks = new ConfigChecks(
-            new FakeConfig(['phpstan.cli' => [true]]),
+            new FakeSettings(['phpstan.cli' => new BoolValue(true)]),
             $folder->path(),
         );
 
-        try {
-            $names = [];
-            foreach ($checks->all() as $check) {
-                $names[] = $check->name();
-            }
+        $names = array_map(
+            static fn($c) => $c->name(),
+            iterator_to_array($checks->all()),
+        );
 
-            self::assertSame(
-                ['phpstan'],
-                $names,
-                'ConfigChecks must yield checks with existing command files',
-            );
-        } finally {
-            $folder->close();
-        }
+        $folder->close();
+
+        self::assertSame(
+            ['phpstan'],
+            $names,
+            'ConfigChecks must yield checks with existing command files',
+        );
     }
 
     #[Test]
@@ -50,45 +50,38 @@ final class ConfigChecksTest extends TestCase
         );
 
         $checks = new ConfigChecks(
-            new FakeConfig([
-                'phpstan.level' => [9],
-                'phpstan.cli' => [true],
+            new FakeSettings([
+                'phpstan.level' => new IntValue(9),
+                'phpstan.cli' => new BoolValue(true),
             ]),
             $folder->path(),
         );
 
-        try {
-            $names = [];
-            foreach ($checks->all() as $check) {
-                $names[] = $check->name();
-            }
+        $names = array_map(
+            static fn($c) => $c->name(),
+            iterator_to_array($checks->all()),
+        );
 
-            self::assertSame(
-                ['phpstan'],
-                $names,
-                'ConfigChecks must skip config keys not ending with .cli',
-            );
-        } finally {
-            $folder->close();
-        }
+        $folder->close();
+
+        self::assertSame(
+            ['phpstan'],
+            $names,
+            'ConfigChecks must skip settings keys not ending with .cli',
+        );
     }
 
     #[Test]
     public function skipsCheckWhenCommandFileMissing(): void
     {
         $checks = new ConfigChecks(
-            new FakeConfig(['phpstan.cli' => [true]]),
+            new FakeSettings(['phpstan.cli' => new BoolValue(true)]),
             '/nonexistent',
         );
 
-        $names = [];
-        foreach ($checks->all() as $check) {
-            $names[] = $check->name();
-        }
-
         self::assertSame(
             [],
-            $names,
+            iterator_to_array($checks->all()),
             'ConfigChecks must skip checks without command files',
         );
     }

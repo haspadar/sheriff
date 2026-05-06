@@ -13,8 +13,13 @@ use Haspadar\Sheriff\Check\RequestedCheck;
 use Haspadar\Sheriff\Check\SequentialRun;
 use Haspadar\Sheriff\Check\SingleCheck;
 use Haspadar\Sheriff\Check\ToggleOption;
-use Haspadar\Sheriff\Config\ProjectConfig;
 use Haspadar\Sheriff\Output\Console;
+use Haspadar\Sheriff\Settings\ComposerSettings;
+use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Patch;
+use Haspadar\Sheriff\Settings\PatchedSettings;
+use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\YamlPatches;
 use Haspadar\Sheriff\SheriffException;
 
 require_once __DIR__ . '/bootstrap-autoload.php';
@@ -23,7 +28,16 @@ $projectRoot = getcwd()
     ?: throw new RuntimeException('Cannot determine cwd');
 
 try {
-    $config = new ProjectConfig($projectRoot);
+    $yamlPath = $projectRoot . '/.sheriff.yaml';
+    $patched = file_exists($yamlPath)
+        ? array_reduce(
+            (new YamlPatches($yamlPath))->patches(),
+            static fn(Settings $base, Patch $patch): Settings => new PatchedSettings($base, $patch),
+            new DefaultSettings(),
+        )
+        : new DefaultSettings();
+
+    $settings = new ComposerSettings($patched, $projectRoot . '/composer.json');
     $output = new Console();
 
     $requested = new RequestedCheck($argv);
@@ -31,21 +45,21 @@ try {
     $parallel = new ConfigOption(
         new ToggleOption($argv, ['-p', '--parallel']),
         new ToggleOption($argv, ['-P', '--no-parallel']),
-        new ConfigDefault($config, 'check.parallel'),
+        new ConfigDefault($settings, 'check.parallel'),
     );
     $full = new ConfigOption(
         new ToggleOption($argv, ['-f', '--full']),
         new ToggleOption($argv, ['-F', '--no-full']),
-        new ConfigDefault($config, 'check.full'),
+        new ConfigDefault($settings, 'check.full'),
     );
 
     $checks = $requested->name() !== ''
         ? new SingleCheck($requested->name(), $projectRoot)
         : new EnabledChecks(
             $full->enabled()
-                ? new ConfigChecks($config, $projectRoot)
-                : new FastChecks(new ConfigChecks($config, $projectRoot), $config),
-            $config,
+                ? new ConfigChecks($settings, $projectRoot)
+                : new FastChecks(new ConfigChecks($settings, $projectRoot), $settings),
+            $settings,
         );
 
     ($parallel->enabled() && $requested->name() === ''

@@ -53,11 +53,7 @@ final readonly class ProjectConfig implements Config
      */
     private function resolve(): Config
     {
-        $defaults = new DefaultConfig(
-            [],
-            [],
-            new ConfigPaths(sprintf('%s/composer.json', $this->root)),
-        );
+        $defaults = new DefaultConfig();
 
         $yamlPath = sprintf('%s/.sheriff.yaml', $this->root);
         $phpPath = sprintf('%s/.sheriff.php', $this->root);

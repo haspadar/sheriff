@@ -134,25 +134,6 @@ final class DefaultConfigTest extends TestCase
     }
 
     #[Test]
-    public function usesRootNamespaceFromComposerJson(): void
-    {
-        $folder = (new TempFolder())->withFile(
-            'composer.json',
-            '{"autoload":{"psr-4":{"Acme\\\\":"src/"}}}',
-        );
-
-        $namespace = (new DefaultConfig(paths: new ConfigPaths($folder->path() . '/composer.json')))->list('phpcs.root_namespace');
-
-        $folder->close();
-
-        self::assertSame(
-            ['Acme'],
-            $namespace,
-            'DefaultConfig must extract root namespace from composer.json psr-4 section',
-        );
-    }
-
-    #[Test]
     public function throwsWhenConfigYamlHasNoDefaultsSection(): void
     {
         $folder = (new TempFolder())->withFile('empty.yaml', 'root: true');

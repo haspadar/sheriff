@@ -7,7 +7,7 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 PROJECT_ROOT="$(pwd)"
-DEFAULT_IMAGE="<< config(docker.image) >>"
+DEFAULT_IMAGE="{% StringText(docker.image) %}"
 IMAGE="${SHERIFF_INFRA_IMAGE:-$DEFAULT_IMAGE}"
 
 docker run --rm \

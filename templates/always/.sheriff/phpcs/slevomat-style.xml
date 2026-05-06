@@ -30,7 +30,7 @@
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
         <properties>
             <property name="rootNamespaces" type="array">
-                <element key="src" value="<< config(phpcs.root_namespace)|join("") >>"/>
+                <element key="src" value="{% StringText(phpcs.root_namespace) %}"/>
             </property>
         </properties>
     </rule>

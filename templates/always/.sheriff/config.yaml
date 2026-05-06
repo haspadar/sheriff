@@ -61,7 +61,6 @@ defaults:
 
   phpcs.cli: true
   phpcs.extend: ""
-  phpcs.root_namespace: ""
 
   phpmd.cli: true
   phpmd.class_complexity: 50

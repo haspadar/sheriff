@@ -30,7 +30,7 @@ if [ -n "$SEED" ]; then
   ARGS+=(--random-order-seed="$SEED")
 fi
 
-PHP_OPTIONS_STR="<< config(phpunit.php_options)|join(' ') >>"
+PHP_OPTIONS_STR="{% StringText(phpunit.php_options) %}"
 PHP_OPTIONS=()
 if [ -n "$PHP_OPTIONS_STR" ]; then
   read -ra PHP_OPTIONS <<< "$PHP_OPTIONS_STR"

@@ -156,7 +156,6 @@ final readonly class DefaultConfig implements Config
             'phpunit.source.include' => $projectIncludes,
             'infection.source.directories' => $projectIncludes,
             'shellcheck.ignore_dirs' => $excludes,
-            'sonar.sources' => $sources,
             'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),
             'yamllint.ignore' => array_merge(
                 (new TrailingGlobDirs($excludes))->toList(),

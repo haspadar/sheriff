@@ -455,7 +455,6 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | Key | Default | Description |
 |-----|---------|-------------|
 | `phpmd.cli` | `true` | Enable PHP Mess Detector |
-| `phpmd.paths` | `["src"]` | Source paths |
 | `phpmd.class_complexity` | `50` | Max class complexity |
 | `phpmd.class_length` | `200` | Max class length |
 | `phpmd.cyclomatic` | `10` | Max cyclomatic complexity |

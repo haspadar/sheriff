@@ -3,14 +3,9 @@
 
 declare(strict_types=1);
 
-use Haspadar\Sheriff\Config\ProjectConfig;
-use Haspadar\Sheriff\Envs\EmptyEnvs;
-use Haspadar\Sheriff\Envs\YamlEnvs;
-use Haspadar\Sheriff\File\ConfiguredFile;
 use Haspadar\Sheriff\File\File;
 use Haspadar\Sheriff\File\PrefixedFile;
 use Haspadar\Sheriff\File\TemplateFile;
-use Haspadar\Sheriff\Formula\Actions\FormulaActions;
 use Haspadar\Sheriff\Files\EachFile;
 use Haspadar\Sheriff\Files\FilteredFiles;
 use Haspadar\Sheriff\Files\FolderFiles;
@@ -48,14 +43,7 @@ try {
 
     $libraryRoot = $installPath;
 
-    $config = new ProjectConfig($projectRoot);
-
     $yamlPath = $projectRoot . '/.sheriff.yaml';
-    $envs = file_exists($yamlPath)
-        ? new YamlEnvs($yamlPath)
-        : new EmptyEnvs();
-
-    $actions = (new FormulaActions($config, $envs))->map();
 
     $patched = file_exists($yamlPath)
         ? array_reduce(
@@ -75,7 +63,7 @@ try {
             new DiskStorage($libraryRoot . '/templates/always'),
             '',
         ),
-        fn(File $file): File => new TemplateFile(new ConfiguredFile($file, $actions), $settings),
+        fn(File $file): File => new TemplateFile($file, $settings),
     );
 
     $gitFiles = new MappedFiles(
@@ -91,7 +79,7 @@ try {
             new DiskStorage($libraryRoot . '/templates/once'),
             '',
         ),
-        fn(File $file): File => new TemplateFile(new ConfiguredFile($file, $actions), $settings),
+        fn(File $file): File => new TemplateFile($file, $settings),
     );
 
     $gitDiffFiles = new FilteredFiles(

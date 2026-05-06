@@ -154,7 +154,6 @@ final readonly class DefaultConfig implements Config
             'phpcs.root_namespace' => (new ComposerRootNamespace($this->paths->composerJson()))->toString(),
             'phpmd.paths' => $sources,
             'infection.source.directories' => $projectIncludes,
-            'shellcheck.ignore_dirs' => $excludes,
             'typos.exclude' => (new TrailingSlashDirs($excludes))->toList(),
             'yamllint.ignore' => array_merge(
                 (new TrailingGlobDirs($excludes))->toList(),

@@ -541,7 +541,6 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `shellcheck.cli` | `true` | Enable ShellCheck |
 | `shellcheck.exclude` | `[]` | Excluded rule codes |
 | `shellcheck.external_sources` | `true` | Follow sourced files |
-| `shellcheck.ignore_dirs` | `["vendor", "tests", ".git"]` | Ignored directories |
 | `shellcheck.severity` | `"warning"` | Minimum severity |
 | `shellcheck.shell` | `"bash"` | Shell dialect |
 | `shellcheck.source_path` | `"."` | Source path for includes |
@@ -552,9 +551,8 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `sonar.cloud` | `true` | Use SonarCloud automatic analysis (skip local scanner and SONAR_TOKEN) |
 | `sonar.cli` | `false` | Enable local sonar-scanner |
-| `sonar.organization` | `[]` | SonarCloud organization |
-| `sonar.projectKey` | `[]` | SonarCloud project key |
-| `sonar.sources` | `["src"]` | Source directories |
+| `sonar.organization` | `""` | SonarCloud organization |
+| `sonar.projectKey` | `""` | SonarCloud project key |
 | `sonar.tests` | `["tests"]` | Test directories |
 | `sonar.exclusions` | `[]` | Excluded paths |
 | `sonar.php.coverage.reportPaths` | `[".sheriff/codecov/coverage.xml"]` | Coverage report path |

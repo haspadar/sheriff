@@ -19,16 +19,10 @@ done < <(
   find . \
     -type f \
     \( \
-<< config(hadolint.patterns)
-   |format_each('      -name "%s" -o \')
-   |join("\n")
->>
+{% ListText(hadolint.patterns)|EachFormatted('      -name "%s" -o \\')|Joined("\n") %}
       -false \
     \) \
-<< config(hadolint.ignore)
-   |format_each('    ! -path "./%s/*" \')
-   |join("\n")
->>
+{% ListText(infra.exclude)|EachFormatted('    ! -path "./%s/*" \\')|Joined("\n") %}
     -print0
 )
 

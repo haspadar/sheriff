@@ -22,12 +22,17 @@ use Haspadar\Sheriff\SheriffException;
 final readonly class AppendedTree
 {
     /**
-     * Initializes with the base tree and the tree carrying the appended entries.
+     * Initializes with the base tree, the tree carrying the appended entries, and the parent path used in error messages.
      *
      * @param TreeValue $base Tree whose entries are kept untouched when the extra leaves them out
      * @param TreeValue $extra Tree whose entries either add new keys or extend matching list/tree leaves
+     * @param string $path Dot-separated parent path threaded through nested merges for diagnostics; empty at the top level
      */
-    public function __construct(private TreeValue $base, private TreeValue $extra) {}
+    public function __construct(
+        private TreeValue $base,
+        private TreeValue $extra,
+        private string $path = '',
+    ) {}
 
     /**
      * Returns the merged tree with extra entries appended into matching leaves.
@@ -55,7 +60,7 @@ final readonly class AppendedTree
     private function resolved(string $key, Value $first, Value $second): Value
     {
         if ($first instanceof TreeValue && $second instanceof TreeValue) {
-            return (new self($first, $second))->value();
+            return (new self($first, $second, $this->qualified($key)))->value();
         }
 
         if ($first instanceof ListValue && $second instanceof ListValue) {
@@ -65,10 +70,18 @@ final readonly class AppendedTree
         throw new SheriffException(
             sprintf(
                 'AppendedTree cannot merge "%s": base is %s but extra is %s; expected matching trees or lists',
-                $key,
+                $this->qualified($key),
                 get_debug_type($first),
                 get_debug_type($second),
             ),
         );
+    }
+
+    /** Joins the current path with the given key for a fully-qualified diagnostic. */
+    private function qualified(string $key): string
+    {
+        return $this->path === ''
+            ? $key
+            : sprintf('%s.%s', $this->path, $key);
     }
 }

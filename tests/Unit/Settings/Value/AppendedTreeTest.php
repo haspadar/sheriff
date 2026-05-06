@@ -105,4 +105,28 @@ final class AppendedTreeTest extends TestCase
             new TreeValue(['x' => new ListValue([])]),
         ))->value();
     }
+
+    #[Test]
+    public function reportsFullDottedPathOnNestedCollision(): void
+    {
+        $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('AppendedTree cannot merge "haspadar.afferentCoupling.flag"');
+
+        (new AppendedTree(
+            new TreeValue([
+                'haspadar' => new TreeValue([
+                    'afferentCoupling' => new TreeValue([
+                        'flag' => new BoolValue(false),
+                    ]),
+                ]),
+            ]),
+            new TreeValue([
+                'haspadar' => new TreeValue([
+                    'afferentCoupling' => new TreeValue([
+                        'flag' => new BoolValue(true),
+                    ]),
+                ]),
+            ]),
+        ))->value();
+    }
 }

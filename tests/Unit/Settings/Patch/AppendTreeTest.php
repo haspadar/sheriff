@@ -147,6 +147,7 @@ final class AppendTreeTest extends TestCase
     public function rejectsScalarCollisionBetweenBaseAndExtra(): void
     {
         $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('AppendedTree cannot merge "flag"');
 
         (new AppendTree(
             'phpstan.parameters',

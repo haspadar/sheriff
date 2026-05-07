@@ -91,12 +91,22 @@ defaults:
   phpmetrics.structure.max_methods_per_class: 10
 
   phpstan.cli: true
-  phpstan.level: 9
   phpstan.memory: "1G"
-  phpstan.checked_exceptions: ['\Throwable']
   phpstan.neon_includes: ["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]
-  phpstan.afferent_coupling.ignore_interfaces: true
-  phpstan.afferent_coupling.excluded_classes: []
+  phpstan.parameters:
+    level: 9
+    errorFormat: table
+    reportUnmatchedIgnoredErrors: true
+    checkUninitializedProperties: true
+    checkClassCaseSensitivity: true
+    checkDynamicProperties: true
+    exceptions:
+      checkedExceptionClasses:
+        - '\Throwable'
+    haspadar:
+      afferentCoupling:
+        ignoreInterfaces: true
+        excludedClasses: []
 
   phpunit.cli: true
   phpunit.php_options: "-d memory_limit=1G"

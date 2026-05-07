@@ -3,22 +3,18 @@ includes:
     - ../../vendor/haspadar/phpstan-rules/rules.neon
 
 parameters:
-    level: 9
-
     paths:
         - ../../src
 
+    level: 9
     errorFormat: table
     reportUnmatchedIgnoredErrors: true
-
     checkUninitializedProperties: true
     checkClassCaseSensitivity: true
     checkDynamicProperties: true
-
     exceptions:
         checkedExceptionClasses:
             - \Throwable
-
     haspadar:
         afferentCoupling:
             ignoreInterfaces: true

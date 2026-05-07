@@ -2,23 +2,8 @@ includes:
 {% ListText(phpstan.neon_includes)|EachFormatted("    - %s")|Joined("\n") %}
 
 parameters:
-    level: {% IntText(phpstan.level) %}
-
+    # paths sit outside phpstan.parameters because they are derived from php.src
+    # rather than declared as a static tree leaf.
     paths:
 {% ListText(php.src)|EachFormatted("../../%s")|EachFormatted("        - %s")|Joined("\n") %}
-
-    errorFormat: table
-    reportUnmatchedIgnoredErrors: true
-
-    checkUninitializedProperties: true
-    checkClassCaseSensitivity: true
-    checkDynamicProperties: true
-
-    exceptions:
-        checkedExceptionClasses:
-{% ListText(phpstan.checked_exceptions)|EachFormatted("            - %s")|Joined("\n") %}
-
-    haspadar:
-        afferentCoupling:
-            ignoreInterfaces: {% BoolText(phpstan.afferent_coupling.ignore_interfaces) %}
-{% ListText(phpstan.afferent_coupling.excluded_classes)|EachFormatted("                - %s")|Joined("\n")|WhenNotEmpty("            excludedClasses:\n%s") %}
+{% NeonTree(phpstan.parameters) %}

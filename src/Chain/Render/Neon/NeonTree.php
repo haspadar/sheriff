@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Chain\Render\Neon;
 
 use Haspadar\Sheriff\Chain\Rendered;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\TreeValue;
 use Haspadar\Sheriff\Settings\Value\Value;
 use Override;
@@ -64,12 +66,15 @@ final readonly class NeonTree implements Rendered
      */
     private function lineFor(Value $child): string
     {
-        if ($child instanceof TreeValue) {
-            return $child->entries === []
+        return match (true) {
+            $child instanceof TreeValue => $child->entries === []
                 ? ' {}'
-                : (new self($child, $this->depth + 1))->rendered();
-        }
-
-        return sprintf(' %s', (new NeonOf($child))->renderer()->rendered());
+                : (new self($child, $this->depth + 1))->rendered(),
+            $child instanceof ListValue => $child->children === []
+                ? ' []'
+                : (new NeonBlockList($child, $this->depth + 1))->rendered(),
+            $child instanceof StringValue => sprintf(' %s', (new NeonBareString($child))->rendered()),
+            default => sprintf(' %s', (new NeonOf($child))->renderer()->rendered()),
+        };
     }
 }

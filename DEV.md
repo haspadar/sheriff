@@ -183,17 +183,42 @@ Example:
 
 ```yaml
 override:
-    phpstan.level: 8
-    psalm.suppress.possibly_unused: ["../../src"]
+    phpstan.parameters:
+        level: 7
+        haspadar:
+            afferentCoupling:
+                ignoreInterfaces: false
 
 append:
-    exclude:
-        - legacy
+    infra.exclude:
+        - dist
+    phpstan.parameters:
+        haspadar:
+            afferentCoupling:
+                excludedClasses:
+                    - '\App\MyException'
+        ignoreErrors:
+            - '#Pattern to ignore#'
+
+remove:
+    phpstan.parameters:
+        haspadar:
+            afferentCoupling:
+                excludedClasses:
+                    - '\App\OldException'
 ```
 
-Keys are flat and use dot-separated names. All valid keys are declared in `templates/always/.sheriff/config.yaml`.
+Keys use dot-separated names at the top level. All valid keys are declared in `templates/always/.sheriff/config.yaml`. Tree-typed keys (e.g. `phpstan.parameters`) carry nested mappings under the same top-level key.
 
-`override` replaces the default value entirely. `append` adds to the default list.
+The three operations apply at every depth of a tree-typed key:
+
+| Leaf type | `override` | `append` | `remove` |
+|---|---|---|---|
+| scalar | replaces the value | error (use `override`) | error (use `override`) |
+| list | replaces the whole list | concatenates new entries after the existing ones | drops the named string entries |
+| tree | walks deeper into the matching subtree | adds missing keys, recurses into matching subtrees | recurses into matching subtrees; a list-of-strings spec at a tree position drops those keys |
+
+Missing keys under `append:` / `remove:` are silently ignored so `.sheriff.yaml` stays idempotent across upgrades. Type collisions (e.g. appending a tree to a list leaf) raise `SheriffException` with the dotted path of the offending entry.
 
 ### Environment variables
 
@@ -502,13 +527,19 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | Key | Default | Description |
 |-----|---------|-------------|
 | `phpstan.cli` | `true` | Enable PHPStan |
-| `phpstan.level` | `9` | Analysis level (0-9) |
 | `phpstan.memory` | `"1G"` | Memory limit |
-| `phpstan.paths` | `["../../src"]` | Paths to analyze |
-| `phpstan.checked_exceptions` | `['\Throwable']` | Checked exception classes |
 | `phpstan.neon_includes` | `["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]` | Neon includes |
-| `phpstan.afferent_coupling.ignore_interfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
-| `phpstan.afferent_coupling.excluded_classes` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
+| `phpstan.parameters.level` | `9` | Analysis level (0-9) |
+| `phpstan.parameters.errorFormat` | `table` | Error formatter |
+| `phpstan.parameters.reportUnmatchedIgnoredErrors` | `true` | Fail when an ignore pattern matches nothing |
+| `phpstan.parameters.checkUninitializedProperties` | `true` | Report properties that may be read before being assigned |
+| `phpstan.parameters.checkClassCaseSensitivity` | `true` | Enforce case-sensitive class references |
+| `phpstan.parameters.checkDynamicProperties` | `true` | Report writes to undeclared dynamic properties |
+| `phpstan.parameters.exceptions.checkedExceptionClasses` | `['\Throwable']` | Checked exception classes for the strict-rules `throws` analysis |
+| `phpstan.parameters.haspadar.afferentCoupling.ignoreInterfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
+| `phpstan.parameters.haspadar.afferentCoupling.excludedClasses` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
+
+`phpstan.parameters` is a nested tree merged into the rendered `phpstan.neon` under `parameters:`. Use `override:` / `append:` / `remove:` on any leaf to customise the analysis without rewriting the file.
 
 ### phpunit
 

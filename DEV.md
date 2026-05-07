@@ -527,13 +527,19 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | Key | Default | Description |
 |-----|---------|-------------|
 | `phpstan.cli` | `true` | Enable PHPStan |
-| `phpstan.level` | `9` | Analysis level (0-9) |
 | `phpstan.memory` | `"1G"` | Memory limit |
-| `phpstan.paths` | `["../../src"]` | Paths to analyze |
-| `phpstan.checked_exceptions` | `['\Throwable']` | Checked exception classes |
 | `phpstan.neon_includes` | `["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]` | Neon includes |
-| `phpstan.afferent_coupling.ignore_interfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
-| `phpstan.afferent_coupling.excluded_classes` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
+| `phpstan.parameters.level` | `9` | Analysis level (0-9) |
+| `phpstan.parameters.errorFormat` | `table` | Error formatter |
+| `phpstan.parameters.reportUnmatchedIgnoredErrors` | `true` | Fail when an ignore pattern matches nothing |
+| `phpstan.parameters.checkUninitializedProperties` | `true` | Report properties that may be read before being assigned |
+| `phpstan.parameters.checkClassCaseSensitivity` | `true` | Enforce case-sensitive class references |
+| `phpstan.parameters.checkDynamicProperties` | `true` | Report writes to undeclared dynamic properties |
+| `phpstan.parameters.exceptions.checkedExceptionClasses` | `['\Throwable']` | Checked exception classes for the strict-rules `throws` analysis |
+| `phpstan.parameters.haspadar.afferentCoupling.ignoreInterfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
+| `phpstan.parameters.haspadar.afferentCoupling.excludedClasses` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
+
+`phpstan.parameters` is a nested tree merged into the rendered `phpstan.neon` under `parameters:`. Use `override:` / `append:` / `remove:` on any leaf to customise the analysis without rewriting the file.
 
 ### phpunit
 

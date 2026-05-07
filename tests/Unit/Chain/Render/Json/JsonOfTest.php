@@ -59,4 +59,14 @@ final class JsonOfTest extends TestCase
 
         (new JsonOf($unknown))->renderer();
     }
+
+    #[Test]
+    public function threadsDefaultDepthZeroIntoContainerRenderer(): void
+    {
+        self::assertSame(
+            "[\n    \"x\"\n]",
+            (new JsonOf(new ListValue([new StringValue('x')])))->renderer()->rendered(),
+            'JsonOf must thread depth=0 by default so a top-level list indents items one level',
+        );
+    }
 }

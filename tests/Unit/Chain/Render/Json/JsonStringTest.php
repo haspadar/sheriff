@@ -6,6 +6,7 @@ namespace Haspadar\Sheriff\Tests\Unit\Chain\Render\Json;
 
 use Haspadar\Sheriff\Chain\Render\Json\JsonString;
 use Haspadar\Sheriff\Settings\Value\StringValue;
+use JsonException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -49,5 +50,13 @@ final class JsonStringTest extends TestCase
             (new JsonString(new StringValue("a\nb")))->rendered(),
             'JsonString must escape control characters so the literal stays single-line valid json',
         );
+    }
+
+    #[Test]
+    public function throwsJsonExceptionForMalformedUtf8(): void
+    {
+        $this->expectException(JsonException::class);
+
+        (new JsonString(new StringValue("\xFF\xFE")))->rendered();
     }
 }

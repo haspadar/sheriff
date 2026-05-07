@@ -60,4 +60,16 @@ final class JsonListTest extends TestCase
             'JsonList must indent items by depth+1 levels and the closing bracket by depth levels',
         );
     }
+
+    #[Test]
+    public function passesIncrementedDepthToNestedList(): void
+    {
+        self::assertSame(
+            "[\n    [\n        \"x\"\n    ]\n]",
+            (new JsonList(new ListValue([
+                new ListValue([new StringValue('x')]),
+            ])))->rendered(),
+            'JsonList must forward depth+1 to nested containers so inner items sit at depth+2 indentation',
+        );
+    }
 }

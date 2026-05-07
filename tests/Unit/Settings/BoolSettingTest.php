@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Sheriff\Tests\Unit\Settings\Value;
+namespace Haspadar\Sheriff\Tests\Unit\Settings;
 
-use Haspadar\Sheriff\Settings\Value\BoolSetting;
+use Haspadar\Sheriff\Settings\BoolSetting;
 use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;

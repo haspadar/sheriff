@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Haspadar\Sheriff\Settings\Value;
+namespace Haspadar\Sheriff\Settings;
 
-use Haspadar\Sheriff\Settings\Settings;
+use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\SheriffException;
 
 /**

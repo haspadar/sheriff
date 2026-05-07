@@ -1,12 +1,12 @@
 # Sheriff
 
+## Pre-configured strict quality gate for PHP
+
 [![CI](https://github.com/haspadar/sheriff/actions/workflows/sheriff.yml/badge.svg)](https://github.com/haspadar/sheriff/actions/workflows/sheriff.yml)
 [![Coverage](https://codecov.io/gh/haspadar/sheriff/branch/main/graph/badge.svg)](https://codecov.io/gh/haspadar/sheriff)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fhaspadar%2Fsheriff%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/haspadar/sheriff/main)
 [![PHPStan Level](https://img.shields.io/badge/PHPStan-Level%209-brightgreen)](https://phpstan.org/)
 [![Psalm](https://img.shields.io/badge/psalm-level%201-brightgreen)](https://psalm.dev)
-
-Pre-configured strict quality gate for PHP.
 
 ```bash
 composer require --dev haspadar/sheriff
@@ -27,7 +27,7 @@ vendor/bin/sheriff check
 [OK]   All checks passed    9.5s
 ```
 
-Over 1200 rules from 18 tools:
+## Over 1200 rules from 18 tools
 
 | Tool          | Rules                                              |
 |---------------|----------------------------------------------------|

@@ -18,8 +18,12 @@ override:
     - "../../bin/sheriff-fix"
     - "../../bin/sheriff-sync"
     - "../../bin/sheriff-tokens-check"
-  phpstan.afferent_coupling.excluded_classes: ['\Haspadar\Sheriff\SheriffException']
 
 append:
   infra.exclude:
     - templates
+  phpstan.parameters:
+    haspadar:
+      afferentCoupling:
+        excludedClasses:
+          - '\Haspadar\Sheriff\SheriffException'

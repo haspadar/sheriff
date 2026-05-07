@@ -32,10 +32,10 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('phpstan.neon', 'level: {% IntText(phpstan.level) %}'),
+                new TextFile('phpmd.xml', 'cyclomatic: {% IntText(phpmd.cyclomatic) %}'),
                 new DefaultSettings(),
             ),
-            new HasFileContents('level: 9'),
+            new HasFileContents('cyclomatic: 10'),
             'TemplateFile must render IntText key from DefaultSettings',
         );
     }
@@ -88,6 +88,34 @@ final class TemplateFileTest extends TestCase
             ),
             new HasFileContents('cloud: true'),
             'TemplateFile must render BoolText key from DefaultSettings',
+        );
+    }
+
+    #[Test]
+    public function rendersPhpstanParametersTreeAsNeonBlock(): void
+    {
+        self::assertThat(
+            new TemplateFile(
+                new TextFile('phpstan.neon', '{% NeonTree(phpstan.parameters) %}'),
+                new DefaultSettings(),
+            ),
+            new HasFileContents(
+                "\n"
+                . "    level: 9\n"
+                . "    errorFormat: table\n"
+                . "    reportUnmatchedIgnoredErrors: true\n"
+                . "    checkUninitializedProperties: true\n"
+                . "    checkClassCaseSensitivity: true\n"
+                . "    checkDynamicProperties: true\n"
+                . "    exceptions:\n"
+                . "        checkedExceptionClasses:\n"
+                . "            - \\Throwable\n"
+                . "    haspadar:\n"
+                . "        afferentCoupling:\n"
+                . "            ignoreInterfaces: true\n"
+                . "            excludedClasses: []",
+            ),
+            'TemplateFile must render the phpstan.parameters TreeValue as a nested neon block, including bare strings and block-style lists',
         );
     }
 }

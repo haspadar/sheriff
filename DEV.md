@@ -183,17 +183,42 @@ Example:
 
 ```yaml
 override:
-    phpstan.level: 8
-    psalm.suppress.possibly_unused: ["../../src"]
+    phpstan.parameters:
+        level: 7
+        haspadar:
+            afferentCoupling:
+                ignoreInterfaces: false
 
 append:
-    exclude:
-        - legacy
+    infra.exclude:
+        - dist
+    phpstan.parameters:
+        haspadar:
+            afferentCoupling:
+                excludedClasses:
+                    - '\App\MyException'
+        ignoreErrors:
+            - '#Pattern to ignore#'
+
+remove:
+    phpstan.parameters:
+        haspadar:
+            afferentCoupling:
+                excludedClasses:
+                    - '\App\OldException'
 ```
 
-Keys are flat and use dot-separated names. All valid keys are declared in `templates/always/.sheriff/config.yaml`.
+Keys use dot-separated names at the top level. All valid keys are declared in `templates/always/.sheriff/config.yaml`. Tree-typed keys (e.g. `phpstan.parameters`) carry nested mappings under the same top-level key.
 
-`override` replaces the default value entirely. `append` adds to the default list.
+The three operations apply at every depth of a tree-typed key:
+
+| Leaf type | `override` | `append` | `remove` |
+|---|---|---|---|
+| scalar | replaces the value | error (use `override`) | error (use `override`) |
+| list | replaces the whole list | concatenates new entries after the existing ones | drops the named string entries |
+| tree | walks deeper into the matching subtree | adds missing keys, recurses into matching subtrees | recurses into matching subtrees; a list-of-strings spec at a tree position drops those keys |
+
+Missing keys under `append:` / `remove:` are silently ignored so `.sheriff.yaml` stays idempotent across upgrades. Type collisions (e.g. appending a tree to a list leaf) raise `SheriffException` with the dotted path of the offending entry.
 
 ### Environment variables
 

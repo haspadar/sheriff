@@ -149,6 +149,54 @@ final class RemovedTreeTest extends TestCase
     }
 
     #[Test]
+    public function processesSubsequentSpecKeysAfterEncounteringAnAbsentOne(): void
+    {
+        self::assertEquals(
+            new TreeValue([
+                'kept' => new IntValue(1),
+                'flags' => new TreeValue([]),
+            ]),
+            (new RemovedTree(
+                new TreeValue([
+                    'kept' => new IntValue(1),
+                    'flags' => new TreeValue(['removed' => new BoolValue(true)]),
+                ]),
+                new TreeValue([
+                    'absent' => new ListValue([]),
+                    'flags' => new ListValue([new StringValue('removed')]),
+                ]),
+            ))->value(),
+            'RemovedTree must keep iterating through spec keys after one targets a key absent from base',
+        );
+    }
+
+    #[Test]
+    public function reindexesListAfterDroppingNonTrailingItems(): void
+    {
+        self::assertEquals(
+            new TreeValue([
+                'items' => new ListValue([
+                    new StringValue('b'),
+                    new StringValue('c'),
+                ]),
+            ]),
+            (new RemovedTree(
+                new TreeValue([
+                    'items' => new ListValue([
+                        new StringValue('a'),
+                        new StringValue('b'),
+                        new StringValue('c'),
+                    ]),
+                ]),
+                new TreeValue([
+                    'items' => new ListValue([new StringValue('a')]),
+                ]),
+            ))->value(),
+            'RemovedTree must reindex the surviving list children so their keys stay sequential',
+        );
+    }
+
+    #[Test]
     public function reportsFullDottedPathOnNestedCollision(): void
     {
         $this->expectException(SheriffException::class);

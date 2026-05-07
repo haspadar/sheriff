@@ -28,7 +28,7 @@ vendor/bin/sheriff check
 [OK]   All checks passed    9.5s
 ```
 
-Over 1200 rules from 14 tools:
+Over 1200 rules from 18 tools:
 
 | Tool          | Rules                                              |
 |---------------|----------------------------------------------------|
@@ -37,7 +37,7 @@ Over 1200 rules from 14 tools:
 | PHP_CodeSniffer | 382 sniffs ([Slevomat](https://github.com/slevomat/coding-standard) + core) |
 | PHP-CS-Fixer  | 364 fixers (303 core + 61 [kubawerlos](https://github.com/kubawerlos/php-cs-fixer-custom-fixers)) |
 | PHPMD         | 6 rulesets, all enabled                            |
-| Infection     | mutation testing, MSI ≥ 80%                        |
+| Infection     | mutation testing, Covered MSI ≥ 80%                |
 
 ---
 
@@ -45,13 +45,13 @@ Over 1200 rules from 14 tools:
 
 Customization is optional. If needed, create `.sheriff.yaml` in the project root.
 
-Three settings cascade across every tool that uses them:
+Three settings cascade across every tool that consumes them:
 
 - `php.src` — paths analysed by PHPStan, Psalm, PHPMD, PHP-CS-Fixer, PHPUnit, Infection
-- `exclude` — paths skipped by every check
-- `php.versions` — versions tested in the CI matrix (PHPStan, Psalm, PHPCS, PHPMD, PHPMetrics)
+- `infra.exclude` — paths skipped by infra-level linters (PHP_CodeSniffer, markdownlint, jsonlint, yamllint, typos, hadolint, shellcheck, PHP Metrics)
+- `php.versions` — versions tested in the CI matrix (PHPStan, Psalm, PHP_CodeSniffer, PHPMD, PHP Metrics)
 
-Change one key, every tool follows.
+Change one key, every consuming tool follows.
 
 Use `append` to extend default lists:
 
@@ -59,7 +59,7 @@ Use `append` to extend default lists:
 append:
     php.src:
         - lib
-    exclude:
+    infra.exclude:
         - legacy
 ```
 
@@ -67,7 +67,8 @@ Use `override` to replace individual keys:
 
 ```yaml
 override:
-    phpstan.level: 8
+    phpstan.parameters:
+        level: 8
     php.versions: ["8.3", "8.4", "8.5"]
     ci.pr.max_lines_changed: 400
 ```

@@ -7,6 +7,8 @@ namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 use Haspadar\Sheriff\Settings\Patch\RemoveTree;
 use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Settings\Value\IntValue;
+use Haspadar\Sheriff\Settings\Value\ListValue;
+use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\TreeValue;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -19,23 +21,66 @@ final class RemoveTreeTest extends TestCase
     {
         self::assertSame(
             'phpstan.parameters',
-            (new RemoveTree('phpstan.parameters', []))->key(),
+            (new RemoveTree('phpstan.parameters', new TreeValue([])))->key(),
             'RemoveTree must expose the configuration key it targets',
         );
     }
 
     #[Test]
-    public function dropsNamedKeyFromBase(): void
+    public function recursesIntoNestedTreeAndDropsListEntries(): void
     {
-        $base = new TreeValue([
-            'kept' => new IntValue(1),
-            'removed' => new BoolValue(true),
-        ]);
-
         self::assertEquals(
-            new TreeValue(['kept' => new IntValue(1)]),
-            (new RemoveTree('phpstan.parameters', ['removed']))->applied($base),
-            'RemoveTree must drop the entry whose key is listed for removal',
+            new TreeValue([
+                'haspadar' => new TreeValue([
+                    'afferentCoupling' => new TreeValue([
+                        'excludedClasses' => new ListValue([new StringValue('\\Kept')]),
+                    ]),
+                ]),
+            ]),
+            (new RemoveTree(
+                'phpstan.parameters',
+                new TreeValue([
+                    'haspadar' => new TreeValue([
+                        'afferentCoupling' => new TreeValue([
+                            'excludedClasses' => new ListValue([new StringValue('\\Dropped')]),
+                        ]),
+                    ]),
+                ]),
+            ))->applied(new TreeValue([
+                'haspadar' => new TreeValue([
+                    'afferentCoupling' => new TreeValue([
+                        'excludedClasses' => new ListValue([
+                            new StringValue('\\Kept'),
+                            new StringValue('\\Dropped'),
+                        ]),
+                    ]),
+                ]),
+            ])),
+            'RemoveTree must walk through nested trees and prune matching list leaves',
+        );
+    }
+
+    #[Test]
+    public function dropsNamedKeysFromTreeWhenSpecAtSameKeyIsAListOfStrings(): void
+    {
+        self::assertEquals(
+            new TreeValue([
+                'flags' => new TreeValue([
+                    'kept' => new IntValue(1),
+                ]),
+            ]),
+            (new RemoveTree(
+                'phpstan.parameters',
+                new TreeValue([
+                    'flags' => new ListValue([new StringValue('removed')]),
+                ]),
+            ))->applied(new TreeValue([
+                'flags' => new TreeValue([
+                    'kept' => new IntValue(1),
+                    'removed' => new BoolValue(true),
+                ]),
+            ])),
+            'RemoveTree must drop named keys from a base tree when the spec at the same key is a list of strings',
         );
     }
 
@@ -46,36 +91,34 @@ final class RemoveTreeTest extends TestCase
 
         self::assertEquals(
             $base,
-            (new RemoveTree('phpstan.parameters', ['absent']))->applied($base),
-            'RemoveTree must keep base entries when removal targets keys absent from base',
+            (new RemoveTree(
+                'phpstan.parameters',
+                new TreeValue(['absent' => new ListValue([])]),
+            ))->applied($base),
+            'RemoveTree must keep base entries when the spec targets keys absent from base',
         );
     }
 
     #[Test]
-    public function dropsEveryListedKeyAtOnce(): void
+    public function acceptsEmptyListBaseAsEmptyTree(): void
     {
-        $base = new TreeValue([
-            'kept' => new IntValue(1),
-            'first' => new BoolValue(true),
-            'second' => new BoolValue(false),
-        ]);
-
-        self::assertEquals(
-            new TreeValue(['kept' => new IntValue(1)]),
-            (new RemoveTree('phpstan.parameters', ['first', 'second']))->applied($base),
-            'RemoveTree must drop every key listed for removal in a single application',
-        );
-    }
-
-    #[Test]
-    public function returnsEmptyTreeWhenAllKeysRemoved(): void
-    {
-        $base = new TreeValue(['only' => new IntValue(1)]);
-
         self::assertEquals(
             new TreeValue([]),
-            (new RemoveTree('phpstan.parameters', ['only']))->applied($base),
-            'RemoveTree must return an empty tree when every base entry is removed',
+            (new RemoveTree('envs', new TreeValue([])))->applied(new ListValue([])),
+            'RemoveTree must accept an empty ListValue base because YAML `{}` parses as `[]`',
+        );
+    }
+
+    #[Test]
+    public function dropsNothingFromEmptyListBaseEvenWithNonEmptySpec(): void
+    {
+        self::assertEquals(
+            new TreeValue([]),
+            (new RemoveTree(
+                'envs',
+                new TreeValue(['absent' => new ListValue([new StringValue('foo')])]),
+            ))->applied(new ListValue([])),
+            'RemoveTree must treat an empty ListValue base as an empty TreeValue regardless of spec contents',
         );
     }
 
@@ -85,6 +128,6 @@ final class RemoveTreeTest extends TestCase
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage('phpstan.parameters');
 
-        (new RemoveTree('phpstan.parameters', []))->applied(new IntValue(8));
+        (new RemoveTree('phpstan.parameters', new TreeValue([])))->applied(new IntValue(8));
     }
 }

@@ -7,6 +7,7 @@ namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Patch\RemoveList;
 use Haspadar\Sheriff\Settings\Patch\RemovePatches;
+use Haspadar\Sheriff\Settings\Patch\RemoveTree;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -55,10 +56,22 @@ final class RemovePatchesTest extends TestCase
     }
 
     #[Test]
-    public function rejectsMappingPayloadAsConfigError(): void
+    public function buildsRemoveTreeForMappingPayload(): void
     {
-        $this->expectException(SheriffException::class);
+        $patches = (new RemovePatches([
+            'phpstan.parameters' => [
+                'haspadar' => [
+                    'afferentCoupling' => [
+                        'excludedClasses' => ['\\App\\Foo'],
+                    ],
+                ],
+            ],
+        ]))->patches();
 
-        (new RemovePatches(['phpstan.parameters' => ['nested' => true]]))->patches();
+        self::assertInstanceOf(
+            RemoveTree::class,
+            $patches[0],
+            'RemovePatches must produce RemoveTree for a yaml mapping that walks into nested leaves',
+        );
     }
 }

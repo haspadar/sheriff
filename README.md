@@ -7,19 +7,37 @@
 [![Psalm](https://img.shields.io/badge/psalm-level%201-brightgreen)](https://psalm.dev)
 [![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/haspadar/sheriff?utm_source=oss&utm_medium=github&utm_campaign=haspadar%2Fsheriff&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 
-Picky standards for PHP projects.
-
-Installed via Composer.  
-Executed locally, in Git hooks, or in CI.
-
----
-
-## Installation
+Pre-configured strict quality gate for PHP.
 
 ```bash
 composer require --dev haspadar/sheriff
 vendor/bin/sheriff sync
+vendor/bin/sheriff check
 ```
+
+```text
+[OK]   phpstan              2.8s
+[OK]   psalm                4.4s
+[OK]   phpunit              5.9s
+[OK]   phpcs                9.1s
+[OK]   phpmd                1.4s
+[OK]   php-cs-fixer         1.6s
+[OK]   markdownlint         2.6s
+[OK]   hadolint             3.1s
+[OK]   ...
+[OK]   All checks passed    9.5s
+```
+
+Over 1200 rules from 14 tools:
+
+| Tool          | Rules                                              |
+|---------------|----------------------------------------------------|
+| PHPStan       | 123 (48 strict + 75 [haspadar custom](https://github.com/haspadar/phpstan-rules)) at level 9 |
+| Psalm         | 331 issue types at level 1                         |
+| PHP_CodeSniffer | 382 sniffs ([Slevomat](https://github.com/slevomat/coding-standard) + core) |
+| PHP-CS-Fixer  | 364 fixers (303 core + 61 [kubawerlos](https://github.com/kubawerlos/php-cs-fixer-custom-fixers)) |
+| PHPMD         | 6 rulesets, all enabled                            |
+| Infection     | mutation testing, MSI ≥ 80%                        |
 
 ---
 
@@ -27,7 +45,15 @@ vendor/bin/sheriff sync
 
 Customization is optional. If needed, create `.sheriff.yaml` in the project root.
 
-Use `append` to add values to default lists — changes to `php.src` cascade to all PHP analysis tools, changes to `exclude` cascade to all tools:
+Three settings cascade across every tool that uses them:
+
+- `php.src` — paths analysed by PHPStan, Psalm, PHPMD, PHP-CS-Fixer, PHPUnit, Infection
+- `exclude` — paths skipped by every check
+- `php.versions` — versions tested in the CI matrix (PHPStan, Psalm, PHPCS, PHPMD, PHPMetrics)
+
+Change one key, every tool follows.
+
+Use `append` to extend default lists:
 
 ```yaml
 append:
@@ -97,7 +123,9 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 
 ## Checks
 
-- PHPStan — level 9 with [strict rules extension](https://github.com/phpstan/phpstan-strict-rules)
+### PHP
+
+- PHPStan — level 9 with [strict rules](https://github.com/phpstan/phpstan-strict-rules) and [haspadar/phpstan-rules](https://github.com/haspadar/phpstan-rules) (75 custom rules for object-oriented strictness)
 - Psalm
 - PHPUnit
 - Infection
@@ -105,6 +133,9 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 - PHP Metrics
 - PHP_CodeSniffer — with [Slevomat Coding Standard](https://github.com/slevomat/coding-standard) rules (class structure, doc comments, attributes)
 - PHP-CS-Fixer — with [kubawerlos/php-cs-fixer-custom-fixers](https://github.com/kubawerlos/php-cs-fixer-custom-fixers)
+
+### Linters
+
 - actionlint
 - hadolint
 - shellcheck
@@ -112,6 +143,9 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 - jsonlint
 - yamllint
 - typos
+
+### CI
+
 - SonarCloud — requires `SONAR_TOKEN` environment variable ([get token](https://sonarcloud.io/account/security))
 - Pull request size limit
 - Code coverage (Codecov)

@@ -45,7 +45,7 @@ final readonly class NeonBareString implements Rendered
 
         return $raw !== ''
             && !in_array($raw, ['true', 'false', 'null', 'yes', 'no', 'on', 'off'], true)
-            && preg_match('/[\s"\'`#:,\[\]{}()]/u', $raw) !== 1
+            && preg_match('/[\s"\'`#:,\[\]{}()]/', $raw) !== 1
             && preg_match('/[\x00-\x1F\x7F]/', $raw) !== 1
             && !in_array($raw[0], ['-', '?', '@', '%', '!', '&', '*', '|', '>', '<', '='], true)
             && !is_numeric($raw);

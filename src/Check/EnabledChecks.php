@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Check;
 
+use Haspadar\Sheriff\Settings\BoolSetting;
 use Haspadar\Sheriff\Settings\Settings;
-use Haspadar\Sheriff\Settings\Value\BoolSetting;
 use Override;
 
 /**

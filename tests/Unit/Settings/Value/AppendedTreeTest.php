@@ -70,17 +70,25 @@ final class AppendedTreeTest extends TestCase
                 'excludedClasses' => new ListValue([
                     new StringValue('A'),
                     new StringValue('B'),
+                    new StringValue('C'),
+                    new StringValue('D'),
                 ]),
             ]),
             (new AppendedTree(
                 new TreeValue([
-                    'excludedClasses' => new ListValue([new StringValue('A')]),
+                    'excludedClasses' => new ListValue([
+                        new StringValue('A'),
+                        new StringValue('B'),
+                    ]),
                 ]),
                 new TreeValue([
-                    'excludedClasses' => new ListValue([new StringValue('B')]),
+                    'excludedClasses' => new ListValue([
+                        new StringValue('C'),
+                        new StringValue('D'),
+                    ]),
                 ]),
             ))->value(),
-            'AppendedTree must concatenate matching list leaves in append order',
+            'AppendedTree must concatenate every item of both list leaves in append order',
         );
     }
 

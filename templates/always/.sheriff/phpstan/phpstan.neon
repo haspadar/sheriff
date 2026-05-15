@@ -2,8 +2,8 @@ includes:
 {% ListText(phpstan.neon_includes)|EachFormatted("    - %s")|Joined("\n") %}
 
 parameters:
-    # paths sit outside phpstan.parameters because they are derived from php.src
-    # rather than declared as a static tree leaf.
+    # Path values below are dynamically derived from php.src configuration
+    # rather than being statically declared.
     paths:
 {% ListText(php.src)|EachFormatted("../../%s")|EachFormatted("        - %s")|Joined("\n") %}
 {% NeonTree(phpstan.parameters) %}

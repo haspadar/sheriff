@@ -3,6 +3,8 @@ includes:
     - ../../vendor/haspadar/phpstan-rules/rules.neon
 
 parameters:
+    # Path values below are dynamically derived from php.src configuration
+    # rather than being statically declared.
     paths:
         - ../../src
 

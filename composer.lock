@@ -1814,16 +1814,16 @@
         },
         {
             "name": "haspadar/phpstan-rules",
-            "version": "v0.48.0",
+            "version": "v0.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/haspadar/phpstan-rules.git",
-                "reference": "669323de4330f7663a9a82747dd7e46f03ea1cce"
+                "reference": "1d0c6c0174bfbacaa780ae75e664e3732ed9735d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/haspadar/phpstan-rules/zipball/669323de4330f7663a9a82747dd7e46f03ea1cce",
-                "reference": "669323de4330f7663a9a82747dd7e46f03ea1cce",
+                "url": "https://api.github.com/repos/haspadar/phpstan-rules/zipball/1d0c6c0174bfbacaa780ae75e664e3732ed9735d",
+                "reference": "1d0c6c0174bfbacaa780ae75e664e3732ed9735d",
                 "shasum": ""
             },
             "require": {
@@ -1831,7 +1831,7 @@
                 "phpstan/phpstan": "^2.0"
             },
             "require-dev": {
-                "haspadar/sheriff": "dev-main",
+                "haspadar/sheriff": "^0.29",
                 "kubawerlos/php-cs-fixer-custom-fixers": "^3.36",
                 "slevomat/coding-standard": "^8.28"
             },
@@ -1861,9 +1861,9 @@
             "description": "PHPStan design rules for immutability and structure",
             "support": {
                 "issues": "https://github.com/haspadar/phpstan-rules/issues",
-                "source": "https://github.com/haspadar/phpstan-rules/tree/v0.48.0"
+                "source": "https://github.com/haspadar/phpstan-rules/tree/v0.49.0"
             },
-            "time": "2026-04-30T10:58:04+00:00"
+            "time": "2026-05-14T15:42:00+00:00"
         },
         {
             "name": "infection/abstract-testframework-adapter",

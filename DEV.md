@@ -538,7 +538,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `phpstan.parameters.exceptions.checkedExceptionClasses` | `['\Throwable']` | Checked exception classes for the strict-rules `throws` analysis |
 | `phpstan.parameters.haspadar.afferentCoupling.ignoreInterfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
 | `phpstan.parameters.haspadar.afferentCoupling.excludedClasses` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
-| `phpstan.parameters.haspadar.prohibitStaticMethods.allowNamedConstructors` | `true` | Allow named constructors (`static fromX(): self { return new self(...); }`) as the only sanctioned use of `static` |
+| `phpstan.parameters.haspadar.prohibitStaticMethods.allowNamedConstructors` | `true` | Allow named constructors (e.g. `public static function fromX(...): self { return new self(...); }` or `public static function fromX(...): static { return new static(...); }`) as the only sanctioned static methods |
 
 `phpstan.parameters` is a nested tree merged into the rendered `phpstan.neon` under `parameters:`. Use `override:` / `append:` / `remove:` on any leaf to customise the analysis without rewriting the file.
 

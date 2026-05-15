@@ -22,3 +22,5 @@ parameters:
             ignoreInterfaces: true
             excludedClasses:
                 - \Haspadar\Sheriff\SheriffException
+        prohibitStaticMethods:
+            allowNamedConstructors: true

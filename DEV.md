@@ -491,7 +491,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `phpmd.cli` | `true` | Enable PHP Mess Detector |
+| `phpmd.cli` | `false` | Enable PHP Mess Detector (opt-in: checks duplicate haspadar/phpstan-rules) |
 | `phpmd.class_complexity` | `50` | Max class complexity |
 | `phpmd.class_length` | `200` | Max class length |
 | `phpmd.cyclomatic` | `10` | Max cyclomatic complexity |

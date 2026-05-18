@@ -64,7 +64,7 @@ defaults:
   phpcs.cli: true
   phpcs.extend: ""
 
-  phpmd.cli: true
+  phpmd.cli: false
   phpmd.class_complexity: 50
   phpmd.class_length: 200
   phpmd.cyclomatic: 10

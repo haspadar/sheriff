@@ -31,7 +31,7 @@ vendor/bin/sheriff check
 
 | Tool          | Rules                                              |
 |---------------|----------------------------------------------------|
-| PHPStan       | 123 (48 strict + 75 [haspadar custom](https://github.com/haspadar/phpstan-rules)) at level 9 |
+| PHPStan       | 128 (48 strict + 80 [haspadar custom](https://github.com/haspadar/phpstan-rules)) at level 9 |
 | Psalm         | 331 issue types at level 1                         |
 | PHP_CodeSniffer | 382 sniffs ([Slevomat](https://github.com/slevomat/coding-standard) + core) |
 | PHP-CS-Fixer  | 364 fixers (303 core + 61 [kubawerlos](https://github.com/kubawerlos/php-cs-fixer-custom-fixers)) |
@@ -125,7 +125,7 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 
 ### PHP
 
-- PHPStan — level 9 with [strict rules](https://github.com/phpstan/phpstan-strict-rules) and [haspadar/phpstan-rules](https://github.com/haspadar/phpstan-rules) (75 custom rules for object-oriented strictness)
+- PHPStan — level 9 with [strict rules](https://github.com/phpstan/phpstan-strict-rules) and [haspadar/phpstan-rules](https://github.com/haspadar/phpstan-rules) (80 custom rules for object-oriented strictness)
 - Psalm
 - PHPUnit
 - Infection

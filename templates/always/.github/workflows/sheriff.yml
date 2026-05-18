@@ -42,13 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         check:
-          - actionlint
-          - hadolint
-          - markdownlint
-          - yamllint
-          - typos
-          - shellcheck
-          - jsonlint
+{% EnabledTools(ci.infra_checks)|EachFormatted("          - %s")|Joined("\n") %}
 
     steps:
       - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
@@ -79,11 +73,7 @@ jobs:
       matrix:
         php: [{% ListText(php.versions)|EachFormatted('"%s"')|Joined(", ") %}]
         check:
-          - phpcs
-          - phpstan
-          - psalm
-          - phpmd
-          - phpmetrics
+{% EnabledTools(ci.php_checks)|EachFormatted("          - %s")|Joined("\n") %}
 
     steps:
       - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98

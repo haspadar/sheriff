@@ -123,6 +123,7 @@ Example:
 | `ListText(key)` | `ListValue` | Listed pipeline of per-item sources |
 | `EnvsText(key, indent)` | `TreeValue` (or empty `ListValue`) | GitHub Actions step exporting env vars; empty tree → empty string |
 | `NeonTree(key, depth)` | `TreeValue` | nested neon block mapping; `depth` is optional (default `0`) and controls indentation |
+| `EnabledTools(key)` | `ListValue` of tool names | Listed pipeline of names whose `<name>.cli` flag is `true`; fails fast on missing or non-boolean flags, and when the resolved list is empty |
 
 ### Map ops
 
@@ -399,6 +400,8 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `ci.sheriff_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
 | `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
+| `ci.infra_checks` | `["actionlint", "hadolint", "markdownlint", "yamllint", "typos", "shellcheck", "jsonlint"]` | Tools placed into the infra CI matrix; filtered by each tool's `<name>.cli` flag. Override or `append` in `.sheriff.yaml` to extend the matrix |
+| `ci.php_checks` | `["phpcs", "phpstan", "psalm", "phpmd", "phpmetrics"]` | Tools placed into the PHP-static CI matrix; filtered by each tool's `<name>.cli` flag. Override or `append` in `.sheriff.yaml` to extend the matrix |
 
 ### Coverage
 

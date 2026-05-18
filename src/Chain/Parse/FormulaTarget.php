@@ -31,6 +31,10 @@ final readonly class FormulaTarget
      */
     public function formula(): Formula
     {
+        if ($this->name === 'EnabledTools') {
+            return new EnabledToolsFormula($this->args);
+        }
+
         foreach ($this->candidates() as $candidate) {
             /** @var class-string<Op> $target */
             $target = sprintf('%s%s', $candidate['namespace'], $this->name);

@@ -35,7 +35,7 @@ final readonly class FloatText implements Op
 
         if (!is_finite($raw)) {
             throw new SheriffException(
-                sprintf('FloatText cannot render non-finite value "%s"', (string) $raw),
+                sprintf('FloatText cannot render non-finite value "%s"', var_export($raw, true)),
             );
         }
 

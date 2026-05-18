@@ -30,7 +30,7 @@ final readonly class NeonFloat implements Rendered
     {
         if (!is_finite($this->value->raw)) {
             throw new UnexpectedValueException(
-                sprintf('NeonFloat cannot render non-finite payload: %s', (string) $this->value->raw),
+                sprintf('NeonFloat cannot render non-finite payload: %s', var_export($this->value->raw, true)),
             );
         }
 

@@ -129,6 +129,7 @@ final class EnabledToolsFormulaTest extends TestCase
     public function throwsWhenSourceKeyIsNotAList(): void
     {
         $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('to be a list');
 
         (new EnabledToolsFormula(['ci.infra_checks']))
             ->op([], self::settings([
@@ -140,6 +141,7 @@ final class EnabledToolsFormulaTest extends TestCase
     public function throwsWhenCliFlagIsNotBoolean(): void
     {
         $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('to be a boolean');
 
         (new EnabledToolsFormula(['ci.infra_checks']))
             ->op([], self::settings([

@@ -138,6 +138,18 @@ final class EnabledToolsFormulaTest extends TestCase
     }
 
     #[Test]
+    public function throwsWhenToolNameIsNotString(): void
+    {
+        $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('expects string tool names');
+
+        (new EnabledToolsFormula(['ci.infra_checks']))
+            ->op([], self::settings([
+                'ci.infra_checks' => new ListValue([new IntValue(42)]),
+            ]));
+    }
+
+    #[Test]
     public function throwsWhenCliFlagIsNotBoolean(): void
     {
         $this->expectException(SheriffException::class);

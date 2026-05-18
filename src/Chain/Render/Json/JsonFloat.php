@@ -32,7 +32,7 @@ final readonly class JsonFloat implements Rendered
     {
         if (!is_finite($this->value->raw)) {
             throw new UnexpectedValueException(
-                sprintf('JsonFloat cannot render non-finite payload: %s', (string) $this->value->raw),
+                sprintf('JsonFloat cannot render non-finite payload: %s', var_export($this->value->raw, true)),
             );
         }
 

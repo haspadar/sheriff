@@ -21,6 +21,8 @@ defaults:
 
   ci.sheriff_bin: "vendor/bin/sheriff"
   ci.pr.max_lines_changed: 250
+  ci.infra_checks: ["actionlint", "hadolint", "markdownlint", "yamllint", "typos", "shellcheck", "jsonlint"]
+  ci.php_checks: ["phpcs", "phpstan", "psalm", "phpmd", "phpmetrics"]
 
   coverage.patch.target: 80
   coverage.patch.threshold: 5

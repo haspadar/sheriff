@@ -72,7 +72,7 @@ defaults:
   phpmd.method_length: 50
   phpmd.npath: 200
 
-  phpmetrics.cli: true
+  phpmetrics.cli: false
   phpmetrics.extensions: ["php"]
   phpmetrics.complexity.max_cyclomatic_per_method: 10
   phpmetrics.complexity.max_weighted_methods_per_class: 20

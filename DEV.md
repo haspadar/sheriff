@@ -502,7 +502,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 
 | Key | Default | Description |
 |-----|---------|-------------|
-| `phpmetrics.cli` | `true` | Enable PHP Metrics |
+| `phpmetrics.cli` | `false` | Enable PHP Metrics (opt-in: checks largely duplicate haspadar/phpstan-rules; enable for HTML/Halstead reports) |
 | `phpmetrics.includes` | `["../../src"]` | Included directories |
 | `phpmetrics.excludes` | `["vendor", "tests", ".git"]` | Excluded directories |
 | `phpmetrics.extensions` | `["php"]` | File extensions |

@@ -35,7 +35,7 @@
         "php": "~8.3.16 || ~8.4.3 || ~8.5.0",
         "friendsofphp/php-cs-fixer": "^3.95",
         "haspadar/phpstan-rules": ">=0.36 <1.0.0",
-        "infection/infection": "^0.32.0",
+        "infection/infection": "^0.33.0",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.36",
         "phpmd/phpmd": "^2.15",
         "phpmetrics/phpmetrics": "^2.9",

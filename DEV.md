@@ -531,7 +531,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `phpstan.cli` | `true` | Enable PHPStan |
 | `phpstan.memory` | `"1G"` | Memory limit |
-| `phpstan.neon_includes` | `["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]` | Neon includes |
+| `phpstan.neon_includes` | `["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/phpstan/phpstan-phpunit/extension.neon", "../../vendor/phpstan/phpstan-phpunit/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]` | Neon includes |
 | `phpstan.parameters.level` | `9` | Analysis level (0-9) |
 | `phpstan.parameters.errorFormat` | `table` | Error formatter |
 | `phpstan.parameters.reportUnmatchedIgnoredErrors` | `true` | Fail when an ignore pattern matches nothing |

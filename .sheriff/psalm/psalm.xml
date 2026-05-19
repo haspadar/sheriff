@@ -18,6 +18,9 @@
 
         </ignoreFiles>
     </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+    </plugins>
     <issueHandlers>
         <InvalidAttribute errorLevel="suppress" />
         <UnusedClass errorLevel="suppress">

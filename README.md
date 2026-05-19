@@ -132,7 +132,7 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 - PHPMD
 - PHP Metrics
 - PHP_CodeSniffer — with [Slevomat Coding Standard](https://github.com/slevomat/coding-standard) rules (class structure, doc comments, attributes)
-- PHP-CS-Fixer — with [kubawerlos/php-cs-fixer-custom-fixers](https://github.com/kubawerlos/php-cs-fixer-custom-fixers) and PHPUnit ruleset (`php_unit_*`: strict asserts, dedicated assertions, data-provider naming/static/return-type, attributes)
+- PHP-CS-Fixer — with [kubawerlos/php-cs-fixer-custom-fixers](https://github.com/kubawerlos/php-cs-fixer-custom-fixers) and PHPUnit ruleset (`php_unit_*`: strict asserts, dedicated assertions, data-provider naming/static/return-type, attributes; requires PHPUnit 12+)
 
 ### Linters
 

@@ -24,3 +24,4 @@ parameters:
                 - \Haspadar\Sheriff\SheriffException
         prohibitStaticMethods:
             allowNamedConstructors: true
+            onlyPublic: true

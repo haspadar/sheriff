@@ -94,7 +94,7 @@ defaults:
 
   phpstan.cli: true
   phpstan.memory: "1G"
-  phpstan.neon_includes: ["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]
+  phpstan.neon_includes: ["../../vendor/phpstan/phpstan-strict-rules/rules.neon", "../../vendor/phpstan/phpstan-phpunit/extension.neon", "../../vendor/phpstan/phpstan-phpunit/rules.neon", "../../vendor/haspadar/phpstan-rules/rules.neon"]
   phpstan.parameters:
     level: 9
     errorFormat: table

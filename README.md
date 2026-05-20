@@ -125,14 +125,14 @@ Do not edit `.sheriff/` or the GitHub workflow file `.github/workflows/sheriff.y
 
 ### PHP
 
-- PHPStan — level 9 with [strict rules](https://github.com/phpstan/phpstan-strict-rules) and [haspadar/phpstan-rules](https://github.com/haspadar/phpstan-rules) (80 custom rules for object-oriented strictness)
-- Psalm
+- PHPStan — level 9 with [strict rules](https://github.com/phpstan/phpstan-strict-rules), [phpstan-phpunit](https://github.com/phpstan/phpstan-phpunit) (PHPUnit-aware assertions, data providers, `MockObject` inference) and [haspadar/phpstan-rules](https://github.com/haspadar/phpstan-rules) (80 custom rules for object-oriented strictness)
+- Psalm — with [psalm/plugin-phpunit](https://github.com/psalm/psalm-plugin-phpunit) for PHPUnit-aware type narrowing and provider validation
 - PHPUnit
 - Infection
 - PHPMD
 - PHP Metrics
 - PHP_CodeSniffer — with [Slevomat Coding Standard](https://github.com/slevomat/coding-standard) rules (class structure, doc comments, attributes)
-- PHP-CS-Fixer — with [kubawerlos/php-cs-fixer-custom-fixers](https://github.com/kubawerlos/php-cs-fixer-custom-fixers)
+- PHP-CS-Fixer — with [kubawerlos/php-cs-fixer-custom-fixers](https://github.com/kubawerlos/php-cs-fixer-custom-fixers) and PHPUnit ruleset (`php_unit_*`: strict asserts, dedicated assertions, data-provider naming/static/return-type, attributes; requires PHPUnit 12+)
 
 ### Linters
 

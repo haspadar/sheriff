@@ -35,6 +35,10 @@ final readonly class FormulaTarget
             return new EnabledToolsFormula($this->args);
         }
 
+        if ($this->name === 'JoinedLists') {
+            return new JoinedListsFormula($this->args);
+        }
+
         foreach ($this->candidates() as $candidate) {
             /** @var class-string<Op> $target */
             $target = sprintf('%s%s', $candidate['namespace'], $this->name);

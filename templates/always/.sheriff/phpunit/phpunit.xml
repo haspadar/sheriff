@@ -11,11 +11,11 @@
 >
     <testsuites>
         <testsuite name="unit">
-{% ListText(phpunit.testsuites.unit)|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
+{% JoinedLists(php.tests, phpunit.testsuites.unit, "/")|EachFormatted("../../%s")|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
         </testsuite>
 
         <testsuite name="integration">
-{% ListText(phpunit.testsuites.integration)|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
+{% JoinedLists(php.tests, phpunit.testsuites.integration, "/")|EachFormatted("../../%s")|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
         </testsuite>
     </testsuites>
 

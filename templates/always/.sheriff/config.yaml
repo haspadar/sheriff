@@ -115,8 +115,9 @@ defaults:
 
   phpunit.cli: true
   phpunit.php_options: "-d memory_limit=1G"
-  phpunit.testsuites.unit: ["../../tests/Unit"]
-  phpunit.testsuites.integration: ["../../tests/Integration"]
+  # phpunit.testsuites.* values are subdirectories of php.tests, not full paths
+  phpunit.testsuites.unit: ["Unit"]
+  phpunit.testsuites.integration: ["Integration"]
 
   psalm.cli: true
   psalm.error_level: 1

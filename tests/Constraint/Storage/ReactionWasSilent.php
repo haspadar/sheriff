@@ -14,19 +14,22 @@ final class ReactionWasSilent extends Constraint
         return 'recorded no created or updated paths';
     }
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         return $other instanceof FakeStorageReaction
             && $other->createdPaths() === []
             && $other->updatedPaths() === [];
     }
 
-    protected function failureDescription($other): string
+    #[\Override]
+    protected function failureDescription(mixed $other): string
     {
         return 'reaction ' . $this->toString();
     }
 
-    protected function additionalFailureDescription($other): string
+    #[\Override]
+    protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof FakeStorageReaction) {
             return "\nBut object of type " . get_debug_type($other) . ' was given';

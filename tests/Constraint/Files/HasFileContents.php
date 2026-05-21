@@ -13,7 +13,8 @@ final class HasFileContents extends Constraint
         private readonly string $expected,
     ) {}
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         return $other instanceof File
             && $other->contents() === $this->expected;
@@ -24,7 +25,8 @@ final class HasFileContents extends Constraint
         return 'has contents ' . var_export($this->expected, true);
     }
 
-    protected function additionalFailureDescription($other): string
+    #[\Override]
+    protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof File) {
             return "\nBut object of type "

@@ -22,7 +22,8 @@ final class HasFiles extends Constraint
         return 'has files ' . $this->export($this->expected);
     }
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         if (!$other instanceof Files) {
             return false;
@@ -45,12 +46,14 @@ final class HasFiles extends Constraint
         return $actual === $expected;
     }
 
-    protected function failureDescription($other): string
+    #[\Override]
+    protected function failureDescription(mixed $other): string
     {
         return 'files ' . $this->toString();
     }
 
-    protected function additionalFailureDescription($other): string
+    #[\Override]
+    protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Files) {
             return "\nBut object of type "

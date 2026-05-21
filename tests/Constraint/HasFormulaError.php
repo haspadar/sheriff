@@ -16,7 +16,8 @@ final class HasFormulaError extends Constraint
         private readonly string $reasonPart,
     ) {}
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         if (!$other instanceof File) {
             return false;

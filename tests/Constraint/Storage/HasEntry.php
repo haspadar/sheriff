@@ -22,7 +22,8 @@ final class HasEntry extends Constraint
             . "and mode {$this->export($this->mode)}";
     }
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         return $other instanceof Storage
             && $other->exists($this->location)
@@ -30,12 +31,14 @@ final class HasEntry extends Constraint
             && $other->mode($this->location) === $this->mode;
     }
 
-    protected function failureDescription($other): string
+    #[\Override]
+    protected function failureDescription(mixed $other): string
     {
         return 'storage ' . $this->toString();
     }
 
-    protected function additionalFailureDescription($other): string
+    #[\Override]
+    protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Storage) {
             return "\nBut object of type "

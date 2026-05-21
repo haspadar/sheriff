@@ -22,7 +22,8 @@ final class HasEntries extends Constraint
         return "has entries {$this->export($this->expected)} under {$this->export($this->location)}";
     }
 
-    protected function matches($other): bool
+    #[\Override]
+    protected function matches(mixed $other): bool
     {
         if (!$other instanceof Storage) {
             return false;
@@ -39,12 +40,14 @@ final class HasEntries extends Constraint
         return $actual === $expected;
     }
 
-    protected function failureDescription($other): string
+    #[\Override]
+    protected function failureDescription(mixed $other): string
     {
         return 'storage ' . $this->toString();
     }
 
-    protected function additionalFailureDescription($other): string
+    #[\Override]
+    protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Storage) {
             return "\nBut object of type "

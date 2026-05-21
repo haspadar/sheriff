@@ -124,6 +124,7 @@ Example:
 | `EnvsText(key, indent)` | `TreeValue` (or empty `ListValue`) | GitHub Actions step exporting env vars; empty tree → empty string |
 | `NeonTree(key, depth)` | `TreeValue` | nested neon block mapping; `depth` is optional (default `0`) and controls indentation |
 | `EnabledTools(key)` | `ListValue` of tool names | Listed pipeline of names whose `<name>.cli` flag is `true`; fails fast on missing or non-boolean flags, and when the resolved list is empty |
+| `JoinedLists(left, right, "sep")` | two `ListValue` of strings keys | Listed pipeline of joined `<left><sep><right>` strings (left-major cartesian product); empty when either side resolves to no values |
 
 ### Map ops
 
@@ -147,6 +148,10 @@ Example:
 List formatting:
 
 `{% ListText(phpunit.testsuites.unit)|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
+
+Path joining across configuration keys:
+
+`{% JoinedLists(php.tests, phpunit.testsuites.unit, "/")|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
 
 Per-item rewriting before formatting:
 

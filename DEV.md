@@ -404,7 +404,6 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | Key | Default | Description |
 |-----|---------|-------------|
 | `ci.sheriff_bin` | `"vendor/bin/sheriff"` | Path to Sheriff binary in CI |
-| `ci.pr.max_lines_changed` | `250` | Maximum lines changed per PR |
 | `ci.infra_checks` | `["actionlint", "hadolint", "markdownlint", "yamllint", "typos", "shellcheck", "jsonlint"]` | Tools placed into the infra CI matrix; filtered by each tool's `<name>.cli` flag. Override or `append` in `.sheriff.yaml` to extend the matrix |
 | `ci.php_checks` | `["phpcs", "phpstan", "psalm", "phpmd", "phpmetrics"]` | Tools placed into the PHP-static CI matrix; filtered by each tool's `<name>.cli` flag. Override or `append` in `.sheriff.yaml` to extend the matrix |
 

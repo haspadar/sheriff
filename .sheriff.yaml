@@ -2,7 +2,6 @@ override:
   phpmetrics.coupling.max_afferent: 35
   phpmetrics.coupling.max_efferent: 25
   php.versions: ["8.3", "8.4", "8.5"]
-  ci.pr.max_lines_changed: 5000
   ci.sheriff_bin: bin/sheriff
   sonar.organization: haspadar-org
   sonar.projectKey: haspadar_sheriff

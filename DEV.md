@@ -601,7 +601,6 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `sonar.cli` | `false` | Enable local sonar-scanner |
 | `sonar.organization` | `""` | SonarCloud organization |
 | `sonar.projectKey` | `""` | SonarCloud project key |
-| `sonar.tests` | `["tests"]` | Test directories |
 | `sonar.exclusions` | `[]` | Excluded paths |
 | `sonar.php.coverage.reportPaths` | `[".sheriff/codecov/coverage.xml"]` | Coverage report path |
 

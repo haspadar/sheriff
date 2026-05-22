@@ -69,7 +69,6 @@ override:
     phpstan.parameters:
         level: 8
     php.versions: ["8.3", "8.4", "8.5"]
-    ci.pr.max_lines_changed: 400
 ```
 
 Use `php_cs_fixer.extend` and `phpcs.extend` to inject native-syntax fragments at the end of the generated config. Useful when a built-in rule clashes with project code — for example, narrowing `phpdoc_types` instead of disabling it entirely:

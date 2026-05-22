@@ -12,6 +12,7 @@
 defaults:
   php.src: ["src"]
   php.tests: ["tests"]
+  php.exclude: ["vendor", ".git"]
   infra.exclude: ["vendor", "tests", ".git"]
   php.versions: ["8.3"]
   envs: {}

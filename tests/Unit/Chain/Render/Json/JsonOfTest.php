@@ -36,6 +36,7 @@ final class JsonOfTest extends TestCase
         yield 'tree' => [new TreeValue([]), JsonTree::class];
     }
 
+    /** @param class-string $expected */
     #[Test]
     #[DataProvider('valueRendererPairs')]
     public function dispatchesEachValueSubtypeToTheMatchingRenderer(

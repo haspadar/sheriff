@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Files;
 
-use Haspadar\Sheriff\File\TextFile;
+use Haspadar\Sheriff\File\File;
 use Haspadar\Sheriff\Files\EachFile;
 use Haspadar\Sheriff\Files\TextFiles;
 use PHPUnit\Framework\Attributes\Test;
@@ -22,7 +22,7 @@ final class EachFileTest extends TestCase
                 'a.txt' => 'A',
                 'b.txt' => 'B',
             ]),
-            function (TextFile $file) use (&$called): void {
+            function (File $file) use (&$called): void {
                 $called[] = $file->name();
             },
         ))->run();

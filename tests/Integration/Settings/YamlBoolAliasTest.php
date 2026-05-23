@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Integration\Settings;
 
-use Haspadar\Sheriff\Chain\Plain\BoolText;
+use Haspadar\Sheriff\File\TemplateFile;
+use Haspadar\Sheriff\File\TextFile;
 use Haspadar\Sheriff\Settings\DefaultSettings;
 use Haspadar\Sheriff\Settings\PatchedSettings;
 use Haspadar\Sheriff\Settings\YamlPatches;
+use Haspadar\Sheriff\Tests\Constraint\Files\HasFileContents;
 use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -39,14 +41,15 @@ final class YamlBoolAliasTest extends TestCase
         );
 
         try {
-            self::assertSame(
-                $expected,
-                (new BoolText(
-                    (new PatchedSettings(
+            self::assertThat(
+                new TemplateFile(
+                    new TextFile('sonar.txt', '{% BoolText(sonar.cloud) %}'),
+                    new PatchedSettings(
                         new DefaultSettings(),
                         ...(new YamlPatches($folder->path() . '/.sheriff.yaml'))->patches(),
-                    ))->value('sonar.cloud'),
-                ))->rendered(),
+                    ),
+                ),
+                new HasFileContents($expected),
                 sprintf('YAML scalar "%s" must round-trip to BoolText literal "%s"', $alias, $expected),
             );
         } finally {

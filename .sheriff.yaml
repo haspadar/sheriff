@@ -24,5 +24,14 @@ append:
   phpstan.parameters:
     haspadar:
       afferentCoupling:
+        # Value-object classes excluded until afferentCoupling becomes path-aware
+        # so it ignores incoming references from tests/.
+        # Tracked in haspadar/phpstan-rules#230.
         excludedClasses:
           - '\Haspadar\Sheriff\SheriffException'
+          - '\Haspadar\Sheriff\File\TextFile'
+          - '\Haspadar\Sheriff\Settings\Value\BoolValue'
+          - '\Haspadar\Sheriff\Settings\Value\IntValue'
+          - '\Haspadar\Sheriff\Settings\Value\ListValue'
+          - '\Haspadar\Sheriff\Settings\Value\StringValue'
+          - '\Haspadar\Sheriff\Settings\Value\TreeValue'

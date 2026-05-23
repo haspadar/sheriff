@@ -111,6 +111,8 @@ final class TemplateFileTest extends TestCase
                 . "        checkedExceptionClasses:\n"
                 . "            - \\Throwable\n"
                 . "    haspadar:\n"
+                . "        testsPaths:\n"
+                . "            - \"*/tests/*\"\n"
                 . "        afferentCoupling:\n"
                 . "            ignoreInterfaces: true\n"
                 . "            excludedClasses: []\n"

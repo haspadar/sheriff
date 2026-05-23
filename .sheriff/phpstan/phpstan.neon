@@ -20,6 +20,8 @@ parameters:
         checkedExceptionClasses:
             - \Throwable
     haspadar:
+        testsPaths:
+            - "*/tests/*"
         afferentCoupling:
             ignoreInterfaces: true
             excludedClasses:

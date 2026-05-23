@@ -11,7 +11,7 @@ use PHPUnit\Framework\Constraint\Constraint;
 final class HasFiles extends Constraint
 {
     /** @param array<string, string> $expected path => contents */
-    public function __construct(private readonly array $expected,) {}
+    public function __construct(private readonly array $expected) {}
 
     public function toString(): string
     {

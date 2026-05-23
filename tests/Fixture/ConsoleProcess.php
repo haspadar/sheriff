@@ -25,7 +25,7 @@ final readonly class ConsoleProcess
 
         $script = sprintf(
             'require %s; (new \Haspadar\Sheriff\Output\Console())->%s(%s);',
-            var_export(dirname(__DIR__, 2) . '/vendor/autoload.php', true),
+            var_export(__DIR__ . '/../../vendor/autoload.php', true),
             $method,
             var_export($text, true),
         );

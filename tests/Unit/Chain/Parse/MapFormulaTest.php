@@ -84,7 +84,7 @@ final class MapFormulaTest extends TestCase
 
     private static function settings(): Settings
     {
-        return new readonly class () implements Settings {
+        return new readonly class implements Settings {
             #[Override]
             public function has(string $name): bool
             {

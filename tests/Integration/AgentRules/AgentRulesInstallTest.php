@@ -25,8 +25,8 @@ final class AgentRulesInstallTest extends TestCase
         try {
             $this->runScript($folder->path());
 
-            self::assertFalse(
-                file_exists($folder->path() . '/CLAUDE.md'),
+            self::assertFileDoesNotExist(
+                $folder->path() . '/CLAUDE.md',
                 'CLAUDE.md must not be created when the user has no agent file',
             );
         } finally {

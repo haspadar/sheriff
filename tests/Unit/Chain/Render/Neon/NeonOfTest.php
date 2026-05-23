@@ -89,8 +89,7 @@ final class NeonOfTest extends TestCase
     {
         $this->expectException(TypeError::class);
 
-        $unknown = new class () implements Value {
-        };
+        $unknown = new class implements Value {};
 
         (new NeonOf($unknown))->renderer();
     }

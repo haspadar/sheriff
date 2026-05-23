@@ -55,8 +55,7 @@ final class JsonOfTest extends TestCase
     {
         $this->expectException(TypeError::class);
 
-        $unknown = new class () implements Value {
-        };
+        $unknown = new class implements Value {};
 
         (new JsonOf($unknown))->renderer();
     }

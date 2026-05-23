@@ -60,7 +60,6 @@ defaults:
   php-cs-fixer.cli: true
   php_cs_fixer.allow_unsupported: ["true"]
   php_cs_fixer.extend: ""
-  php_cs_fixer.paths: ["../.."]
 
   phpcs.cli: true
   phpcs.extend: ""

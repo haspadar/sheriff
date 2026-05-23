@@ -31,8 +31,8 @@ final class YamlBoolAliasTest extends TestCase
         yield 'false' => ['false', 'false'];
     }
 
-    #[Test]
     #[DataProvider('aliases')]
+    #[Test]
     public function rendersYamlBooleanAsCanonicalLiteral(string $alias, string $expected): void
     {
         $folder = (new TempFolder())->withFile(

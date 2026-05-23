@@ -6,9 +6,10 @@ namespace Haspadar\Sheriff\Tests\Constraint;
 
 use Haspadar\Sheriff\File\File;
 use Haspadar\Sheriff\SheriffException;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
-final class HasFormulaError extends Constraint
+final class HasFormulaFailure extends Constraint
 {
     public function __construct(
         private readonly string $fileName,
@@ -16,7 +17,7 @@ final class HasFormulaError extends Constraint
         private readonly string $reasonPart,
     ) {}
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         if (!$other instanceof File) {
@@ -38,6 +39,6 @@ final class HasFormulaError extends Constraint
 
     public function toString(): string
     {
-        return 'has formula error with file context';
+        return 'has formula failure with file context';
     }
 }

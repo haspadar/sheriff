@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Constraint\Storage;
 
 use Haspadar\Sheriff\Storage\Storage;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasEntries extends Constraint
 {
-    /**
-     * @param list<string> $expected
-     */
+    /** @param list<string> $expected */
     public function __construct(
         private readonly string $location,
         private readonly array $expected,
@@ -22,7 +21,7 @@ final class HasEntries extends Constraint
         return "has entries {$this->export($this->expected)} under {$this->export($this->location)}";
     }
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         if (!$other instanceof Storage) {
@@ -40,13 +39,13 @@ final class HasEntries extends Constraint
         return $actual === $expected;
     }
 
-    #[\Override]
+    #[Override]
     protected function failureDescription(mixed $other): string
     {
         return 'storage ' . $this->toString();
     }
 
-    #[\Override]
+    #[Override]
     protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Storage) {

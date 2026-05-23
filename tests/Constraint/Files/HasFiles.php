@@ -5,23 +5,20 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Constraint\Files;
 
 use Haspadar\Sheriff\Files\Files;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFiles extends Constraint
 {
-    /**
-     * @param array<string, string> $expected path => contents
-     */
-    public function __construct(
-        private readonly array $expected,
-    ) {}
+    /** @param array<string, string> $expected path => contents */
+    public function __construct(private readonly array $expected,) {}
 
     public function toString(): string
     {
         return 'has files ' . $this->export($this->expected);
     }
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         if (!$other instanceof Files) {
@@ -41,13 +38,13 @@ final class HasFiles extends Constraint
         return $actual === $expected;
     }
 
-    #[\Override]
+    #[Override]
     protected function failureDescription(mixed $other): string
     {
         return 'files ' . $this->toString();
     }
 
-    #[\Override]
+    #[Override]
     protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Files) {
@@ -57,9 +54,11 @@ final class HasFiles extends Constraint
         }
 
         $actual = [];
+
         foreach ($other->all() as $file) {
             $actual[$file->name()] = $file->contents();
         }
+
         ksort($actual);
 
         return "\nExpected: {$this->export($this->expected)}"

@@ -9,13 +9,13 @@ use Haspadar\Sheriff\Chain\Plain\FloatText;
 use Haspadar\Sheriff\Chain\Plain\IntText;
 use Haspadar\Sheriff\Chain\Plain\ListText;
 use Haspadar\Sheriff\Chain\Plain\StringText;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Settings\Value\FloatValue;
 use Haspadar\Sheriff\Settings\Value\IntValue;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +40,7 @@ final class ListTextTest extends TestCase
         self::assertSame(
             ['src', 'tests', 'docs'],
             array_map(
-                fn (object $part): string => $part->rendered(),
+                static fn(object $part): string => $part->rendered(),
                 (new ListText(new ListValue([
                     new StringValue('src'),
                     new StringValue('tests'),

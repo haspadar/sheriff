@@ -7,9 +7,9 @@ namespace Haspadar\Sheriff\Tests\Unit\Chain\Map;
 use Haspadar\Sheriff\Chain\Map\EachFormatted;
 use Haspadar\Sheriff\Chain\Map\Formatted;
 use Haspadar\Sheriff\Chain\Plain\ListText;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +37,7 @@ final class EachFormattedTest extends TestCase
         self::assertSame(
             ['- src', '- tests', '- docs'],
             array_map(
-                fn (object $part): string => $part->rendered(),
+                static fn(object $part): string => $part->rendered(),
                 (new EachFormatted(
                     new ListText(new ListValue([
                         new StringValue('src'),

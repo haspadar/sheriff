@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Files;
 
+use ArrayObject;
 use Haspadar\Sheriff\File\File;
 use Haspadar\Sheriff\Files\EachFile;
 use Haspadar\Sheriff\Files\TextFiles;
@@ -15,21 +16,22 @@ final class EachFileTest extends TestCase
     #[Test]
     public function executesActionForEachFile(): void
     {
-        $called = [];
+        /** @var ArrayObject<int, string> $called */
+        $called = new ArrayObject();
 
         (new EachFile(
             new TextFiles([
                 'a.txt' => 'A',
                 'b.txt' => 'B',
             ]),
-            function (File $file) use (&$called): void {
-                $called[] = $file->name();
+            static function (File $file) use ($called): void {
+                $called->append($file->name());
             },
         ))->run();
 
         self::assertSame(
             ['a.txt', 'b.txt'],
-            $called,
+            $called->getArrayCopy(),
             'Action must be executed for each file',
         );
     }

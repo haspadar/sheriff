@@ -9,7 +9,6 @@ use Haspadar\Sheriff\Chain\Plain\BoolText;
 use Haspadar\Sheriff\Chain\Plain\IntText;
 use Haspadar\Sheriff\Chain\Plain\ListText;
 use Haspadar\Sheriff\Chain\Render\Neon\NeonTree;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Settings\Value\IntValue;
@@ -17,6 +16,7 @@ use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\TreeValue;
 use Haspadar\Sheriff\Settings\Value\Value;
+use Haspadar\Sheriff\SheriffException;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -114,15 +114,11 @@ final class SourceFormulaTest extends TestCase
             ->op([], self::settings(['phpstan.cli' => new BoolValue(true)]));
     }
 
-    /**
-     * @param array<string, Value> $values
-     */
+    /** @param array<string, Value> $values */
     private static function settings(array $values): Settings
     {
         return new readonly class ($values) implements Settings {
-            /**
-             * @param array<string, Value> $values
-             */
+            /** @param array<string, Value> $values */
             public function __construct(private array $values) {}
 
             #[Override]

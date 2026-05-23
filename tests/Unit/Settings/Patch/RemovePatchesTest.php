@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Patch\RemoveList;
 use Haspadar\Sheriff\Settings\Patch\RemovePatches;
 use Haspadar\Sheriff\Settings\Patch\RemoveTree;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

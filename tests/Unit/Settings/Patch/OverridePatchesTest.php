@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Settings\Patch;
 
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Patch\OverrideList;
 use Haspadar\Sheriff\Settings\Patch\OverridePatches;
 use Haspadar\Sheriff\Settings\Patch\OverrideScalar;
 use Haspadar\Sheriff\Settings\Patch\OverrideTree;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

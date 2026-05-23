@@ -23,7 +23,7 @@ final class MappedFilesTest extends TestCase
                     'README.md' => 'Hello, {{name}}',
                     'config/app.ini' => 'name={{name}}',
                 ]),
-                fn(File $file) => new ReplacedFile(
+                static fn(File $file) => new ReplacedFile(
                     $file,
                     '{{name}}',
                     'Sheriff',

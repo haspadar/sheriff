@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Fixture;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 final readonly class ConsoleProcess
 {
     private const array ALLOWED = ['info', 'success', 'error', 'muted'];
@@ -15,7 +18,7 @@ final readonly class ConsoleProcess
     public function __construct(string $method, string $text)
     {
         if (!in_array($method, self::ALLOWED, true)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Method %s is not allowed', var_export($method, true)),
             );
         }
@@ -34,7 +37,7 @@ final readonly class ConsoleProcess
         );
 
         if (!is_resource($proc)) {
-            throw new \RuntimeException('Failed to start subprocess');
+            throw new RuntimeException('Failed to start subprocess');
         }
 
         fclose($pipes[0]);
@@ -45,7 +48,7 @@ final readonly class ConsoleProcess
         $exitCode = proc_close($proc);
 
         if ($exitCode !== 0) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf('Subprocess exited with code %d: %s', $exitCode, $this->stderr),
             );
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Constraint\Storage;
 
 use Haspadar\Sheriff\Tests\Fake\Storage\Reaction\FakeStorageReaction;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class ReactionWasSilent extends Constraint
@@ -14,7 +15,7 @@ final class ReactionWasSilent extends Constraint
         return 'recorded no created or updated paths';
     }
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         return $other instanceof FakeStorageReaction
@@ -22,13 +23,13 @@ final class ReactionWasSilent extends Constraint
             && $other->updatedPaths() === [];
     }
 
-    #[\Override]
+    #[Override]
     protected function failureDescription(mixed $other): string
     {
         return 'reaction ' . $this->toString();
     }
 
-    #[\Override]
+    #[Override]
     protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof FakeStorageReaction) {

@@ -37,8 +37,8 @@ final class JsonOfTest extends TestCase
     }
 
     /** @param class-string $expected */
-    #[Test]
     #[DataProvider('valueRendererPairs')]
+    #[Test]
     public function dispatchesEachValueSubtypeToTheMatchingRenderer(
         Value $value,
         string $expected,

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Unit\Chain\Plain;
 
 use Haspadar\Sheriff\Chain\Plain\FloatText;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Value\FloatValue;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

@@ -162,9 +162,7 @@ final class EnabledToolsFormulaTest extends TestCase
             ]));
     }
 
-    /**
-     * @return list<string>
-     */
+    /** @return list<string> */
     private static function names(Op $op): array
     {
         if (!$op instanceof Listed) {
@@ -177,15 +175,11 @@ final class EnabledToolsFormulaTest extends TestCase
         );
     }
 
-    /**
-     * @param array<string, Value> $values
-     */
+    /** @param array<string, Value> $values */
     private static function settings(array $values): Settings
     {
         return new readonly class ($values) implements Settings {
-            /**
-             * @param array<string, Value> $values
-             */
+            /** @param array<string, Value> $values */
             public function __construct(private array $values) {}
 
             #[Override]

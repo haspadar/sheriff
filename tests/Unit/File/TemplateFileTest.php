@@ -9,7 +9,7 @@ use Haspadar\Sheriff\File\TextFile;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Tests\Constraint\Files\HasFileContents;
-use Haspadar\Sheriff\Tests\Constraint\HasFormulaError;
+use Haspadar\Sheriff\Tests\Constraint\HasFormulaFailure;
 use Haspadar\Sheriff\Tests\Fake\Settings\FakeSettings;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -71,7 +71,7 @@ final class TemplateFileTest extends TestCase
                 new TextFile('broken.neon', '{% MissingFormula(phpstan.paths) %}'),
                 new FakeSettings([]),
             ),
-            new HasFormulaError(
+            new HasFormulaFailure(
                 'broken.neon',
                 'MissingFormula(phpstan.paths)',
                 'Unknown pipeline formula',
@@ -87,7 +87,7 @@ final class TemplateFileTest extends TestCase
                 new TextFile('missing.neon', '{% StringText(app.name) %}'),
                 new FakeSettings([]),
             ),
-            new HasFormulaError(
+            new HasFormulaFailure(
                 'missing.neon',
                 'StringText(app.name)',
                 'cannot find settings key',
@@ -107,7 +107,7 @@ final class TemplateFileTest extends TestCase
                     ]),
                 ]),
             ),
-            new HasFormulaError(
+            new HasFormulaFailure(
                 'typed.neon',
                 'StringText(phpstan.paths)',
                 'StringValue',

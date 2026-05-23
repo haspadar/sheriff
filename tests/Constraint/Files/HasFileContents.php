@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Constraint\Files;
 
 use Haspadar\Sheriff\File\File;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFileContents extends Constraint
 {
-    public function __construct(
-        private readonly string $expected,
-    ) {}
+    public function __construct(private readonly string $expected,) {}
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         return $other instanceof File
@@ -25,7 +24,7 @@ final class HasFileContents extends Constraint
         return 'has contents ' . var_export($this->expected, true);
     }
 
-    #[\Override]
+    #[Override]
     protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof File) {

@@ -23,7 +23,7 @@ final class FilteredFilesTest extends TestCase
                     'pre-push-sheriff' => 'exit 2',
                     'commit-msg' => 'exit 3',
                 ]),
-                fn(File $file): bool => !str_ends_with($file->name(), 'pre-push'),
+                static fn(File $file): bool => !str_ends_with($file->name(), 'pre-push'),
             ),
             new HasFiles([
                 'pre-push-sheriff' => 'exit 2',
@@ -41,7 +41,7 @@ final class FilteredFilesTest extends TestCase
                 new TextFiles([
                     'pre-push' => 'exit 0',
                 ]),
-                fn(File $file): bool => str_starts_with($file->name(), 'commit'),
+                static fn(File $file): bool => str_starts_with($file->name(), 'commit'),
             ),
             new HasFiles([]),
             'FilteredFiles must return empty list when no files satisfy the predicate',
@@ -57,7 +57,7 @@ final class FilteredFilesTest extends TestCase
                     'pre-push' => 'run push checks',
                     'pre-commit' => 'run commit checks',
                 ]),
-                fn(File $file): bool => str_starts_with($file->name(), 'pre-'),
+                static fn(File $file): bool => str_starts_with($file->name(), 'pre-'),
             ),
             new HasFiles([
                 'pre-push' => 'run push checks',

@@ -71,6 +71,7 @@ final readonly class TempFolder
         }
 
         $items = scandir($dir);
+
         if ($items === false) {
             throw new SheriffException(
                 sprintf('Failed to scan directory: "%s"', $dir),
@@ -83,7 +84,9 @@ final readonly class TempFolder
             }
 
             $path = $dir . '/' . $item;
-            is_dir($path) ? $this->removeDirectory($path) : unlink($path);
+            is_dir($path)
+                ? $this->removeDirectory($path)
+                : unlink($path);
         }
 
         rmdir($dir);

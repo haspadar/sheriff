@@ -543,6 +543,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `phpstan.parameters.checkClassCaseSensitivity` | `true` | Enforce case-sensitive class references |
 | `phpstan.parameters.checkDynamicProperties` | `true` | Report writes to undeclared dynamic properties |
 | `phpstan.parameters.exceptions.checkedExceptionClasses` | `['\Throwable']` | Checked exception classes for the strict-rules `throws` analysis |
+| `phpstan.parameters.haspadar.testsPaths` | `['*/tests/*']` | fnmatch patterns against absolute file paths; matched files are exempt from haspadar production rules |
 | `phpstan.parameters.haspadar.afferentCoupling.ignoreInterfaces` | `true` | Skip interfaces when counting afferent coupling (haspadar rule) |
 | `phpstan.parameters.haspadar.afferentCoupling.excludedClasses` | `[]` | FQCNs excluded from the haspadar afferent coupling rule |
 | `phpstan.parameters.haspadar.prohibitStaticMethods.allowNamedConstructors` | `true` | Allow named constructors (e.g. `public static function fromX(...): self { return new self(...); }` or `public static function fromX(...): static { return new static(...); }`) as the only sanctioned static methods |

@@ -11,9 +11,10 @@ use Override;
 /**
  * Settings decorator that exposes derived keys read from `composer.json`.
  *
- * Currently provides `phpcs.root_namespace` — the first PSR-4 root namespace
- * declared by the project. Other composer-derived keys can be added here
- * without touching the rest of the Settings stack.
+ * Provides `phpcs.root_namespace` — the first PSR-4 root namespace declared
+ * under `autoload` — and `phpcs.tests_root_namespace` — the first PSR-4 root
+ * namespace declared under `autoload-dev`. Other composer-derived keys can be
+ * added here without touching the rest of the Settings stack.
  *
  * Example:
  *
@@ -22,6 +23,8 @@ use Override;
 final readonly class ComposerSettings implements Settings
 {
     private const string ROOT_NAMESPACE_KEY = 'phpcs.root_namespace';
+
+    private const string TESTS_ROOT_NAMESPACE_KEY = 'phpcs.tests_root_namespace';
 
     /**
      * Initializes with the underlying settings and the composer.json path.
@@ -34,7 +37,9 @@ final readonly class ComposerSettings implements Settings
     #[Override]
     public function has(string $name): bool
     {
-        return $name === self::ROOT_NAMESPACE_KEY || $this->base->has($name);
+        return $name === self::ROOT_NAMESPACE_KEY
+            || $name === self::TESTS_ROOT_NAMESPACE_KEY
+            || $this->base->has($name);
     }
 
     #[Override]
@@ -46,16 +51,28 @@ final readonly class ComposerSettings implements Settings
             );
         }
 
+        if ($name === self::TESTS_ROOT_NAMESPACE_KEY && !$this->base->has($name)) {
+            return new StringValue(
+                (new ComposerTestsRootNamespace($this->composer))->toString(),
+            );
+        }
+
         return $this->base->value($name);
     }
 
     #[Override]
     public function keys(): array
     {
-        $baseKeys = $this->base->keys();
+        $keys = $this->base->keys();
 
-        return in_array(self::ROOT_NAMESPACE_KEY, $baseKeys, true)
-            ? $baseKeys
-            : [...$baseKeys, self::ROOT_NAMESPACE_KEY];
+        if (!in_array(self::ROOT_NAMESPACE_KEY, $keys, true)) {
+            $keys = [...$keys, self::ROOT_NAMESPACE_KEY];
+        }
+
+        if (!in_array(self::TESTS_ROOT_NAMESPACE_KEY, $keys, true)) {
+            $keys = [...$keys, self::TESTS_ROOT_NAMESPACE_KEY];
+        }
+
+        return $keys;
     }
 }

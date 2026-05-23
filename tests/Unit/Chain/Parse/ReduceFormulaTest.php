@@ -9,12 +9,13 @@ use Haspadar\Sheriff\Chain\Parse\ReduceFormula;
 use Haspadar\Sheriff\Chain\Plain\IntText;
 use Haspadar\Sheriff\Chain\Plain\ListText;
 use Haspadar\Sheriff\Chain\Reduce\Joined;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\Settings\Value\IntValue;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\Value;
+use Haspadar\Sheriff\SheriffException;
+use LogicException;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -111,7 +112,7 @@ final class ReduceFormulaTest extends TestCase
             #[Override]
             public function value(string $name): Value
             {
-                throw new \LogicException('not used');
+                throw new LogicException('not used');
             }
 
             #[Override]

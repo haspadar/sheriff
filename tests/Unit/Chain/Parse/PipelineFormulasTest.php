@@ -6,12 +6,12 @@ namespace Haspadar\Sheriff\Tests\Unit\Chain\Parse;
 
 use Haspadar\Sheriff\Chain\Parse\PipelineFormulas;
 use Haspadar\Sheriff\Chain\Parse\PipelineOp;
-use InvalidArgumentException;
 use Haspadar\Sheriff\Settings\Settings;
 use Haspadar\Sheriff\Settings\Value\IntValue;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\Value;
+use InvalidArgumentException;
 use Override;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -125,15 +125,11 @@ final class PipelineFormulasTest extends TestCase
         (new PipelineFormulas('StringText(app.name) junk'))->formulas();
     }
 
-    /**
-     * @param array<string, Value> $values
-     */
+    /** @param array<string, Value> $values */
     private static function settings(array $values): Settings
     {
         return new readonly class ($values) implements Settings {
-            /**
-             * @param array<string, Value> $values
-             */
+            /** @param array<string, Value> $values */
             public function __construct(private array $values) {}
 
             #[Override]

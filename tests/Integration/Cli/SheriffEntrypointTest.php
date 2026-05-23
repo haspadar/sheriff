@@ -70,9 +70,7 @@ final class SheriffEntrypointTest extends TestCase
         }
     }
 
-    /**
-     * @param list<string> $command
-     */
+    /** @param list<string> $command */
     private function stdout(array $command, ?string $cwd = null): string
     {
         $proc = proc_open(
@@ -96,15 +94,15 @@ final class SheriffEntrypointTest extends TestCase
         return $stdout;
     }
 
-    /**
-     * @return list<string>
-     */
+    /** @return list<string> */
     private function composerBin(): array
     {
         $json = json_decode((string) file_get_contents(__DIR__ . '/../../../composer.json'), true);
 
         /** @var list<string> $bin */
-        $bin = is_array($json) && isset($json['bin']) && is_array($json['bin']) ? $json['bin'] : [];
+        $bin = is_array($json) && isset($json['bin']) && is_array($json['bin'])
+            ? $json['bin']
+            : [];
 
         return $bin;
     }

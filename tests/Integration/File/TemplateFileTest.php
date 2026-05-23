@@ -67,7 +67,10 @@ final class TemplateFileTest extends TestCase
     {
         self::assertThat(
             new TemplateFile(
-                new TextFile('docker.yml', 'image: {% ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") %}'),
+                new TextFile(
+                    'docker.yml',
+                    'image: {% ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") %}',
+                ),
                 new PatchedSettings(
                     new DefaultSettings(),
                     new OverrideList('php.versions', new ListValue([

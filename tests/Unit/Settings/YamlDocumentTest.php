@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Settings;
 
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\YamlDocument;
+use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Tests\Fixture\TempFolder;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

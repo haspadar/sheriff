@@ -21,8 +21,8 @@ final class NeonBareStringTest extends TestCase
         yield 'dotted path' => ['1G.alpha', '1G.alpha'];
     }
 
-    #[Test]
     #[DataProvider('safeStrings')]
+    #[Test]
     public function rendersSafePayloadWithoutQuotes(string $raw, string $expected): void
     {
         self::assertSame(
@@ -44,8 +44,8 @@ final class NeonBareStringTest extends TestCase
         yield 'empty' => ['', '""'];
     }
 
-    #[Test]
     #[DataProvider('unsafeStrings')]
+    #[Test]
     public function fallsBackToQuotedFormForUnsafePayload(string $raw, string $expected): void
     {
         self::assertSame(

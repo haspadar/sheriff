@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Haspadar\Sheriff\Tests\Constraint\Storage;
 
 use Haspadar\Sheriff\Storage\Storage;
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasEntry extends Constraint
@@ -22,7 +23,7 @@ final class HasEntry extends Constraint
             . "and mode {$this->export($this->mode)}";
     }
 
-    #[\Override]
+    #[Override]
     protected function matches(mixed $other): bool
     {
         return $other instanceof Storage
@@ -31,13 +32,13 @@ final class HasEntry extends Constraint
             && $other->mode($this->location) === $this->mode;
     }
 
-    #[\Override]
+    #[Override]
     protected function failureDescription(mixed $other): string
     {
         return 'storage ' . $this->toString();
     }
 
-    #[\Override]
+    #[Override]
     protected function additionalFailureDescription(mixed $other): string
     {
         if (!$other instanceof Storage) {

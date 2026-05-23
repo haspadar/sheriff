@@ -7,9 +7,9 @@ namespace Haspadar\Sheriff\Tests\Unit\Chain\Map;
 use Haspadar\Sheriff\Chain\Map\EachReplaced;
 use Haspadar\Sheriff\Chain\Map\Replaced;
 use Haspadar\Sheriff\Chain\Plain\ListText;
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

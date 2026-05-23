@@ -176,9 +176,7 @@ final class JoinedListsFormulaTest extends TestCase
             ]));
     }
 
-    /**
-     * @return list<string>
-     */
+    /** @return list<string> */
     private static function strings(Op $op): array
     {
         if (!$op instanceof Listed) {
@@ -191,15 +189,11 @@ final class JoinedListsFormulaTest extends TestCase
         );
     }
 
-    /**
-     * @param array<string, Value> $values
-     */
+    /** @param array<string, Value> $values */
     private static function settings(array $values): Settings
     {
         return new readonly class ($values) implements Settings {
-            /**
-             * @param array<string, Value> $values
-             */
+            /** @param array<string, Value> $values */
             public function __construct(private array $values) {}
 
             #[Override]

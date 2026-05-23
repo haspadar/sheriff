@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Unit\Settings\Value;
 
-use Haspadar\Sheriff\SheriffException;
 use Haspadar\Sheriff\Settings\Value\BoolValue;
 use Haspadar\Sheriff\Settings\Value\FloatValue;
 use Haspadar\Sheriff\Settings\Value\IntValue;
@@ -12,6 +11,7 @@ use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\RawValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Settings\Value\TreeValue;
+use Haspadar\Sheriff\SheriffException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;

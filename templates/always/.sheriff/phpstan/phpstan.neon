@@ -6,4 +6,5 @@ parameters:
     # rather than being statically declared.
     paths:
 {% ListText(php.src)|EachFormatted("../../%s")|EachFormatted("        - %s")|Joined("\n") %}
+{% ListText(php.tests)|EachFormatted("../../%s")|EachFormatted("        - %s")|Joined("\n") %}
 {% NeonTree(phpstan.parameters) %}

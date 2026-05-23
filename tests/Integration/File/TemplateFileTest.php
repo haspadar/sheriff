@@ -7,6 +7,9 @@ namespace Haspadar\Sheriff\Tests\Integration\File;
 use Haspadar\Sheriff\File\TemplateFile;
 use Haspadar\Sheriff\File\TextFile;
 use Haspadar\Sheriff\Settings\DefaultSettings;
+use Haspadar\Sheriff\Settings\Patch\OverrideList;
+use Haspadar\Sheriff\Settings\PatchedSettings;
+use Haspadar\Sheriff\Settings\Value\ListValue;
 use Haspadar\Sheriff\Settings\Value\StringValue;
 use Haspadar\Sheriff\Tests\Constraint\Files\HasFileContents;
 use PHPUnit\Framework\Attributes\Test;
@@ -43,38 +46,38 @@ final class TemplateFileTest extends TestCase
     #[Test]
     public function rendersListValueJoinedFromDefaultSettings(): void
     {
-        $settings = new DefaultSettings();
-        $versions = array_map(
-            static fn(StringValue $v): string => $v->raw,
-            $settings->value('php.versions')->children,
-        );
-
         self::assertThat(
             new TemplateFile(
                 new TextFile('matrix.yml', 'php: [{% ListText(php.versions)|Joined(", ") %}]'),
-                $settings,
+                new PatchedSettings(
+                    new DefaultSettings(),
+                    new OverrideList('php.versions', new ListValue([
+                        new StringValue('8.3'),
+                        new StringValue('8.4'),
+                    ])),
+                ),
             ),
-            new HasFileContents(sprintf('php: [%s]', implode(', ', $versions))),
-            'TemplateFile must render ListText joined from DefaultSettings',
+            new HasFileContents('php: [8.3, 8.4]'),
+            'TemplateFile must render ListText joined from settings using the given separator',
         );
     }
 
     #[Test]
     public function rendersListValueWithEachFormattedFromDefaultSettings(): void
     {
-        $settings = new DefaultSettings();
-        $versions = array_map(
-            static fn(StringValue $v): string => $v->raw . '-alpine',
-            $settings->value('php.versions')->children,
-        );
-
         self::assertThat(
             new TemplateFile(
                 new TextFile('docker.yml', 'image: {% ListText(php.versions)|EachFormatted("%s-alpine")|Joined(" ") %}'),
-                $settings,
+                new PatchedSettings(
+                    new DefaultSettings(),
+                    new OverrideList('php.versions', new ListValue([
+                        new StringValue('8.3'),
+                        new StringValue('8.4'),
+                    ])),
+                ),
             ),
-            new HasFileContents(sprintf('image: %s', implode(' ', $versions))),
-            'TemplateFile must render EachFormatted pipeline from DefaultSettings',
+            new HasFileContents('image: 8.3-alpine 8.4-alpine'),
+            'TemplateFile must apply EachFormatted to each list item before joining',
         );
     }
 

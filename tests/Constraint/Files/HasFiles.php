@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Haspadar\Sheriff\Tests\Constraint\Files;
 
-use Haspadar\Sheriff\File\File;
 use Haspadar\Sheriff\Files\Files;
 use PHPUnit\Framework\Constraint\Constraint;
 
@@ -32,10 +31,6 @@ final class HasFiles extends Constraint
         $actual = [];
 
         foreach ($other->all() as $file) {
-            if (!$file instanceof File) {
-                return false;
-            }
-
             $actual[$file->name()] = $file->contents();
         }
 

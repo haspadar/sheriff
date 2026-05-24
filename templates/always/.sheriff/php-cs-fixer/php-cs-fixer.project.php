@@ -9,8 +9,11 @@ $rules = require __DIR__ . '/php-cs-fixer.php';
 
 $rules->setFinder(
     Finder::create()
-        ->in([{% ListText(php_cs_fixer.paths)|EachFormatted("__DIR__ . '/%s'")|Joined(",\n") %}])
-        ->exclude([{% ListText(infra.exclude)|EachFormatted("'%s'")|Joined(",") %}]),
+        ->in([
+{% ListText(php.src)|EachFormatted("            __DIR__ . '/../../%s'")|Joined(",\n") %},
+{% ListText(php.tests)|EachFormatted("            __DIR__ . '/../../%s'")|Joined(",\n") %},
+        ])
+        ->exclude([{% ListText(php.exclude)|EachFormatted("'%s'")|Joined(",") %}]),
 )->setCacheFile(__DIR__ . '/.php-cs-fixer.cache');
 
 return $rules;

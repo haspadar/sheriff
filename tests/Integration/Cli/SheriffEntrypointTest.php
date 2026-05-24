@@ -100,7 +100,7 @@ final class SheriffEntrypointTest extends TestCase
         $json = json_decode((string) file_get_contents(__DIR__ . '/../../../composer.json'), true);
 
         /** @var list<string> $bin */
-        $bin = is_array($json) && isset($json['bin']) && is_array($json['bin'])
+        $bin = is_array($json) && array_key_exists('bin', $json) && is_array($json['bin'])
             ? $json['bin']
             : [];
 

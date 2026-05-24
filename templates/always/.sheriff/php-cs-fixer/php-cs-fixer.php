@@ -113,10 +113,11 @@ return (new PhpCsFixer\Config())
         'php_unit_mock_short_will_return' => true,
         'php_unit_method_casing' => true,
         'php_unit_data_provider_static' => true,
-        'php_unit_data_provider_name' => true,
         'php_unit_data_provider_return_type' => true,
         'php_unit_attributes' => true,
-        'php_unit_strict' => true,
+        // Disabled until Value-object equality assertions migrate off assertEquals.
+        // Tracked in haspadar/sheriff#790.
+        'php_unit_strict' => false,
         'php_unit_set_up_tear_down_visibility' => true,
 {% StringText(php_cs_fixer.extend) %}
     ]))

@@ -123,7 +123,7 @@ final class TemplateFileTest extends TestCase
                 . "            ignoreInterfaces: true\n"
                 . "            excludedClasses: []\n"
                 . "        prohibitStaticMethods:\n"
-                . "            allowNamedConstructors: true",
+                . '            allowNamedConstructors: true',
             ),
             'TemplateFile must render the phpstan.parameters TreeValue as a nested neon block, including bare strings and block-style lists',
         );

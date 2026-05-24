@@ -10,7 +10,7 @@ use PHPUnit\Framework\Constraint\Constraint;
 
 final class HasFileContents extends Constraint
 {
-    public function __construct(private readonly string $expected,) {}
+    public function __construct(private readonly string $expected) {}
 
     #[Override]
     protected function matches(mixed $other): bool

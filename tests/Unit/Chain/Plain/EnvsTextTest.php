@@ -114,7 +114,7 @@ final class EnvsTextTest extends TestCase
             "      - name: Set environment variables\n"
             . "        run: |\n"
             . "          git fetch --tags --unshallow 2>/dev/null || git fetch --tags\n"
-            . '          echo "FOO=$(echo a)" >> "$GITHUB_ENV"' . "\n"
+            . "          echo \"FOO=\$(echo a)\" >> \"\$GITHUB_ENV\"\n"
             . '          echo "BAR=$(echo b)" >> "$GITHUB_ENV"',
             (new EnvsText(
                 new TreeValue([

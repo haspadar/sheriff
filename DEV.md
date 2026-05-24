@@ -477,9 +477,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `php-cs-fixer.cli` | `true` | Enable PHP CS Fixer |
 | `php_cs_fixer.allow_unsupported` | `["true"]` | Allow unsupported PHP versions |
-| `php_cs_fixer.exclude` | `["vendor", "tests", ".git"]` | Excluded directories |
 | `php_cs_fixer.extend` | `""` | Raw PHP fragment inserted at the end of the `setRules()` array (overrides preset and built-in entries) |
-| `php_cs_fixer.paths` | `["../.."]` | Paths to fix |
 
 ### phpcs
 

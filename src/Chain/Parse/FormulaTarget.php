@@ -31,12 +31,8 @@ final readonly class FormulaTarget
      */
     public function formula(): Formula
     {
-        if ($this->name === 'EnabledTools') {
-            return new EnabledToolsFormula($this->args);
-        }
-
-        if ($this->name === 'JoinedLists') {
-            return new JoinedListsFormula($this->args);
+        if (in_array($this->name, ['EnabledTools', 'JoinedLists', 'PhpunitTestsuites'], true)) {
+            return $this->customFormula();
         }
 
         foreach ($this->candidates() as $candidate) {
@@ -55,6 +51,21 @@ final readonly class FormulaTarget
         }
 
         throw new InvalidArgumentException(sprintf('Unknown pipeline formula "%s"', $this->name));
+    }
+
+    /**
+     * Returns the dedicated formula for one of the special-cased names.
+     *
+     * @throws InvalidArgumentException
+     */
+    private function customFormula(): Formula
+    {
+        return match ($this->name) {
+            'EnabledTools' => new EnabledToolsFormula($this->args),
+            'JoinedLists' => new JoinedListsFormula($this->args),
+            'PhpunitTestsuites' => new PhpunitTestsuitesFormula($this->args),
+            default => throw new InvalidArgumentException(sprintf('Unknown custom formula "%s"', $this->name)),
+        };
     }
 
     /**

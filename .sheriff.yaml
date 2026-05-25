@@ -17,6 +17,9 @@ override:
     - "../../bin/sheriff-fix"
     - "../../bin/sheriff-sync"
     - "../../bin/sheriff-tokens-check"
+  phpunit.testsuites:
+    unit: ["Unit"]
+    integration: ["Integration"]
 
 append:
   infra.exclude:

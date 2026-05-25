@@ -27,11 +27,5 @@ parameters:
             ignoreInterfaces: true
             excludedClasses:
                 - \Haspadar\Sheriff\SheriffException
-                - \Haspadar\Sheriff\File\TextFile
-                - \Haspadar\Sheriff\Settings\Value\BoolValue
-                - \Haspadar\Sheriff\Settings\Value\IntValue
-                - \Haspadar\Sheriff\Settings\Value\ListValue
-                - \Haspadar\Sheriff\Settings\Value\StringValue
-                - \Haspadar\Sheriff\Settings\Value\TreeValue
         prohibitStaticMethods:
             allowNamedConstructors: true

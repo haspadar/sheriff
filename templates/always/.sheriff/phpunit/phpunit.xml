@@ -10,13 +10,7 @@
         beStrictAboutCoverageMetadata="false"
 >
     <testsuites>
-        <testsuite name="unit">
-{% JoinedLists(php.tests, phpunit.testsuites.unit, "/")|EachFormatted("../../%s")|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
-        </testsuite>
-
-        <testsuite name="integration">
-{% JoinedLists(php.tests, phpunit.testsuites.integration, "/")|EachFormatted("../../%s")|EachFormatted('            <directory suffix="Test.php">%s</directory>')|Joined("\n") %}
-        </testsuite>
+{% PhpunitTestsuites(phpunit.testsuites, php.tests) %}
     </testsuites>
 
     <source>

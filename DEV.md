@@ -147,11 +147,11 @@ Example:
 
 List formatting:
 
-`{% ListText(phpunit.testsuites.unit)|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
+`{% ListText(php.tests)|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
 
 Path joining across configuration keys:
 
-`{% JoinedLists(php.tests, phpunit.testsuites.unit, "/")|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
+`{% JoinedLists(php.src, php.tests, "/")|EachFormatted("            <directory>%s</directory>")|Joined("\n") %}`
 
 Per-item rewriting before formatting:
 
@@ -555,8 +555,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `phpunit.cli` | `true` | Enable PHPUnit |
 | `phpunit.php_options` | `"-d memory_limit=1G"` | PHP CLI options |
 | `phpunit.source.include` | `["../../src"]` | Source directories for coverage |
-| `phpunit.testsuites.unit` | `["../../tests/Unit"]` | Unit test directories |
-| `phpunit.testsuites.integration` | `["../../tests/Integration"]` | Integration test directories |
+| `phpunit.testsuites` | `{}` | Map from suite name to subdirs under `php.tests`; empty renders a single `default` suite |
 
 ### psalm
 

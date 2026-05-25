@@ -16,6 +16,8 @@ use InvalidArgumentException;
  */
 final readonly class FormulaTarget
 {
+    private const array CUSTOM_NAMES = ['EnabledTools', 'JoinedLists', 'PhpunitTestsuites'];
+
     /**
      * Initializes with a PascalCase formula name and its raw arguments.
      *
@@ -31,7 +33,7 @@ final readonly class FormulaTarget
      */
     public function formula(): Formula
     {
-        if (in_array($this->name, ['EnabledTools', 'JoinedLists', 'PhpunitTestsuites'], true)) {
+        if (in_array($this->name, self::CUSTOM_NAMES, true)) {
             return $this->customFormula();
         }
 
@@ -54,7 +56,7 @@ final readonly class FormulaTarget
     }
 
     /**
-     * Returns the dedicated formula for one of the special-cased names.
+     * Returns the dedicated formula for one of the CUSTOM_NAMES entries.
      *
      * @throws InvalidArgumentException
      */

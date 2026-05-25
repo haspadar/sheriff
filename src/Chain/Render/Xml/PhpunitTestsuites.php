@@ -41,6 +41,11 @@ final readonly class PhpunitTestsuites implements Rendered
     public function rendered(): string
     {
         $bases = $this->stringList($this->roots, 'base directories');
+
+        if ($bases === []) {
+            throw new SheriffException('PhpunitTestsuites requires at least one base directory');
+        }
+
         $entries = $this->entries();
 
         if ($entries === []) {

@@ -132,6 +132,18 @@ final class PhpunitTestsuitesTest extends TestCase
     }
 
     #[Test]
+    public function throwsWhenBaseDirectoryListIsEmpty(): void
+    {
+        $this->expectException(SheriffException::class);
+        $this->expectExceptionMessage('requires at least one base directory');
+
+        (new PhpunitTestsuites(
+            new TreeValue(['unit' => new ListValue([new StringValue('Unit')])]),
+            new ListValue([]),
+        ))->rendered();
+    }
+
+    #[Test]
     public function throwsWhenSuitesPayloadIsNeitherTreeNorEmptyList(): void
     {
         $this->expectException(SheriffException::class);

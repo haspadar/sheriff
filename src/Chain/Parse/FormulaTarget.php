@@ -16,6 +16,8 @@ use InvalidArgumentException;
  */
 final readonly class FormulaTarget
 {
+    private const array CUSTOM_NAMES = ['EnabledTools', 'JoinedLists', 'PhpunitTestsuites'];
+
     /**
      * Initializes with a PascalCase formula name and its raw arguments.
      *
@@ -31,12 +33,8 @@ final readonly class FormulaTarget
      */
     public function formula(): Formula
     {
-        if ($this->name === 'EnabledTools') {
-            return new EnabledToolsFormula($this->args);
-        }
-
-        if ($this->name === 'JoinedLists') {
-            return new JoinedListsFormula($this->args);
+        if (in_array($this->name, self::CUSTOM_NAMES, true)) {
+            return $this->customFormula();
         }
 
         foreach ($this->candidates() as $candidate) {
@@ -55,6 +53,21 @@ final readonly class FormulaTarget
         }
 
         throw new InvalidArgumentException(sprintf('Unknown pipeline formula "%s"', $this->name));
+    }
+
+    /**
+     * Returns the dedicated formula for one of the CUSTOM_NAMES entries.
+     *
+     * @throws InvalidArgumentException
+     */
+    private function customFormula(): Formula
+    {
+        return match ($this->name) {
+            'EnabledTools' => new EnabledToolsFormula($this->args),
+            'JoinedLists' => new JoinedListsFormula($this->args),
+            'PhpunitTestsuites' => new PhpunitTestsuitesFormula($this->args),
+            default => throw new InvalidArgumentException(sprintf('Unknown custom formula "%s"', $this->name)),
+        };
     }
 
     /**

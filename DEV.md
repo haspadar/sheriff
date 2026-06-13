@@ -567,6 +567,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 | `psalm.project.files` | `[]` | Individual files to analyze |
 | `psalm.project.ignore` | `["../../vendor", "../../tests", "../../.git"]` | Ignored directories |
 | `psalm.suppress.possibly_unused` | `[]` | Directories to suppress PossiblyUnusedMethod (e.g. `["../../src"]` for DI-constructed classes) |
+| `psalm.suppress.unused_class` | `[]` | Directories to suppress UnusedClass (e.g. `["../../src"]` for public API classes) |
 
 ### infection
 

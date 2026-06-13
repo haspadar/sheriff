@@ -124,6 +124,7 @@ defaults:
   psalm.project.files: []
   psalm.project.ignore: []
   psalm.suppress.possibly_unused: []
+  psalm.suppress.unused_class: []
 
   infection.cli: true
   infection.min_msi: 50.0

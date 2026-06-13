@@ -17,6 +17,8 @@ override:
     - "../../bin/sheriff-fix"
     - "../../bin/sheriff-sync"
     - "../../bin/sheriff-tokens-check"
+  psalm.suppress.unused_class:
+    - "../../src"
   phpunit.testsuites:
     unit: ["Unit"]
     integration: ["Integration"]

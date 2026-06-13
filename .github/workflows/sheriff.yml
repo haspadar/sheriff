@@ -118,6 +118,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: .sheriff/codecov/coverage.xml
           fail_ci_if_error: true
+          use_pypi: true
 
       # ------------------------------------------------------------
       # Infection (if config exists)

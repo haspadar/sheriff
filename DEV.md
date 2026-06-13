@@ -422,6 +422,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `codecov.cloud` | `true` | Upload coverage to Codecov in CI |
 | `codecov.cli` | `false` | Enable codecov-cli locally |
+| `codecov.fail_ci_if_error` | `false` | Fail the CI job when the Codecov upload step errors |
 
 ### coderabbit
 

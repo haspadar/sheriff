@@ -32,6 +32,7 @@ defaults:
 
   codecov.cloud: true
   codecov.cli: false
+  codecov.fail_ci_if_error: false
 
   coderabbit.cloud: true
   coderabbit.cli: false

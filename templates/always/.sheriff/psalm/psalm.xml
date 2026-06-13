@@ -19,11 +19,7 @@
     </plugins>
     <issueHandlers>
         <InvalidAttribute errorLevel="suppress" />
-        <UnusedClass errorLevel="suppress">
-            <errorLevel type="suppress">
-{% ListText(php.src)|EachFormatted("../../%s")|EachFormatted('                <directory name="%s" />')|Joined("\n") %}
-            </errorLevel>
-        </UnusedClass>
+{% ListText(psalm.suppress.unused_class)|EachFormatted('                <directory name="%s" />')|Joined("\n")|WhenNotEmpty("        <UnusedClass errorLevel=\"suppress\">\n            <errorLevel type=\"suppress\">\n%s\n            </errorLevel>\n        </UnusedClass>") %}
 {% ListText(psalm.suppress.possibly_unused)|EachFormatted('                <directory name="%s" />')|Joined("\n")|WhenNotEmpty("        <PossiblyUnusedMethod errorLevel=\"suppress\">\n            <errorLevel type=\"suppress\">\n%s\n            </errorLevel>\n        </PossiblyUnusedMethod>") %}
     </issueHandlers>
 </psalm>

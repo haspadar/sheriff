@@ -55,7 +55,9 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)Dockerfile$"],
+      "managerFilePatterns": [
+        "/(^|/)Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG DEBIAN_IMAGE=(?<depName>[^:]+):(?<currentValue>[^\\s]+)"
       ],
@@ -63,7 +65,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG NODE_MAJOR=(?<currentValue>\\d+)"
       ],
@@ -72,7 +76,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG ACTIONLINT_VERSION=(?<currentValue>[^\\s]+)"
       ],
@@ -81,7 +87,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG HADOLINT_VERSION=(?<currentValue>[^\\s]+)"
       ],
@@ -90,7 +98,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG TYPOS_VERSION=(?<currentValue>[^\\s]+)"
       ],
@@ -99,7 +109,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG SHELLCHECK_VERSION=(?<currentValue>[^\\s]+)"
       ],
@@ -108,7 +120,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG MARKDOWNLINT_VERSION=(?<currentValue>[^\\s]+)"
       ],
@@ -117,7 +131,9 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
       "matchStrings": [
         "ARG JSONLINT_VERSION=(?<currentValue>[^\\s]+)"
       ],

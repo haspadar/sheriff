@@ -44,10 +44,11 @@ vendor/bin/sheriff check
 
 Customization is optional. If needed, create `.sheriff.yaml` in the project root.
 
-Three settings cascade across every tool that consumes them:
+Four settings cascade across every tool that consumes them:
 
 - `php.src` — paths analysed by PHPStan, Psalm, PHPUnit, PHPMD, PHP_CodeSniffer, PHP Metrics, Infection, SonarCloud
-- `infra.exclude` — paths skipped by PHP_CodeSniffer, PHP-CS-Fixer, PHP Metrics, markdownlint, jsonlint, yamllint, typos, hadolint, shellcheck
+- `php.exclude` — paths skipped by PHP_CodeSniffer and PHP-CS-Fixer
+- `infra.exclude` — paths skipped by PHP Metrics, markdownlint, jsonlint, yamllint, typos, hadolint, shellcheck
 - `php.versions` — versions used in the CI matrix and consumed by PHPStan, PHP-CS-Fixer, PHPMD, Infection
 
 Change one key, every consuming tool follows.

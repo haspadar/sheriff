@@ -3,6 +3,7 @@
 
 [default]
 binary = false
+{% ListText(typos.extend_words)|EachFormatted('%1$s = "%1$s"')|Joined("\n")|WhenNotEmpty("\n[default.extend-words]\n%s") %}
 
 [files]
 extend-exclude = [

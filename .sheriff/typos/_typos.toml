@@ -4,6 +4,7 @@
 [default]
 binary = false
 
+
 [files]
 extend-exclude = [
     "vendor/",

@@ -148,6 +148,7 @@ defaults:
 
   typos.cli: true
   typos.exclude: ["vendor/", "tests/", ".git/"]
+  typos.extend_words: []
 
   yamllint.cli: true
   yamllint.ignore: ["vendor/**", "tests/**", ".git/**", ".sheriff/**/html/**", ".sheriff/**/coverage-report/**"]

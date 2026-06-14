@@ -608,6 +608,7 @@ All keys below are declared in `templates/always/.sheriff/config.yaml` with thei
 |-----|---------|-------------|
 | `typos.cli` | `true` | Enable typo checking |
 | `typos.exclude` | `["vendor/", "tests/", ".git/"]` | Excluded directories |
+| `typos.extend_words` | `[]` | Words treated as correct (e.g. `["galya"]`) |
 
 ### yamllint
 

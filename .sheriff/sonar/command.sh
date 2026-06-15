@@ -37,7 +37,7 @@ else
 fi
 
 PROJECT_ROOT="$(pwd)"
-DEFAULT_IMAGE="ghcr.io/haspadar/sheriff-infra@sha256:e64d3f39bdd00e8734e2e4311a5be91b6365757dd7b5fe385451c71af4899147"
+DEFAULT_IMAGE="ghcr.io/haspadar/sheriff-infra@sha256:7b0af8c57265504fd4b14d0ad565b1432c9361a4678090092c89bb6f8d4bb160"
 IMAGE="${SHERIFF_INFRA_IMAGE:-$DEFAULT_IMAGE}"
 
 docker run --rm \
